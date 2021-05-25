@@ -1,0 +1,12 @@
+{
+  "name": "rn_aws_going_out",
+  "displayName": "rn_aws_going_out",
+  "expo": {
+    "name": "rn_aws_going_out",
+    "slug": "rn_aws_going_out",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
