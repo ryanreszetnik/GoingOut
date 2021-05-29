@@ -1,8 +1,8 @@
 import Auth from '@aws-amplify/auth';
 import React, {useState} from 'react'
 import { View, Text } from 'react-native'
-import AppButton from '../../Components/AppButton';
-import AppTextInput from '../../Components/AppTextInput';
+import AppButton from '../../../Components/AppButton';
+import AppTextInput from '../../../Components/AppTextInput';
 
 export default function ForgotPassword({navigation}) {
     const [page, setPage] = useState(true);

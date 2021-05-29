@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CreateGroupSettings from './CreateGroupSettings';
 import MonthPicker from './MonthPicker';
 import moment from 'moment';
+import {useSelector} from 'react-redux';
 const CreateGroupStack = createStackNavigator();
 
 const initialGroup = {
@@ -15,8 +16,9 @@ const initialGroup = {
     locationRange:100
 }
 
-export default function CreateGroup({user}) {
+export default function CreateGroup() {
     const [group, setGroup] = useState(initialGroup)
+    const user = useSelector(state=>state.userSession.user);
     const updateDate = (date)=>{
         setGroup(oldGroup=> {return {...oldGroup,date}});
     }

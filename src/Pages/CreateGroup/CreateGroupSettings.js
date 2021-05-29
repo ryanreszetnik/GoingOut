@@ -1,13 +1,15 @@
 import React, {useState} from 'react'
 import { View, Text, Button, TextInput} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch, useSelector} from 'react-redux';
 
 import moment from 'moment';
 import MonthPicker from './MonthPicker';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 
-export default function CreateGroupSettings({navigation, user, group}) {
+export default function CreateGroupSettings({navigation, group}) {
+    const user = useSelector(state=>state.userSession.user);
     const [description,setDescription] = useState(group.description);
     const [ageRange,setAgeRange]= useState([group.minAge,group.maxAge]);
     const [maxDistance ,setMaxDistance] = useState(group.locationRange);

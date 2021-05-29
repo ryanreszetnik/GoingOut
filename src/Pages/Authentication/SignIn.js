@@ -2,25 +2,28 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AppTextInput from '../../Components/AppTextInput';
-import AppButton from '../../Components/AppButton';
-export default function SignUp({ navigation }) {
+import AppTextInput from '../../../Components/AppTextInput';
+import AppButton from '../../../Components/AppButton';
+import {LOGGED_IN} from '../../Constants/authConstants'
+import {SET_AUTH_STATUS} from '../../Actions/authActions'
+export default function SignIn({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
-  async function signUp() {
+  const dispatch = useDispatch();
+  async function signIn() {
     try {
-      await Auth.signUp({ username, password, attributes: { email } });
-      console.log(' Sign-up Confirmed');
-      navigation.navigate('ConfirmSignUp');
+      await Auth.signIn(username, password);
+      console.log(' Success');
+      
+      dispatch({type:SET_AUTH_STATUS, payload:LOGGED_IN});
     } catch (error) {
-      console.log(' Error signing up...', error);
+      console.log(' Error signing in...', error);
     }
   }
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <View style={styles.container}>
-        <Text style={styles.title}>Create a new account</Text>
+        <Text style={styles.title}>Sign in to your account</Text>
         <AppTextInput
           value={username}
           onChangeText={text => setUsername(text)}
@@ -40,20 +43,17 @@ export default function SignUp({ navigation }) {
           secureTextEntry
           textContentType="password"
         />
-        <AppTextInput
-          value={email}
-          onChangeText={text => setEmail(text)}
-          leftIcon="email"
-          placeholder="Enter email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-        />
-        <AppButton title="Sign Up" onPress={signUp} />
+        <AppButton title="Login" onPress={signIn} />
+
         <View style={styles.footerButtonContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+            <TouchableOpacity onPress={() => navigation.navigate('ResetPassword')}>
             <Text style={styles.forgotPasswordButtonText}>
-              Already have an account? Sign In
+              Forgot Password
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+            <Text style={styles.forgotPasswordButtonText}>
+              Don't have an account? Sign Up
             </Text>
           </TouchableOpacity>
         </View>
@@ -87,4 +87,3 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   }
 });
-
