@@ -4,9 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector} from 'react-redux';
 
 import moment from 'moment';
-import MonthPicker from './MonthPicker';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-
 
 export default function CreateGroupSettings({navigation, group}) {
     const user = useSelector(state=>state.userSession.user);
@@ -25,7 +23,7 @@ export default function CreateGroupSettings({navigation, group}) {
             Location Range
             </Text>
             
-            <Button title={`Date: ${group.date.format("MMMM Do")}`} onPress={()=>navigation.navigate("Choose Day")}/>
+            <Button title={`Date: ${moment(group.datetime).format("MMMM Do")}`} onPress={()=>navigation.navigate("Choose Day")}/>
             <Text>Description:</Text>
             <View style={{backgroundColor:"white"}}>
             <TextInput value={description} onChangeText={text=>setDescription(text)} multiline={true} numberOfLines={2} maxLength={100}/>

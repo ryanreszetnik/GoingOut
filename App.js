@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, Button } from 'react-native';
 import Amplify, {Auth} from 'aws-amplify';
-import awsConfig from './src/aws-exports';
+import {awsConfig,endpoints} from './src/aws-exports';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -19,7 +19,7 @@ import Upcoming from './src/Pages/Upcoming/Upcoming';
 import PermGroups from './src/Pages/PermGroups/PermGroups';
 
 
-Amplify.configure(awsConfig);
+Amplify.configure({Auth:awsConfig,endpoints:endpoints});
 
 
 const AuthenticationStack = createStackNavigator();
@@ -40,6 +40,7 @@ const AuthenticationNavigator = props => {
 };
 
 const TabNavigator = () =>{
+  console.log(useSelector(state=>state.userSession.user))
 return (
     <Tab.Navigator>
       <Tab.Screen name="Upcoming" component={Upcoming}/>
@@ -54,6 +55,7 @@ const Initializing = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ActivityIndicator size="large" color="tomato" />
+      <Button title="Reload" color="tomato" onPress={()=>checkAuthState()} />
     </View>
   );
 };
@@ -69,7 +71,7 @@ function App() {
   async function checkAuthState() {
     try {
       dispatch({type:SET_AUTH_USER, payload:await Auth.currentAuthenticatedUser()});
-      console.log(' User is signed in');
+      console.log(' User is signed in', user.signInUserSession.idToken.jwtToken);
       dispatch({type:SET_AUTH_STATUS, payload:LOGGED_IN});
     } catch (err) {
       console.log(' User is not signed in');
@@ -83,7 +85,7 @@ function App() {
       
         <NavigationContainer>
           {authStatus === INITIALIZING && <Initializing />}
-          {authStatus === LOGGED_IN && user &&(
+          {authStatus === LOGGED_IN &&(
               <TabNavigator/>
           )}
           {authStatus === LOGGED_OUT && (

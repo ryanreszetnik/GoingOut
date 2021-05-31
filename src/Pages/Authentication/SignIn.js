@@ -5,14 +5,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AppTextInput from '../../../Components/AppTextInput';
 import AppButton from '../../../Components/AppButton';
 import {LOGGED_IN} from '../../Constants/authConstants'
-import {SET_AUTH_STATUS} from '../../Actions/authActions'
+import {SET_AUTH_STATUS, SET_AUTH_USER} from '../../Actions/authActions'
+import { useDispatch } from 'react-redux';
 export default function SignIn({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   async function signIn() {
     try {
-      await Auth.signIn(username, password);
+      dispatch({type:SET_AUTH_USER, payload: await Auth.signIn(username, password)});
+
       console.log(' Success');
       
       dispatch({type:SET_AUTH_STATUS, payload:LOGGED_IN});

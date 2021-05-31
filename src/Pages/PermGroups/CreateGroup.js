@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import CreateGroupSettings from './CreateGroupSettings';
-import MonthPicker from './MonthPicker';
+import MonthPicker from '../../../Components/MonthPicker';
 import moment from 'moment';
 import {useSelector} from 'react-redux';
 const CreateGroupStack = createStackNavigator();

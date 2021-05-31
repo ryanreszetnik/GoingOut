@@ -1,30 +1,28 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Auth } from 'aws-amplify';
-import {useSelector} from 'react-redux';
-import { SET_AUTH_STATUS } from '../../Actions/authActions';
-import { LOGGED_OUT } from '../../Constants/authConstants';
-export default function Profile() {
-  const user = useSelector(state=>state.userSession.user);
-    async function signOut() {
-    try {
-      await Auth.signOut();
-      dispatch({type:SET_AUTH_STATUS, payload:LOGGED_OUT});
-    } catch (error) {
-      console.log('Error signing out: ', error);
-    }
-  }
+import { View, Text,Button } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack';
+import ViewProfile from './ViewProfile';
+import EditProfile from './EditProfile';
+const ProfileStack = createStackNavigator();
+import { useSelector } from 'react-redux';
+import API from '@aws-amplify/api';
+
+export default function Profile({navigation}) {
+  
+    
+    const user = useSelector(state=>state.userSession.user);
+
+
     return (
-        <SafeAreaView>
-            <Text>Profile Photo</Text>
-            <Text>Name</Text>
-            <Text>{user.username}</Text>
-            <Text>{user.attributes.email}</Text>
-            <Text>Phone</Text>
-            <Text>Birthday</Text>
-            <Text>Gender</Text>
-            <Button title="Sign Out" color="tomato" onPress={signOut} />
-        </SafeAreaView>
+      <ProfileStack.Navigator>
+        <ProfileStack.Screen 
+          name="ViewProfile" 
+          component={ViewProfile} 
+          options={{
+            headerTitle:user.username, 
+            headerRight:()=>(<Button title="edit" onPress={()=>navigation.navigate('EditProfile')}/>)
+          }}/>
+        <ProfileStack.Screen name="EditProfile" component={EditProfile}/>
+        </ProfileStack.Navigator>
     )
 }

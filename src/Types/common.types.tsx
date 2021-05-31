@@ -34,6 +34,17 @@ export interface Group{
     ageRange:AgeRange;
     genderPreference:string;
     permanent:boolean;
+    lastMessage:Message;
+}
+export interface CreateGroup{
+    name:string;
+    members:MemberPreview[];
+    datetime:string;
+    bio:string;
+    location:Location;
+    locationRange:number;
+    ageRange:AgeRange;
+    genderPreference:string;
 }
 export interface Match{
     id:string;
@@ -72,9 +83,7 @@ export interface MemberPreview{
 export interface Location{
     latitude:number;
     longitude:number;
-    human_address:Address;
-}
-export interface Address{
     address:string;
     postalCode:string;
 }
+
