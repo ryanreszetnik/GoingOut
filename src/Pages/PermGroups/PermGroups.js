@@ -29,7 +29,7 @@ export default function PermGroups() {
             <PermGroupNavigator.Screen name ="Create Perm Group">{screenProps => (
                 <CreateGroupSettings {...screenProps} group={newGroup}/>
             )}</PermGroupNavigator.Screen>            
-            <PermGroupNavigator.Screen name ="Choose Group Availability" component={MonthPicker}/> 
+            <PermGroupNavigator.Screen name ="Choose Day" component={MonthPicker}/> 
         </PermGroupNavigator.Navigator>
     )
 }
