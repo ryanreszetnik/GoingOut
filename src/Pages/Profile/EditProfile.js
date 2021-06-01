@@ -3,9 +3,10 @@ import { View, Text, Button } from "react-native"
 import { Auth } from "aws-amplify"
 import { SET_AUTH_STATUS } from "../../Actions/authActions"
 import { LOGGED_OUT } from "../../Constants/authConstants"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector, useStore } from "react-redux"
 
 export default function EditProfile({ navigation }) {
+  const user = useSelector((state) => state.userSession.user)
   const dispatch = useDispatch()
   async function signOut() {
     try {
@@ -15,11 +16,14 @@ export default function EditProfile({ navigation }) {
       console.log("Error signing out: ", error)
     }
   }
+
   return (
     <View>
-      <Text>Edit Profile</Text>
+      <Text>{user.username}</Text>
+      <Text>{user.attributes.email}</Text>
+
       <Button
-        title='Back To Profile'
+        title='Back To View Profile'
         color='tomato'
         onPress={() => navigation.navigate("ViewProfile")}
       />
