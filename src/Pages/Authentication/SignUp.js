@@ -14,25 +14,23 @@ import AppButton from "../../../Components/AppButton"
 import MonthPicker from "../../../Components/MonthPicker"
 import { NavigationEvents } from "react-navigation"
 import GenderPicker from "../../../Components/GenderPicker"
-import DateSelector from "../../../Components/DateSelector"
 import ImageSelector from "../../../Components/ImageSelector"
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
+  const [phone_number, setPhone] = useState("")
   const [gender, setGender] = useState("")
-  const [renderDate, setRender] = useState(false)
-  const [birthday, setBirthday] = useState("")
-
-  const submit = () => {
-    const profile = { username, email, password, phone, gender, birthday }
-    console.log(profile)
-  }
+  //const [renderDate, setRender] = useState(false)
+  const [birthdate, setBirthday] = useState("")
 
   async function signUp() {
     try {
-      await Auth.signUp({ username, password, attributes: { email } })
+      await Auth.signUp({
+        username,
+        password,
+        attributes: { email, phone_number, gender, birthdate },
+      })
       console.log(" Sign-up Confirmed")
       navigation.navigate("ConfirmSignUp")
     } catch (error) {
@@ -50,8 +48,6 @@ export default function SignUp({ navigation }) {
             leftIcon='account'
             placeholder='Enter username'
             autoCapitalize='none'
-            keyboardType='email-address'
-            textContentType='emailAddress'
           />
           <AppTextInput
             value={password}
@@ -63,29 +59,33 @@ export default function SignUp({ navigation }) {
             secureTextEntry
             textContentType='password'
           />
-          <AppButton
+          {
+            //For Future date picker
+            /*<AppButton
             title='Select Date of Birth'
             onPress={() => {
               setRender(true)
             }}
-          ></AppButton>
-          <DateSelector
-            render={renderDate}
-            setRender={setRender}
-            date={birthday}
-            setDate={setBirthday}
-          />
+          ></AppButton>*/
+          }
           <AppTextInput
             value={email}
             onChangeText={(text) => setEmail(text)}
             leftIcon='email'
-            placeholder='Enter email'
+            placeholder='Enter Email'
             autoCapitalize='none'
             keyboardType='email-address'
             textContentType='emailAddress'
           />
+
           <AppTextInput
-            value={phone}
+            value={birthdate}
+            onChangeText={(text) => setBirthday(text)}
+            placeholder='Enter Birthday'
+            autoCapitalize='none'
+          />
+          <AppTextInput
+            value={phone_number}
             onChangeText={(text) => setPhone(text)}
             leftIcon='phone'
             placeholder='Enter Phone Number'
@@ -95,7 +95,7 @@ export default function SignUp({ navigation }) {
             textContentType='telephoneNumber'
           />
           <GenderPicker checked={gender} setChecked={setGender}></GenderPicker>
-          <AppButton title='Sign Up' onPress={submit} />
+          <AppButton title='Sign Up' onPress={signUp} />
           <View style={styles.footerButtonContainer}>
             <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
               <Text style={styles.forgotPasswordButtonText}>

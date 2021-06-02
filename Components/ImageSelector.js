@@ -9,11 +9,11 @@ export default function ImageSelector() {
       <Image />
       <AppButton
         title='Select Profile Picture from Camera Roll'
-        onPress={launchImageLibrary}
+        onPress={launchImageLibrary()}
       />
       <AppButton
         title='Take Profile Picture with Camera'
-        onPress={launchCamera}
+        onPress={launchCamera()}
       />
     </View>
   )
