@@ -13,7 +13,7 @@ export default function Profile({ navigation }) {
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
-        name='ViewProfile'
+        name='View Profile'
         component={ViewProfile}
         options={{
           headerTitle: user.username,
@@ -21,12 +21,12 @@ export default function Profile({ navigation }) {
             <FontAwesome5
               name='user-edit'
               color='tomato'
-              onPress={() => navigation.navigate("EditProfile")}
+              onPress={() => navigation.navigate("Edit Profile")}
             />
           ),
         }}
       />
-      <ProfileStack.Screen name='EditProfile' component={EditProfile} />
+      <ProfileStack.Screen name='Edit Profile' component={EditProfile} />
     </ProfileStack.Navigator>
   )
 }

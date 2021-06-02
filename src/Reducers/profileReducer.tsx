@@ -1,4 +1,4 @@
-import {SET_PROFILE} from '../Actions/profileActions'
+import {SET_PROFILE, UPLOAD_IMAGE} from '../Actions/profileActions'
 const INITIAL_STATE = null;
 export default function profileReducer(state=INITIAL_STATE, action){
     switch(action.type){
@@ -8,5 +8,7 @@ export default function profileReducer(state=INITIAL_STATE, action){
             }
         default:
             return state;
+        
+        
     }
 }
