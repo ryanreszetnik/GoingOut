@@ -6,38 +6,34 @@ export default function GenderPicker({ checked, setChecked }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select Gender</Text>
-      <View style={styles.radioContainer}>
-        <RadioButton
+      <RadioButton.Group style={styles.radioContainer}>
+        <RadioButton.Item
           value='male'
+          label='Male'
           status={checked === "male" ? "checked" : "unchecked"}
           onPress={() => setChecked("male")}
           uncheckedColor='gray'
           color='tomato'
         />
-        <Text style={checked === "male" ? styles.labelOn : styles.labelOff}>
-          Male
-        </Text>
-        <RadioButton
+
+        <RadioButton.Item
           value='female'
+          label='Female'
           status={checked === "female" ? "checked" : "unchecked"}
           onPress={() => setChecked("female")}
           uncheckedColor='gray'
           color='tomato'
         />
-        <Text style={checked === "female" ? styles.labelOn : styles.labelOff}>
-          Female
-        </Text>
-        <RadioButton
+
+        <RadioButton.Item
           value='other'
+          label='Other'
           status={checked === "other" ? "checked" : "unchecked"}
           onPress={() => setChecked("other")}
           uncheckedColor='gray'
           color='tomato'
         />
-        <Text style={checked === "other" ? styles.labelOn : styles.labelOff}>
-          Other
-        </Text>
-      </View>
+      </RadioButton.Group>
     </View>
   )
 }
@@ -48,21 +44,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: "90%",
     marginVertical: 10,
+    paddingTop: 15,
   },
   radioContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  labelOn: {
-    textAlign: "center",
-    color: "tomato",
-    paddingRight: 20,
-  },
-  labelOff: {
-    textAlign: "center",
-    color: "gray",
-    paddingRight: 20,
   },
   title: {
     color: "#737373",

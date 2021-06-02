@@ -14,14 +14,13 @@ import GenderPicker from "../../../Components/GenderPicker"
 import { ScrollView } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import { SET_PROFILE } from "../../Actions/profileActions"
 
 export default function EditProfile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
   const profile = useSelector((state) => state.profile)
   const dispatch = useDispatch()
 
-  const [username, setUsername] = useState(profile.username)
-  //const [password, setPassword] = useState("")
   const [email, setEmail] = useState(profile.email)
   const [phone_number, setPhone] = useState(profile.phone_number)
   const [gender, setGender] = useState(profile.gender)
@@ -45,9 +44,12 @@ export default function EditProfile({ navigation }) {
       gender: gender,
       name: name,
     }
-
     try {
       console.log(await updateUser(newUser, user))
+      dispatch({
+        type: SET_PROFILE,
+        payload: await updateUser(newUser, user),
+      })
     } catch (error) {
       console.log(error)
     }
@@ -77,32 +79,6 @@ export default function EditProfile({ navigation }) {
           placeholder='Enter full name'
           autoCapitalize='none'
         />
-        <View style={styles.editHeading}>
-          <FontAwesome5
-            name='edit'
-            color='tomato'
-            onPress={() => navigation.navigate("Edit Profile")}
-            style={styles.icon}
-          />
-          <Text>Username</Text>
-        </View>
-        <AppTextInput
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-          leftIcon='account'
-          placeholder='Enter username'
-          autoCapitalize='none'
-        />
-        {/* <AppTextInput
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        leftIcon='lock'
-        placeholder='Enter password'
-        autoCapitalize='none'
-        autoCorrect={false}
-        secureTextEntry
-        textContentType='password'
-      /> */}
         <View style={styles.editHeading}>
           <FontAwesome5 name='edit' color='tomato' style={styles.icon} />
           <Text>Email Address</Text>

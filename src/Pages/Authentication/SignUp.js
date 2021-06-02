@@ -14,7 +14,6 @@ import AppButton from "../../../Components/AppButton"
 import MonthPicker from "../../../Components/MonthPicker"
 import { NavigationEvents } from "react-navigation"
 import GenderPicker from "../../../Components/GenderPicker"
-// import ImageSelector from "../../../Components/ImageSelector"
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")

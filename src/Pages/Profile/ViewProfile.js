@@ -36,7 +36,7 @@ export default function ViewProfile({ navigation }) {
       {profile ? (
         <View>
           <Text>Profile Photo</Text>
-          <Text>Name</Text>
+          <Text>{profile.name}</Text>
           <Text>{profile.username}</Text>
           <Text>{profile.email}</Text>
           <Text>{profile.phone_number}</Text>
