@@ -8,6 +8,8 @@ export interface AppData{
 export interface UserSession{
     authStatus:string;
     user:any;//from aws
+    userData:any;
+
 }
 export interface Profile{
     username:string;

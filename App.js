@@ -12,7 +12,7 @@ import ConfirmSignUp from './src/Pages/Authentication/ConfirmSignUp';
 import Profile from './src/Pages/Profile/Profile';
 import ForgotPassword from './src/Pages/Authentication/ForgotPassword';
 import { useDispatch ,useSelector,batch} from 'react-redux';
-import { SET_AUTH_STATUS, SET_AUTH_USER } from './src/Actions/authActions';
+import { SET_AUTH_STATUS, SET_AUTH_USER, SET_CURR_USER_DATA } from './src/Actions/authActions';
 import {LOGGED_IN, LOGGED_OUT, INITIALIZING} from './src/Constants/authConstants';
 import TempGroups from './src/Pages/TempGroups/TempGroups';
 import Upcoming from './src/Pages/Upcoming/Upcoming';
@@ -71,6 +71,7 @@ function App() {
   async function checkAuthState() {
     try {
       dispatch({type:SET_AUTH_USER, payload:await Auth.currentAuthenticatedUser()});
+      dispatch({type:SET_CURR_USER_DATA, payload:await Auth.currentUserInfo()});
       console.log(' User is signed in', user.signInUserSession.idToken.jwtToken);
       dispatch({type:SET_AUTH_STATUS, payload:LOGGED_IN});
     } catch (err) {

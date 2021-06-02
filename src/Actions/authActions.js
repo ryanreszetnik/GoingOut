@@ -1,2 +1,3 @@
 export const SET_AUTH_STATUS = "SET_AUTH_STATUS"
 export const SET_AUTH_USER = "SET_AUTH_USER"
+export const SET_CURR_USER_DATA = "SET_CURR_USER_DATA"
