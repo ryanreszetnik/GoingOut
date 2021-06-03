@@ -31,7 +31,7 @@ export default function ConfirmSignUp({ navigation }) {
           placeholder='Enter verification code'
           keyboardType='numeric'
         />
-        <AppButton title='Confirm Sign Up' onPress={confirmSignUp} />
+        <AppButton title='Confirm New Email' onPress={confirmSignUp} />
       </View>
     </SafeAreaView>
   )
