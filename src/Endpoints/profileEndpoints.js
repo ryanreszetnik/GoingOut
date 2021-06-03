@@ -1,9 +1,9 @@
-
 import API from "@aws-amplify/api"
-import {Auth} from "aws-amplify"
+import { Auth } from "aws-amplify"
 
 export const getUser = async (sub) => {
-  const Authorization = (await Auth.currentAuthenticatedUser()).signInUserSession.idToken.jwtToken;
+  const Authorization = (await Auth.currentAuthenticatedUser())
+    .signInUserSession.idToken.jwtToken
   console.log(Authorization)
   const apiRequest = {
     body: {},
@@ -23,7 +23,8 @@ export const getUser = async (sub) => {
 }
 
 export const updateUser = async (newUser) => {
-  const signInUserSession = (await Auth.currentAuthenticatedUser()).signInUserSession;
+  const signInUserSession = (await Auth.currentAuthenticatedUser())
+    .signInUserSession
   const apiRequest = {
     body: {
       AccessToken: signInUserSession.accessToken.jwtToken,

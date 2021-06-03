@@ -3,9 +3,7 @@ const INITIAL_STATE = null;
 export default function profileReducer(state=INITIAL_STATE, action){
     switch(action.type){
         case SET_PROFILE:
-            return{
-                ...action.payload
-            }
+            return{...action.payload}
         default:
             return state;
         

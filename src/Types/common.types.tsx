@@ -22,6 +22,11 @@ export interface Profile{
     groups:Group[];
     numFriends:number;
 }
+export interface Friend{
+    sub:string;
+    username:string;
+    status:string;
+}
 export interface Group{
     id:string;
     name:string;
