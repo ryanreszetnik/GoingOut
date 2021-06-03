@@ -7,6 +7,7 @@ const ProfileStack = createStackNavigator()
 import { useSelector } from "react-redux"
 import API from "@aws-amplify/api"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import ConfirmNewEmail from "./ConfirmNewEmail"
 
 export default function Profile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
@@ -37,6 +38,7 @@ export default function Profile({ navigation }) {
         }}
       />
       <ProfileStack.Screen name='Edit Profile' component={EditProfile} />
+      <ProfileStack.Screen name='Confirm Email' component={ConfirmNewEmail} />
     </ProfileStack.Navigator>
   )
 }
