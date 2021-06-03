@@ -3,6 +3,7 @@ import chatReducer from './chatReducer';
 import groupsReducer from './groupsReducer';
 import profileReducer from './profileReducer';
 import userSessionReducer from './userSessionReducer';
+import friendReducer from "./friendReducer"
 
 
 const rootReducer = combineReducers({
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
     profile:profileReducer,
     groups:groupsReducer,
     tempGroups:groupsReducer,
-    chats:chatReducer
+    chats:chatReducer,
+    friends:friendReducer
 });
 export default rootReducer;

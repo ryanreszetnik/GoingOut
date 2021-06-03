@@ -64,7 +64,11 @@ const Initializing = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <ActivityIndicator size='large' color='tomato' />
-      <Button title='Reload' color='tomato' onPress={() => checkAuthState()} />
+      <Button
+        title='Reloading'
+        color='tomato'
+        onPress={() => checkAuthState()}
+      />
     </View>
   )
 }
@@ -76,7 +80,7 @@ function App() {
   useEffect(() => {
     checkAuthState()
   }, [])
-  
+
   async function checkAuthState() {
     try {
       dispatch({

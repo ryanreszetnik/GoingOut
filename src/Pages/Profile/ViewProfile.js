@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { useDispatch, useSelector } from "react-redux"
 import { getUser } from "../../Endpoints/profileEndpoints"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
+import { TouchableOpacity } from "react-native-gesture-handler"
 export default function ViewProfile({ navigation }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.userSession.user)
@@ -33,7 +34,26 @@ export default function ViewProfile({ navigation }) {
       {profile ? (
         <View style={styles.container}>
           <Text style={styles.imgTitle}>{profile.name}</Text>
-          <Image style={styles.img} />
+          <View style={styles.imageFriends}>
+            <Image style={styles.img} />
+            <TouchableOpacity>
+              <Text
+                onPress={() => {
+                  navigation.navigate("Friends")
+                }}
+                style={styles.imgText}
+              >
+                <MaterialCommunityIcons
+                  name='account-group'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`   Friends`}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
           <View style={styles.attributeContainer}>
             <View style={styles.txtField}>
               <Text>
@@ -115,12 +135,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "gray",
     backgroundColor: "white",
+    marginLeft: "10%",
+  },
+  imageFriends: {
+    flexDirection: "row",
+  },
+  imgText: {
+    backgroundColor: "#c0c0c0",
+    padding: 5,
+    marginLeft: "30%",
+    borderRadius: 5,
     alignSelf: "center",
   },
   imgTitle: {
     fontSize: 20,
     textAlign: "center",
-    marginVertical: 10,
+    marginVertical: 15,
   },
   attributeContainer: {
     marginVertical: 10,
