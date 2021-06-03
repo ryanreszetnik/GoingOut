@@ -8,7 +8,6 @@ import { useDispatch, useSelector, useStore } from "react-redux"
 import { updateUser } from "../../Endpoints/profileEndpoints"
 import AppButton from "../../../Components/AppButton"
 import AppTextInput from "../../../Components/AppTextInput"
-import { launchCamera, launchImageLibrary } from "react-native-image-picker"
 import ImageSelector from "../../../Components/ImageSelector"
 import GenderPicker from "../../../Components/GenderPicker"
 import { ScrollView } from "react-native-gesture-handler"
@@ -21,6 +20,7 @@ export default function EditProfile({ navigation }) {
   const profile = useSelector((state) => state.profile)
   const dispatch = useDispatch()
 
+  const curEmail = profile.email
   const [email, setEmail] = useState(profile.email)
   const [phone_number, setPhone] = useState(profile.phone_number)
   const [gender, setGender] = useState(profile.gender)
@@ -53,7 +53,12 @@ export default function EditProfile({ navigation }) {
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("View Profile")
+
+    if (email !== curEmail) {
+      navigation.navigate("Confirm Email")
+    } else {
+      navigation.navigate("View Profile")
+    }
   }
 
   return (
