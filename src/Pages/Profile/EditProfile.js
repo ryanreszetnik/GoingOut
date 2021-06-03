@@ -45,10 +45,11 @@ export default function EditProfile({ navigation }) {
       name: name,
     }
     try {
-      console.log(await updateUser(newUser, user))
+      const newUserValues = await updateUser(newUser, user)
+      console.log(newUserValues)
       dispatch({
         type: SET_PROFILE,
-        payload: await updateUser(newUser, user),
+        payload: newUserValues,
       })
     } catch (error) {
       console.log(error)
