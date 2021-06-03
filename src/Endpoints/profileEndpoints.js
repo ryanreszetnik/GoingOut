@@ -13,7 +13,7 @@ export const getUser = async (sub) => {
     },
   }
   const data = await API.get(
-    "ProfileEndpoint",
+    "GeneralEndpoint",
     `/profile?user=${sub}`,
     apiRequest
   )
@@ -34,6 +34,6 @@ export const updateUser = async (newUser) => {
       "Content-Type": "application/json",
     },
   }
-  const data = await API.put("ProfileEndpoint", "/profile", apiRequest)
+  const data = await API.put("GeneralEndpoint", "/profile", apiRequest)
   return data
 }

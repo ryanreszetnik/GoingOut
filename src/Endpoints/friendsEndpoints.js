@@ -11,9 +11,10 @@ export const searchUser = async (search) => {
     },
   }
   const data = await API.get(
-    "ProfileEndpoint",
+    "GeneralEndpoint",
     `/searchusers?search=${search}`,
     apiRequest
   )
+  console.log(data)
   return data
 }
