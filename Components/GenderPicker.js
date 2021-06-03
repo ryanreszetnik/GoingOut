@@ -8,28 +8,28 @@ export default function GenderPicker({ checked, setChecked }) {
       <Text style={styles.title}>Select Gender</Text>
       <RadioButton.Group style={styles.radioContainer}>
         <RadioButton.Item
-          value='male'
+          value='Male'
           label='Male'
-          status={checked === "male" ? "checked" : "unchecked"}
-          onPress={() => setChecked("male")}
+          status={checked === "Male" ? "checked" : "unchecked"}
+          onPress={() => setChecked("Male")}
           uncheckedColor='gray'
           color='tomato'
         />
 
         <RadioButton.Item
-          value='female'
+          value='Female'
           label='Female'
-          status={checked === "female" ? "checked" : "unchecked"}
-          onPress={() => setChecked("female")}
+          status={checked === "Female" ? "checked" : "unchecked"}
+          onPress={() => setChecked("Female")}
           uncheckedColor='gray'
           color='tomato'
         />
 
         <RadioButton.Item
-          value='other'
+          value='Other'
           label='Other'
-          status={checked === "other" ? "checked" : "unchecked"}
-          onPress={() => setChecked("other")}
+          status={checked === "Other" ? "checked" : "unchecked"}
+          onPress={() => setChecked("Other")}
           uncheckedColor='gray'
           color='tomato'
         />

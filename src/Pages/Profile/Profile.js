@@ -18,11 +18,21 @@ export default function Profile({ navigation }) {
         options={{
           headerTitle: user.username,
           headerRight: () => (
-            <FontAwesome5
-              name='user-edit'
-              color='tomato'
-              onPress={() => navigation.navigate("Edit Profile")}
-            />
+            <View style={styles.headerView}>
+              <Text
+                onPress={() => navigation.navigate("Edit Profile")}
+                style={styles.headerText}
+              >
+                Edit Profile
+              </Text>
+              <FontAwesome5
+                style={{ marginRight: 20 }}
+                size={20}
+                name='user-edit'
+                color='tomato'
+                onPress={() => navigation.navigate("Edit Profile")}
+              />
+            </View>
           ),
         }}
       />
@@ -30,3 +40,13 @@ export default function Profile({ navigation }) {
     </ProfileStack.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  headerView: {
+    flexDirection: "row",
+  },
+  headerText: {
+    marginRight: 10,
+    color: "tomato",
+  },
+})
