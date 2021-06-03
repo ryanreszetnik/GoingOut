@@ -8,7 +8,6 @@ export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
 
   const sendRequest = async () => {
-    console.log(profile)
     try {
       await requestFriend(profile.sub)
     } catch (error) {

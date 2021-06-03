@@ -36,3 +36,57 @@ export const requestFriend = async (sub) => {
 
   return data
 }
+
+export const getFriends = async (sub) => {
+  const Authorization = (await Auth.currentAuthenticatedUser())
+    .signInUserSession.idToken.jwtToken
+
+  const apiRequest = {
+    body: {},
+    headers: {
+      Authorization,
+      "Content-Type": "application/json",
+    },
+  }
+  const data = await API.get(
+    "GeneralEndpoint",
+    `/friends?user=${sub}`,
+    apiRequest
+  )
+  console.log(data, sub)
+
+  return data
+}
+
+export const acceptRequest = async (sub) => {
+  const Authorization = (await Auth.currentAuthenticatedUser())
+    .signInUserSession.idToken.jwtToken
+
+  const apiRequest = {
+    body: { user: sub },
+    headers: {
+      Authorization,
+      "Content-Type": "application/json",
+    },
+  }
+  const data = await API.put("GeneralEndpoint", `/friends`, apiRequest)
+  console.log(data)
+
+  return data
+}
+export const deleteFriend = async (sub) => {
+  const Authorization = (await Auth.currentAuthenticatedUser())
+    .signInUserSession.idToken.jwtToken
+
+  const apiRequest = {
+    body: { user: sub },
+    headers: {
+      Authorization,
+      "Content-Type": "application/json",
+    },
+  }
+  const data = await API.delete("GeneralEndpoint", `/friends`, apiRequest)
+  console.log(data)
+
+  return data
+}
