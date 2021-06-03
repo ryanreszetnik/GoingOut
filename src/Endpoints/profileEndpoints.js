@@ -1,11 +1,14 @@
-import { useDispatch, useSelector } from "react-redux"
-import API from "@aws-amplify/api"
 
-export const getUser = async (sub, user) => {
+import API from "@aws-amplify/api"
+import {Auth} from "aws-amplify"
+
+export const getUser = async (sub) => {
+  const Authorization = (await Auth.currentAuthenticatedUser()).signInUserSession.idToken.jwtToken;
+  console.log(Authorization)
   const apiRequest = {
     body: {},
     headers: {
-      Authorization: user.signInUserSession.idToken.jwtToken,
+      Authorization,
       "Content-Type": "application/json",
     },
   }
@@ -19,14 +22,15 @@ export const getUser = async (sub, user) => {
   return data
 }
 
-export const updateUser = async (newUser, user) => {
+export const updateUser = async (newUser) => {
+  const signInUserSession = (await Auth.currentAuthenticatedUser()).signInUserSession;
   const apiRequest = {
     body: {
-      AccessToken: user.signInUserSession.accessToken.jwtToken,
+      AccessToken: signInUserSession.accessToken.jwtToken,
       user: newUser,
     },
     headers: {
-      Authorization: user.signInUserSession.idToken.jwtToken,
+      Authorization: signInUserSession.idToken.jwtToken,
       "Content-Type": "application/json",
     },
   }

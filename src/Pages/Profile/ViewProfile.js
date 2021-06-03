@@ -17,7 +17,7 @@ export default function ViewProfile({ navigation }) {
     try {
       dispatch({
         type: SET_PROFILE,
-        payload: await getUser(userData.attributes.sub, user),
+        payload: await getUser(userData.attributes.sub),
       })
     } catch (error) {
       console.log(`ERROR MESSAGE: ${error.message}`)

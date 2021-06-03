@@ -45,7 +45,7 @@ export default function EditProfile({ navigation }) {
       name: name,
     }
     try {
-      const newUserValues = await updateUser(newUser, user)
+      const newUserValues = await updateUser(newUser)
       console.log(newUserValues)
       dispatch({
         type: SET_PROFILE,

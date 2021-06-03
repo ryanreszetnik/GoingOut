@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text,Button } from 'react-native'
 import { useSelector } from 'react-redux';
+import FriendSearch from '../../../Components/FriendSearch';
 import GroupPreview from '../../../Components/GroupPreview';
 
 export default function ViewPermGroups({navigation}) {
@@ -12,6 +13,7 @@ export default function ViewPermGroups({navigation}) {
             {groups.map(group=>{
                 return <GroupPreview group ={group} key={group.id}/>
             })}
+            <FriendSearch/>
             
         </View>
     )
