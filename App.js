@@ -76,6 +76,7 @@ function App() {
   useEffect(() => {
     checkAuthState()
   }, [])
+  
   async function checkAuthState() {
     try {
       dispatch({

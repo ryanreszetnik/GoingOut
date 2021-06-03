@@ -8,8 +8,8 @@ import { useDispatch, useSelector, useStore } from "react-redux"
 import { updateUser } from "../../Endpoints/profileEndpoints"
 import AppButton from "../../../Components/AppButton"
 import AppTextInput from "../../../Components/AppTextInput"
-import { launchCamera, launchImageLibrary } from "react-native-image-picker"
-import ImageSelector from "../../../Components/ImageSelector"
+//import { launchCamera, launchImageLibrary } from "react-native-image-picker"
+//import ImageSelector from "../../../Components/ImageSelector"
 import GenderPicker from "../../../Components/GenderPicker"
 import { ScrollView } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -45,10 +45,11 @@ export default function EditProfile({ navigation }) {
       name: name,
     }
     try {
-      console.log(await updateUser(newUser, user))
+      const newUserValues = await updateUser(newUser, user);
+      console.log(newUserValues)
       dispatch({
         type: SET_PROFILE,
-        payload: await updateUser(newUser, user),
+        payload: newUserValues,
       })
     } catch (error) {
       console.log(error)
@@ -60,7 +61,7 @@ export default function EditProfile({ navigation }) {
     <ScrollView>
       <SafeAreaView style={styles.container}>
         <Text style={styles.imgTitle}>Change your profile picture</Text>
-        <ImageSelector />
+        {/*<ImageSelector />*/}
 
         <View style={styles.editHeading}>
           <FontAwesome5

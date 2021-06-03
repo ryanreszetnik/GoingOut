@@ -10,7 +10,7 @@ export default function ViewPermGroups({navigation}) {
             <Text>View Perm Groups</Text>
             <Button title="Create New" color="tomato" onPress={()=>navigation.navigate('Create Perm Group')} />
             {groups.map(group=>{
-                return <GroupPreview group ={group}/>
+                return <GroupPreview group ={group} key={group.id}/>
             })}
             
         </View>
