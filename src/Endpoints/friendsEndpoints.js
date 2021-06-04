@@ -17,6 +17,7 @@ export const searchUser = async (search) => {
     `/searchusers?search=${search}`,
     apiRequest
   )
+  console.log(data)
   return data
 }
 

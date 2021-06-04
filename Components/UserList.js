@@ -1,0 +1,67 @@
+import React, { useState } from 'react'
+import { View, Text,StyleSheet, TouchableOpacity, Image} from 'react-native'
+import { REQUEST,REQUESTED,CONFIRMED } from '../src/Constants/friendConstants';
+
+export default function UserList({users,onPress}) {
+
+    const [pressed, setPressed]= useState(false);
+
+    const statusPreview = (status)=>{
+        switch(status){
+            case REQUEST:
+                return "- Incoming Request"
+            case REQUESTED:
+                return "- Requested"
+            case CONFIRMED:
+                return "- Friends"
+            default:
+                return ""
+        }
+    }
+
+    const userPreview = (user)=>{
+        return <TouchableOpacity style={styles.container} key ={user.sub} onPress={onPress(user)}>
+            <Image style={styles.photo}/>
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>{user.username}</Text>
+                <Text style={styles.subtext}>{`${user.name}${statusPreview(user.status)}`}</Text>
+            </View>
+        </TouchableOpacity>
+    }
+
+
+    return (
+        <View style={styles.componentContainer}>
+            {users.map(user=>userPreview(user))}
+        </View>
+    )
+}
+const styles = StyleSheet.create({
+    componentContainer:{
+
+    },
+  container: {
+    height:60,
+    backgroundColor:"#DDD",
+    flexDirection:"row"
+  },
+  text:{
+    fontWeight:"500",
+    fontSize:20,
+  },
+  photo:{
+      backgroundColor:"#EEE",
+      width:60,
+      height:60
+  },
+  textContainer:{
+      height:60,
+      padding:8,
+  },
+  subtext:{
+      fontWeight:"300",
+    fontSize:14,
+    paddingTop:3
+  }
+})
+

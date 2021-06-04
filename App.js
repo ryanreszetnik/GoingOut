@@ -23,8 +23,9 @@ import {
   INITIALIZING,
 } from "./src/Constants/authConstants"
 import TempGroups from "./src/Pages/TempGroups/TempGroups"
-import Upcoming from "./src/Pages/Upcoming/Upcoming"
+
 import PermGroups from "./src/Pages/PermGroups/PermGroups"
+import Notifications from "./src/Pages/Notifications/Notifications"
 
 Amplify.configure({ Auth: awsConfig, endpoints: endpoints })
 
@@ -52,7 +53,7 @@ const TabNavigator = () => {
   console.log(useSelector((state) => state.userSession.user))
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Upcoming' component={Upcoming} />
+      <Tab.Screen name='Notifications' component={Notifications} />
       <Tab.Screen name='Temp Groups' component={TempGroups} />
       <Tab.Screen name='Perm Groups' component={PermGroups} />
       <Tab.Screen name='Profile' component={Profile} />
@@ -91,7 +92,7 @@ function App() {
         type: SET_CURR_USER_DATA,
         payload: await Auth.currentUserInfo(),
       })
-      console.log(" User is signed in", user.signInUserSession.idToken.jwtToken)
+      console.log(" User is signed in", await Auth.currentUserInfo())
       dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
     } catch (err) {
       console.log(" User is not signed in")

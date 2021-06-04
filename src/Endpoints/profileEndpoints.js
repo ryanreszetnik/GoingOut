@@ -34,8 +34,6 @@ export const updateUser = async (newUser) => {
       "Content-Type": "application/json",
     },
   }
-
   const data = await API.put("GeneralEndpoint", "/profile", apiRequest)
-
   return data
 }
