@@ -1,6 +1,7 @@
+import { SET_PERM_GROUPS, SET_TEMP_GROUPS} from "../Actions/groupActions";
 import { Group } from "../Types/common.types";
 
-const INITIAL_STATE = [{
+const INITIAL_STATE = {permGroups:[{
     id:"1",
     name:"First Group",
     members:[{
@@ -71,9 +72,13 @@ const INITIAL_STATE = [{
         sender:"Ryan Reszetnik"
     }
 }
-];
-export default function groupsReducer(state:Group[]=INITIAL_STATE, action){
+], tempGroups:[]}
+export default function groupsReducer(state=INITIAL_STATE, action){
     switch(action.type){
+        case SET_PERM_GROUPS:
+            return {...state, permGroups: action.payload}
+        case SET_TEMP_GROUPS:
+            return {...state, tempGroups: action.payload}
         default:
             return state;
     }
