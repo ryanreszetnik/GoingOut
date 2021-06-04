@@ -1,15 +1,18 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import UserList from '../../../Components/UserList';
+import { SET_CUR_PROFILE } from '../../Actions/friendActions';
 import { REQUEST } from '../../Constants/friendConstants';
 
-export default function Notifications() {
+export default function Notifications({navigation}) {
     const friends = useSelector(state=>state.friends.friends)
+    const dispatch = useDispatch()
 
-    const selectUser = (user)=>{
-
+    const selectUser = (profile)=>{
+        dispatch({ type: SET_CUR_PROFILE, payload: profile })
+        navigation.navigate("User Profile")
     }
 
     return (

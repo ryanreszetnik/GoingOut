@@ -84,7 +84,7 @@ export const deleteFriend = async (sub) => {
       "Content-Type": "application/json",
     },
   }
-  const data = await API.delete("GeneralEndpoint", `/friends`, apiRequest)
-
+  const data = await API.del("GeneralEndpoint", `/friends`, apiRequest)
+  
   return data
 }
