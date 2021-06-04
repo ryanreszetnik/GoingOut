@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
+import { useDispatch } from "react-redux"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppTextInput from "../../../Components/AppTextInput"
 import UserList from "../../../Components/UserList"
+import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 
-export default function FriendSearch({ onSelect }) {
+export default function FriendSearch({ navigation }) {
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
-  useEffect(() => {
-    updateSearch("")
-  }, [])
 
   const updateSearch = async (term) => {
     setSearchTerm(term)
-    const newFriends = await searchUser(term)
-    console.log(newFriends)
-    setFriends((friends) => (newFriends ? newFriends : []))
+    if (term.length > 0) {
+      const newFriends = await searchUser(term)
+      setFriends(newFriends)
+    } else {
+      setFriends([])
+    }
   }
-  const selectUser=(user)=>{
-    
+  const dispatch = useDispatch()
+
+  const onSelect = (profile) => {
+    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    navigation.navigate("User Profile")
   }
 
   return (
@@ -35,9 +40,7 @@ export default function FriendSearch({ onSelect }) {
           textContentType='emailAddress'
         />
       </View>
-      {(friends&&searchTerm.length > 0)?<View>
-        <UserList users={friends} onPress={selectUser}/>
-      </View>:<View/>}
+      <UserList users={friends} onPress={onSelect} />
     </View>
   )
 }

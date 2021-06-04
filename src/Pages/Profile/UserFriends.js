@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from "react"
 import { View, Text } from "react-native"
-import UserFriendList from "../../../Components/UserFriendList"
-import { Friend } from "../../Types/common.types"
-import { useSelector, useDispatch } from "react-redux"
 import { ScrollView } from "react-native-gesture-handler"
+import UserList from "../../../Components/UserList"
+import { useDispatch, useSelector } from "react-redux"
+import { getFriends } from "../../Endpoints/friendsEndpoints"
+import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 
-export default function Friends({ navigation }) {
+export default function UserFriends({ navigation }) {
+  const [friends, setFriends] = useState([])
+  const sub = useSelector((state) => state.friends.curProfile.sub)
   const dispatch = useDispatch()
-  const profile = useSelector((state) => state.friends.curProfile)
+  useEffect(() => {
+    makeFriends()
+  }, [])
+
+  const makeFriends = async () => {
+    setFriends(await getFriends(sub))
+  }
+
+  const selectUser = (profile) => {
+    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    navigation.navigate("User Profile")
+  }
 
   return (
     <ScrollView>
-      <UserList users={users} onPress={selectUser} />
+      <UserList users={friends} onPress={selectUser} />
     </ScrollView>
   )
 }
