@@ -13,7 +13,8 @@ export default function FriendSearch({ onSelect }) {
   const updateSearch = async (term) => {
     setSearchTerm(term)
     const newFriends = await searchUser(term)
-    setFriends((friends) => (newFriends ? newFriends.Items : []))
+    console.log(newFriends)
+    setFriends((friends) => (newFriends ? newFriends : []))
   }
 
   return (
@@ -30,8 +31,9 @@ export default function FriendSearch({ onSelect }) {
           textContentType='emailAddress'
         />
       </View>
+      {(friends&&searchTerm.length > 0)?<View>
       {friends.map((friend) => {
-        if (searchTerm.length > 0) {
+        
           return (
             <TouchableOpacity
               key={friend.sub}
@@ -44,8 +46,8 @@ export default function FriendSearch({ onSelect }) {
               <Text style={styles.friendText}>{`Name: ${friend.name}`}</Text>
             </TouchableOpacity>
           )
-        }
-      })}
+        
+      })}</View>:<View/>}
     </View>
   )
 }

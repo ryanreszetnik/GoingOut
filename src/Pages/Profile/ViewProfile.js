@@ -36,11 +36,11 @@ export default function ViewProfile({ navigation }) {
           <Text style={styles.imgTitle}>{profile.name}</Text>
           <View style={styles.imageFriends}>
             <Image style={styles.img} />
-            <TouchableOpacity>
-              <Text
-                onPress={() => {
+            <TouchableOpacity onPress={() => {
                   navigation.navigate("Friends")
-                }}
+                }}>
+              <Text
+                
                 style={styles.imgText}
               >
                 <MaterialCommunityIcons
