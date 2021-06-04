@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { getUser } from "../../Endpoints/profileEndpoints"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
+
 export default function ViewProfile({ navigation }) {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.userSession.user)
   const profile = useSelector((state) => state.profile)
   const userData = useSelector((state) => state.userSession.userData)
 
