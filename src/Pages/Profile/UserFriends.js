@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text } from "react-native"
 import UserFriendList from "../../../Components/UserFriendList"
 import { Friend } from "../../Types/common.types"
@@ -11,7 +11,7 @@ export default function Friends({ navigation }) {
 
   return (
     <ScrollView>
-      <UserFriendList sub={profile.sub} />
+      <UserList users={users} onPress={selectUser} />
     </ScrollView>
   )
 }
