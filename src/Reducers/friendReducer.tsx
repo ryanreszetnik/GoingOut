@@ -1,4 +1,4 @@
-const INITIAL_STATE = {friends:[], otherUsersFriends:[], curProfile:null};
+const INITIAL_STATE = {friends:[], curProfile:null};
 import {ADD_FRIEND, REMOVE_FRIEND, SET_FRIENDS, SET_CUR_PROFILE} from "../Actions/friendActions"
 
 export default function friendReducer(state=INITIAL_STATE, action){

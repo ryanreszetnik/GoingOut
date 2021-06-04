@@ -10,6 +10,8 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import ConfirmNewEmail from "./ConfirmNewEmail"
 import Friends from "./Friends"
 import UserProfile from "./UserProfile"
+import UserFriends from "./UserFriends"
+import SearchFriends from "./SearchFriends"
 
 export default function Profile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
@@ -43,6 +45,8 @@ export default function Profile({ navigation }) {
       <ProfileStack.Screen name='Confirm Email' component={ConfirmNewEmail} />
       <ProfileStack.Screen name='Friends' component={Friends} />
       <ProfileStack.Screen name='User Profile' component={UserProfile} />
+      <ProfileStack.Screen name='User Friends' component={UserFriends} />
+      <ProfileStack.Screen name='Search Friends' component={SearchFriends} />
     </ProfileStack.Navigator>
   )
 }
