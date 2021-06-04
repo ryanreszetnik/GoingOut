@@ -53,7 +53,6 @@ export const getFriends = async (sub) => {
     `/friends?user=${sub}`,
     apiRequest
   )
-  console.log(data, sub)
 
   return data
 }
@@ -70,7 +69,6 @@ export const acceptRequest = async (sub) => {
     },
   }
   const data = await API.put("GeneralEndpoint", `/friends`, apiRequest)
-  console.log(data)
 
   return data
 }
@@ -86,7 +84,6 @@ export const deleteFriend = async (sub) => {
     },
   }
   const data = await API.delete("GeneralEndpoint", `/friends`, apiRequest)
-  console.log(data)
 
   return data
 }

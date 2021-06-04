@@ -1,23 +1,17 @@
 import React from "react"
 import { View, Text } from "react-native"
-import FriendSearch from "../../../Components/FriendSearch"
 import FriendList from "../../../Components/FriendList"
-import { Friend } from "../../Types/common.types"
 import { useSelector, useDispatch } from "react-redux"
 import { ScrollView } from "react-native-gesture-handler"
-import { SET_CUR_PROFILE } from "../../Actions/friendActions"
+import AppButton from "../../../Components/AppButton"
 
 export default function Friends({ navigation }) {
   const dispatch = useDispatch()
   const friendList = useSelector((state) => state.friends)
-  const onSelect = (profile) => {
-    dispatch({ type: SET_CUR_PROFILE, payload: profile })
-    navigation.navigate("User Profile")
-  }
 
   return (
     <ScrollView>
-      <FriendSearch onSelect={onSelect} />
+      <AppButton onPress={() => navigation.navigate("Search Friends")} />
       <FriendList />
     </ScrollView>
   )
