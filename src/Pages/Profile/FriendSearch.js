@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
-import { searchUser } from "../src/Endpoints/friendsEndpoints"
-import AppTextInput from "./AppTextInput"
+import { searchUser } from "../../Endpoints/friendsEndpoints"
+import AppTextInput from "../../../Components/AppTextInput"
+import UserList from "../../../Components/UserList"
 
 export default function FriendSearch({ onSelect }) {
   const [searchTerm, setSearchTerm] = useState("")
@@ -15,6 +16,9 @@ export default function FriendSearch({ onSelect }) {
     const newFriends = await searchUser(term)
     console.log(newFriends)
     setFriends((friends) => (newFriends ? newFriends : []))
+  }
+  const selectUser=(user)=>{
+    
   }
 
   return (
@@ -32,22 +36,8 @@ export default function FriendSearch({ onSelect }) {
         />
       </View>
       {(friends&&searchTerm.length > 0)?<View>
-      {friends.map((friend) => {
-        
-          return (
-            <TouchableOpacity
-              key={friend.sub}
-              style={styles.friendBackground}
-              onPress={() => onSelect(friend)}
-            >
-              <Text
-                style={styles.friendText}
-              >{`Username: ${friend.username}`}</Text>
-              <Text style={styles.friendText}>{`Name: ${friend.name}`}</Text>
-            </TouchableOpacity>
-          )
-        
-      })}</View>:<View/>}
+        <UserList users={friends} onPress={selectUser}/>
+      </View>:<View/>}
     </View>
   )
 }
