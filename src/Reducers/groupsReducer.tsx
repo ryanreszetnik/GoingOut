@@ -1,4 +1,4 @@
-import { SET_CUR_GROUP, ADD_PERM_GROUP, REMOVE_PERM_GROUP, GET_PERM_GROUPS} from "../Actions/groupActions";
+import { SET_CUR_GROUP, ADD_PERM_GROUP, REMOVE_PERM_GROUP, SET_PERM_GROUPS} from "../Actions/groupActions";
 
 const INITIAL_STATE = {permGroups:[{
     id:"1",
@@ -82,8 +82,8 @@ export default function groupsReducer(state=INITIAL_STATE, action){
             return {permGroups:[...state.permGroups, action.payload]}
         case REMOVE_PERM_GROUP:
             return {permGroups:[...state.permGroups.filter((group)=>group.id !== action.payload)]}
-        case GET_PERM_GROUPS:
-            return {}
+        case SET_PERM_GROUPS:
+            return {permGroups:[action.payload]}
         default:
             return state;
     }
