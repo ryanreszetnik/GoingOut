@@ -36,15 +36,14 @@ export default function ViewProfile({ navigation }) {
           <Text style={styles.imgTitle}>{profile.name}</Text>
           <View style={styles.imageFriends}>
             <Image style={styles.img} />
-            <TouchableOpacity onPress={() => {
-                  navigation.navigate("Friends")
-                }}>
-              <Text
-                
-                style={styles.imgText}
-              >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Friends")
+              }}
+            >
+              <Text style={styles.imgText}>
                 <MaterialCommunityIcons
-                  name='account-group'
+                  name='account-multiple'
                   size={20}
                   color='#6e6869'
                   style={styles.icon}

@@ -40,6 +40,7 @@ export default function GenderPicker({ checked, setChecked }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    alignSelf: "center",
     backgroundColor: "#e9e9e9",
     borderRadius: 20,
     width: "90%",

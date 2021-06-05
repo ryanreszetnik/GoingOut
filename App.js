@@ -50,7 +50,6 @@ const AuthenticationNavigator = (props) => {
 }
 
 const TabNavigator = () => {
-  console.log(useSelector((state) => state.userSession.user))
   return (
     <Tab.Navigator>
       <Tab.Screen name='Notifications' component={Notifications} />

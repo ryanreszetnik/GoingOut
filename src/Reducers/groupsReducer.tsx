@@ -1,5 +1,4 @@
-import { SET_PERM_GROUPS, SET_TEMP_GROUPS} from "../Actions/groupActions";
-import { Group } from "../Types/common.types";
+import { SET_CUR_GROUP, ADD_PERM_GROUP, REMOVE_PERM_GROUP, GET_PERM_GROUPS} from "../Actions/groupActions";
 
 const INITIAL_STATE = {permGroups:[{
     id:"1",
@@ -10,7 +9,8 @@ const INITIAL_STATE = {permGroups:[{
         birthday:"2002-08-28",
         gender:"Male",
         photoUrl:"",
-        numFriends:3
+        numFriends:3,
+        sub:"3123123"
     }],
     datetime:"2021-06-01T20:00:00",
     bio:"Huuuuge night",
@@ -45,7 +45,8 @@ const INITIAL_STATE = {permGroups:[{
         birthday:"2002-08-28",
         gender:"Male",
         photoUrl:"",
-        numFriends:3
+        numFriends:3,
+        sub:"jdsa;djsa"
     }],
     datetime:"2021-06-01T20:00:00",
     bio:"big night",
@@ -72,14 +73,19 @@ const INITIAL_STATE = {permGroups:[{
         sender:"Ryan Reszetnik"
     }
 }
-], tempGroups:[]}
+], tempGroups:[], curGroup:null}
 export default function groupsReducer(state=INITIAL_STATE, action){
     switch(action.type){
-        case SET_PERM_GROUPS:
-            return {...state, permGroups: action.payload}
-        case SET_TEMP_GROUPS:
-            return {...state, tempGroups: action.payload}
+        case SET_CUR_GROUP:
+            return {...state, curGroup:action.payload}    
+        case ADD_PERM_GROUP:
+            return {permGroups:[...state.permGroups, action.payload]}
+        case REMOVE_PERM_GROUP:
+            return {permGroups:[...state.permGroups.filter((group)=>group.id !== action.payload)]}
+        case GET_PERM_GROUPS:
+            return {}
         default:
             return state;
     }
+    
 }
