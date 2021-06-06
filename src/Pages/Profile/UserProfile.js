@@ -41,9 +41,7 @@ export default function UserProfile({ navigation }) {
     }
 // navigation.navigate("Friends");
   }
-  useEffect(()=>{
-    console.log(JSON.stringify(profile))
-  },[profile])
+  
 
   const getButtons = ()=>{
     switch(profile.status){
@@ -78,12 +76,12 @@ export default function UserProfile({ navigation }) {
         <View style={styles.imageFriends}>
           <Image style={styles.img} />
           <View style={styles.col}>
-          <TouchableOpacity>
-            <Text
-              onPress={() => {
-                dispatch({ type: SET_OTHER_FRIENDS, payload: profile })
+          <TouchableOpacity onPress={() => {
+                
                 navigation.navigate("User Friends")
-              }}
+              }}>
+            <Text
+              
               style={styles.imgText}
             >
               <MaterialCommunityIcons
