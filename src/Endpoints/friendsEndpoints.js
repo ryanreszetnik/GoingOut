@@ -85,6 +85,6 @@ export const deleteFriend = async (sub) => {
     },
   }
   const data = await API.del("GeneralEndpoint", `/friends`, apiRequest)
-  
+
   return data
 }
