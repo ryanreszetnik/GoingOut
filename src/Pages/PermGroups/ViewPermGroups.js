@@ -23,9 +23,9 @@ export default function ViewPermGroups({ navigation }) {
         return (
           <GroupPreview
             group={group}
-            key={group.id}
+            key={group.groupId}
             onPress={moveToView}
-            id={group.id}
+            id={group.groupId}
           />
         )
       })}

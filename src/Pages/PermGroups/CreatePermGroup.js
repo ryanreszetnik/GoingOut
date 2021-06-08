@@ -14,6 +14,7 @@ import AppButton from "../../../Components/AppButton"
 import { ADD_FRIEND } from "../../Actions/friendActions"
 import { ADD_PERM_GROUP } from "../../Actions/groupActions"
 import { addPermGroup } from "../../Endpoints/permGroupsEndpoints"
+import uuid from "react-native-uuid"
 
 export default function CreatePermGroup({ navigation, group }) {
   const dispatch = useDispatch()
@@ -39,11 +40,20 @@ export default function CreatePermGroup({ navigation, group }) {
       genderPref: genderPref,
       permanent: true,
       datetime: "",
+      groupId: uuid.v4(),
     }
-    dispatch({
-      type: ADD_PERM_GROUP,
-      payload: await addPermGroup(newGroup),
-    }).catch((error) => console.log(error))
+    try {
+      const lmao = await addPermGroup(newGroup)
+      console.log(lmao)
+
+      // dispatch({
+      //   type: ADD_PERM_GROUP,
+      //   payload: lmao,
+      // })
+    } catch (error) {
+      console.log(error)
+    }
+    navigation.navigate("View Perm Groups")
   }
   const updateSearch = async (term) => {
     setSearchTerm(term)
@@ -54,6 +64,7 @@ export default function CreatePermGroup({ navigation, group }) {
       setFriends([])
     }
   }
+
   const onPress = (user) => {
     setMembers([...members, user])
   }

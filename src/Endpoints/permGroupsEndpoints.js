@@ -22,12 +22,13 @@ export const addPermGroup = async (group) => {
     .signInUserSession.idToken.jwtToken
 
   const apiRequest = {
-    body: { ...group },
+    body: group,
     headers: {
       Authorization,
       "Content-Type": "application/json",
     },
   }
+
   const data = await API.post(
     "GeneralEndpoint",
     `/groups/groupdata`,

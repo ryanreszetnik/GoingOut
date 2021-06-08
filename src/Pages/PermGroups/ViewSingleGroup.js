@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 
 export default function ViewSingleGroup() {
-  const curID = useSelector((state) => state.groups.curGroup)
+  const curID = useSelector((state) => state.groups.curGroup.groupID)
   const group = useSelector((state) =>
-    state.groups.permGroups.find((group) => group.id === curID)
+    state.groups.permGroups.find((group) => group.groupId === curID)
   )
 
   return (
