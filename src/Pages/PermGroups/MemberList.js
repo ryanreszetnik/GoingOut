@@ -7,8 +7,9 @@ import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 export default function MemberList({ navigation }) {
   const curID = useSelector((state) => state.groups.curGroup)
   const members = useSelector((state) =>
-    state.groups.permGroups.find((group) => group.groupID === curID)
+    state.groups.permGroups.find((group) => group.groupId === curID)
   ).members
+
   const dispatch = useDispatch()
 
   const onPress = (profile) => {

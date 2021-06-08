@@ -1,9 +1,9 @@
 
 import {LOGGED_OUT, LOGGED_IN, INITIALIZING}  from '../Constants/authConstants'
-import {SET_AUTH_STATUS, SET_AUTH_USER,SET_CURR_USER_DATA} from '../Actions/authActions'
+import {SET_AUTH_STATUS, SET_AUTH_USER,SET_CURR_USER_DATA, SET_USER_GROUPS} from '../Actions/authActions'
 import {UserSession} from '../Types/common.types'
 
-const INITIAL_STATE = {user:null,authStatus:INITIALIZING,userData:null};
+const INITIAL_STATE = {user:null,authStatus:INITIALIZING,userData:null, userGroups:[]};
 
 export default function userSessionReducer(state=INITIAL_STATE, action):UserSession{
     switch(action.type){
@@ -23,6 +23,9 @@ export default function userSessionReducer(state=INITIAL_STATE, action):UserSess
                 userData:action.payload
             }
         }
+        case SET_USER_GROUPS: 
+            return {...state, userGroups:[action.payload]}
+            
         default:
             return state;
     }

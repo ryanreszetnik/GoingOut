@@ -2,12 +2,16 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-
-export default function ViewSingleGroup() {
-  const curID = useSelector((state) => state.groups.curGroup.groupID)
+import AppButton from "../../../Components/AppButton"
+export default function ViewSingleGroup({ navigation }) {
+  const curID = useSelector((state) => state.groups.curGroup)
   const group = useSelector((state) =>
     state.groups.permGroups.find((group) => group.groupId === curID)
   )
+
+  const editGroup = () => {
+    navigation.navigate("Edit Group")
+  }
 
   return (
     <View style={styles.container}>
@@ -74,6 +78,9 @@ export default function ViewSingleGroup() {
           </Text>
           <Text style={styles.attributeTxt}>{group.averageGender}</Text>
         </View>
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <AppButton title='Edit Group' onPress={editGroup} />
       </View>
     </View>
   )

@@ -11,6 +11,7 @@ import ViewSingleGroup from "./ViewSingleGroup"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import MemberList from "./MemberList"
 import MemberProfile from "./MemberProfile"
+import EditGroup from "./EditGroup"
 const PermGroupNavigator = createStackNavigator()
 const newGroupInitial = {
   name: "",
@@ -33,19 +34,16 @@ export default function PermGroups({ navigation }) {
         component={ViewPermGroups}
         options={{
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}>
-              <Text
-                onPress={() => navigation.navigate("Create Group")}
-                style={styles.headerText}
-              >
-                Create Group
-              </Text>
+            <TouchableOpacity
+              style={styles.headerView}
+              onPress={() => navigation.navigate("Create Group")}
+            >
+              <Text style={styles.headerText}>Create Group</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
                 name='plus'
                 color='tomato'
-                onPress={() => navigation.navigate("Create Group")}
               />
             </TouchableOpacity>
           ),
@@ -62,25 +60,23 @@ export default function PermGroups({ navigation }) {
         options={{
           headerTitle: "Group Info",
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}>
-              <Text
-                onPress={() => navigation.navigate("Members")}
-                style={styles.headerText}
-              >
-                View Members
-              </Text>
+            <TouchableOpacity
+              style={styles.headerView}
+              onPress={() => navigation.navigate("Members")}
+            >
+              <Text style={styles.headerText}>View Members</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
                 name='users'
                 color='tomato'
-                onPress={() => navigation.navigate("Members")}
               />
             </TouchableOpacity>
           ),
         }}
       />
       <PermGroupNavigator.Screen name='Members' component={MemberList} />
+      <PermGroupNavigator.Screen name='Edit Group' component={EditGroup} />
       <PermGroupNavigator.Screen
         name='Member Profile'
         component={MemberProfile}

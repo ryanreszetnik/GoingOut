@@ -9,6 +9,7 @@ export interface UserSession{
     authStatus:string;
     user:any;//from aws
     userData:any;
+    userGroups: any[]
 
 }
 export interface Profile{

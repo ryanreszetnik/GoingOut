@@ -17,29 +17,35 @@ import { addPermGroup } from "../../Endpoints/permGroupsEndpoints"
 import uuid from "react-native-uuid"
 import { SET_USER_GROUPS } from "../../Actions/authActions"
 
-export default function CreatePermGroup({ navigation }) {
+export default function EditGroup({ navigation }) {
+  const group = useSelector((state) => state.groups.permGroups).find(
+    (group) => group.groupId === useSelector((state) => state.groups.curGroup)
+  )
   const dispatch = useDispatch()
-  const [locRange, setLocRange] = useState(25)
-  const [groupName, setGroupName] = useState()
-  const [groupBio, setGroupBio] = useState()
-  const [ageRange, setAgeRange] = useState([0, 100])
-  const [loc, setLoc] = useState({ lat: 27.1234, lon: -27.342 })
-  const [genderPref, setPref] = useState("")
-  const curUser = useSelector((state) => state.userSession.userData.attributes)
-  const [members, setMembers] = useState([
-    {
-      name: curUser.name,
-      sub: curUser.sub,
-      birthdate: curUser.birthdate,
-      gender: curUser.gender,
-      username: useSelector((state) => state.userSession.user.username),
-    },
-  ])
+  const [locRange, setLocRange] = useState(group.locRange)
+  const [groupName, setGroupName] = useState(group.name)
+  const [groupBio, setGroupBio] = useState(group.bio)
+  const [ageRange, setAgeRange] = useState([group.minAge, group.maxAge])
+  const [loc, setLoc] = useState(group.loc)
+  const [genderPref, setPref] = useState(group.genderPref)
+  const curUserGet = useSelector(
+    (state) => state.userSession.userData.attributes
+  )
+  const curUser = {
+    name: curUserGet.name,
+    sub: curUserGet.sub,
+    birthdate: curUserGet.birthdate,
+    gender: curUserGet.gender,
+    username: useSelector((state) => state.userSession.user.username),
+  }
+
+  const [members, setMembers] = useState(group.members)
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
 
-  const createGroup = async () => {
+  const editGroup = async () => {
     const newGroup = {
+      groupId: group.groupId,
       name: groupName,
       members: members,
       bio: groupBio,
@@ -50,22 +56,10 @@ export default function CreatePermGroup({ navigation }) {
       genderPref: genderPref,
       permanent: true,
       datetime: "",
-      groupId: uuid.v4(),
     }
-
-    batch(async () => {
-      dispatch({
-        type: ADD_PERM_GROUP,
-        payload: await addPermGroup(newGroup),
-      })
-
-      // dispatch({
-      //   type: SET_USER_GROUPS,
-      //   payload: groups.map((group) => group.groupId),
-      // })
-    })
-    navigation.navigate("View Perm Groups")
+    navigation.navigate("View Single Group")
   }
+
   const updateSearch = async (term) => {
     setSearchTerm(term)
     if (term.length > 0) {
@@ -75,7 +69,6 @@ export default function CreatePermGroup({ navigation }) {
       setFriends([])
     }
   }
-
   const removeMember = (user) => {
     user.sub !== curUser.sub &&
       setMembers(members.filter((member) => user.sub !== member.sub))
@@ -83,7 +76,6 @@ export default function CreatePermGroup({ navigation }) {
   const onPress = (user) => {
     setMembers([...members, user])
   }
-
   return (
     <ScrollView>
       <AppTextInput
@@ -122,13 +114,12 @@ export default function CreatePermGroup({ navigation }) {
           )}
         />
         <View style={{ alignItems: "center" }}>
-          <AppButton title='Create Group' onPress={createGroup} />
+          <AppButton title='Save Changes' onPress={editGroup} />
         </View>
       </View>
     </ScrollView>
   )
 }
-
 const styles = StyleSheet.create({
   sliderTitle: {
     alignSelf: "center",

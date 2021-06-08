@@ -20,40 +20,40 @@ import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
 
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
+  const friendsList = useSelector((state) => state.friends.friends)
   const dispatch = useDispatch()
   const sendRequest = async () => {
     try {
       const ret = await requestFriend(profile.sub)
-      dispatch({ type: ADD_FRIEND, payload: { ...profile } })
+      dispatch({ type: ADD_FRIEND, payload: profile  })
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("Friends")
+    console.log(JSON.stringify(friendsList))
+    // navigation.navigate("Friends")
   }
   const requestAccept = async () => {
     try {
       const ret = await acceptRequest(profile.sub)
-      dispatch({ type: ACCEPT_REQUEST, payload: { ...profile } })
+      dispatch({ type: ACCEPT_REQUEST, payload: profile  })
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("Friends")
+    // navigation.navigate("Friends")
   }
   const removeFriend = async () => {
     console.log(profile.status)
     try {
       const ret = await deleteFriend(profile.sub)
       console.log(ret)
-      dispatch({ type: REMOVE_FRIEND, payload: { ...profile } })
+      dispatch({ type: REMOVE_FRIEND, payload: profile  })
       console.log(profile.sub)
+      console.log("new List",friendsList)
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("Friends")
+    // navigation.navigate("Friends")
   }
-  useEffect(() => {
-    console.log(JSON.stringify(profile))
-  }, [profile])
 
   const getButtons = () => {
     switch (profile.status) {
@@ -96,24 +96,24 @@ export default function UserProfile({ navigation }) {
         <View style={styles.imageFriends}>
           <Image style={styles.img} />
           <View style={styles.col}>
-            <TouchableOpacity>
-              <Text
-                onPress={() => {
-                  dispatch({ type: SET_OTHER_FRIENDS, payload: profile })
-                  navigation.navigate("User Friends")
-                }}
-                style={styles.imgText}
-              >
-                <MaterialCommunityIcons
-                  name='account-group'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                {`   Friends`}
-              </Text>
-            </TouchableOpacity>
-            {getButtons()}
+          <TouchableOpacity onPress={() => {
+                
+                navigation.navigate("User Friends")
+              }}>
+            <Text
+              
+              style={styles.imgText}
+            >
+              <MaterialCommunityIcons
+                name='account-group'
+                size={20}
+                color='#6e6869'
+                style={styles.icon}
+              />
+              {`   Friends`}
+            </Text>
+          </TouchableOpacity>
+          {getButtons()}
           </View>
         </View>
 

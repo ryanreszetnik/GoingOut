@@ -3,20 +3,29 @@ import { View, Text, Button } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import FriendSearch from "../Profile/FriendSearch"
 import GroupPreview from "../../../Components/GroupPreview"
-import { SET_CUR_GROUP, SET_PERM_GROUPS } from "../../Actions/groupActions"
+import {
+  REMOVE_PERM_GROUP,
+  SET_CUR_GROUP,
+  SET_PERM_GROUPS,
+} from "../../Actions/groupActions"
 import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
+import { SET_USER_GROUPS } from "../../Actions/authActions"
+import { deleteGroup } from "../../Endpoints/groupEndpoints"
 
 export default function ViewPermGroups({ navigation }) {
+  const groups = useSelector((state) => state.groups.permGroups)
   const dispatch = useDispatch()
   const moveToView = () => {
     navigation.navigate("View Single Group")
   }
-
-  // useEffect(() => {
-  //   dispatch({ type: SET_PERM_GROUPS, payload: await getPermGroups() })
-  // }, [])
-
-  const groups = useSelector((state) => state.groups.permGroups)
+  const onDelete = async (groupId) => {
+    console.log(await deleteGroup(groupId))
+    dispatch({ type: REMOVE_PERM_GROUP, payload: groupId })
+    dispatch({
+      type: SET_USER_GROUPS,
+      payload: groups.map((group) => group.groupId),
+    })
+  }
   return (
     <View>
       {groups.map((group) => {
@@ -26,6 +35,7 @@ export default function ViewPermGroups({ navigation }) {
             key={group.groupId}
             onPress={moveToView}
             id={group.groupId}
+            onDelete={onDelete}
           />
         )
       })}
