@@ -49,11 +49,13 @@ export const getFriends = async (sub) => {
       "Content-Type": "application/json",
     },
   }
+  console.log("Searching for friend",sub)
   const data = await API.get(
     "GeneralEndpoint",
     `/friends?user=${sub}`,
     apiRequest
   )
+  console.log("Got friend",data);
 
   return data
 }

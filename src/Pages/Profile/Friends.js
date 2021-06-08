@@ -11,9 +11,8 @@ export default function Friends({ navigation }) {
   const dispatch = useDispatch()
   const sub = useSelector((state) => state.userSession.userData.attributes.sub)
   const [searchTerm, setSearch] = useState("")
-  const [friendList, setList] = useState(
-    useSelector((state) => state.friends.friends)
-  )
+  const friendList = useSelector((state) => state.friends.friends)
+  
 
   useEffect(() => {
     if (friendList.length === 0) {

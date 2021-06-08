@@ -35,6 +35,7 @@
     "react-native-screens": "~3.0.0",
     "react-native-scripts": "^2.0.1",
     "react-native-unimodules": "~0.13.3",
+    "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.4",

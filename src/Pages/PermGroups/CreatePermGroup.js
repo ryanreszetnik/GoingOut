@@ -14,6 +14,7 @@ import AppButton from "../../../Components/AppButton"
 import { ADD_FRIEND } from "../../Actions/friendActions"
 import { ADD_PERM_GROUP } from "../../Actions/groupActions"
 import { addPermGroup } from "../../Endpoints/permGroupsEndpoints"
+import uuid from 'react-native-uuid'
 
 export default function CreatePermGroup({ navigation, group }) {
   const dispatch = useDispatch()
@@ -21,7 +22,7 @@ export default function CreatePermGroup({ navigation, group }) {
   const [groupName, setGroupName] = useState()
   const [groupBio, setGroupBio] = useState()
   const [ageRange, setAgeRange] = useState([0, 100])
-  const [loc, setLoc] = useState("somewhere")
+  const [loc, setLoc] = useState({lat:27.1234,lon:-27.342})
   const [genderPref, setPref] = useState("")
   const [members, setMembers] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
@@ -29,6 +30,7 @@ export default function CreatePermGroup({ navigation, group }) {
 
   const createGroup = async () => {
     const newGroup = {
+      groupId: uuid.v4(),
       name: groupName,
       members: members,
       bio: groupBio,
@@ -43,7 +45,7 @@ export default function CreatePermGroup({ navigation, group }) {
     dispatch({
       type: ADD_PERM_GROUP,
       payload: await addPermGroup(newGroup),
-    }).catch((error) => console.log(error))
+    })
   }
   const updateSearch = async (term) => {
     setSearchTerm(term)
@@ -78,6 +80,7 @@ export default function CreatePermGroup({ navigation, group }) {
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <Text style={styles.searchTitle}>Add members to group</Text>
+      <UserList users={members}/>
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}

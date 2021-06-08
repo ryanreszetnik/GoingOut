@@ -20,36 +20,39 @@ import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
 
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
+  const friendsList = useSelector((state) => state.friends.friends)
   const dispatch = useDispatch()
   const sendRequest = async () => {
     try {
       const ret = await requestFriend(profile.sub)
-      dispatch({ type: ADD_FRIEND, payload: { ...profile } })
+      dispatch({ type: ADD_FRIEND, payload: profile  })
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("Friends")
+    console.log(JSON.stringify(friendsList))
+    // navigation.navigate("Friends")
   }
   const requestAccept = async () => {
     try {
       const ret = await acceptRequest(profile.sub)
-      dispatch({ type: ACCEPT_REQUEST, payload: { ...profile } })
+      dispatch({ type: ACCEPT_REQUEST, payload: profile  })
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("Friends")
+    // navigation.navigate("Friends")
   }
   const removeFriend = async () => {
     console.log(profile.status)
     try {
       const ret = await deleteFriend(profile.sub)
       console.log(ret)
-      dispatch({ type: REMOVE_FRIEND, payload: { ...profile } })
+      dispatch({ type: REMOVE_FRIEND, payload: profile  })
       console.log(profile.sub)
+      console.log("new List",friendsList)
     } catch (error) {
       console.log(error)
     }
-    navigation.navigate("Friends")
+    // navigation.navigate("Friends")
   }
 
   const getButtons = () => {

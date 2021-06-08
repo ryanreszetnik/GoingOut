@@ -24,7 +24,7 @@ export default function Profile({ navigation }) {
         options={{
           headerTitle: user.username,
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}>
+            <TouchableOpacity style={styles.headerView}  onPress={() => navigation.navigate("Edit Profile")}>
               <Text
                 onPress={() => navigation.navigate("Edit Profile")}
                 style={styles.headerText}
@@ -36,7 +36,7 @@ export default function Profile({ navigation }) {
                 size={20}
                 name='user-edit'
                 color='tomato'
-                onPress={() => navigation.navigate("Edit Profile")}
+               
               />
             </TouchableOpacity>
           ),
@@ -50,9 +50,9 @@ export default function Profile({ navigation }) {
         options={{
           headerTitle: "Friends",
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}>
+            <TouchableOpacity style={styles.headerView} onPress={() => navigation.navigate("Search Friends")}>
               <Text
-                onPress={() => navigation.navigate("Search Friends")}
+                
                 style={styles.headerText}
               >
                 Add Friends
@@ -62,7 +62,7 @@ export default function Profile({ navigation }) {
                 size={20}
                 name='plus'
                 color='tomato'
-                onPress={() => navigation.navigate("Edit Profile")}
+                
               />
             </TouchableOpacity>
           ),

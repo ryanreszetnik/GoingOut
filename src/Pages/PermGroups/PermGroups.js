@@ -33,9 +33,8 @@ export default function PermGroups({ navigation }) {
         component={ViewPermGroups}
         options={{
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}>
+            <TouchableOpacity style={styles.headerView} onPress={() => navigation.navigate("Create Group")}>
               <Text
-                onPress={() => navigation.navigate("Create Group")}
                 style={styles.headerText}
               >
                 Create Group
@@ -45,7 +44,7 @@ export default function PermGroups({ navigation }) {
                 size={20}
                 name='plus'
                 color='tomato'
-                onPress={() => navigation.navigate("Create Group")}
+                
               />
             </TouchableOpacity>
           ),
@@ -62,9 +61,8 @@ export default function PermGroups({ navigation }) {
         options={{
           headerTitle: "Group Info",
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}>
+            <TouchableOpacity style={styles.headerView}  onPress={() => navigation.navigate("Members")}>
               <Text
-                onPress={() => navigation.navigate("Members")}
                 style={styles.headerText}
               >
                 View Members
@@ -74,7 +72,7 @@ export default function PermGroups({ navigation }) {
                 size={20}
                 name='users'
                 color='tomato'
-                onPress={() => navigation.navigate("Members")}
+               
               />
             </TouchableOpacity>
           ),
