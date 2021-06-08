@@ -12,9 +12,9 @@ export default function ViewPermGroups({ navigation }) {
     navigation.navigate("View Single Group")
   }
 
-  useEffect(() => {
-    dispatch({ type: SET_PERM_GROUPS, payload: await getPermGroups() })
-  }, [])
+  // useEffect(() => {
+  //   dispatch({ type: SET_PERM_GROUPS, payload: await getPermGroups() })
+  // }, [])
 
   const groups = useSelector((state) => state.groups.permGroups)
   return (

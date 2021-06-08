@@ -27,18 +27,29 @@ export default function CreatePermGroup({ navigation, group }) {
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
 
-  const createGroup = () => {
-    const newGroup = {}
-    const newGroupFinal = await addPermGroup(newGroup)
-    dispatch({ type: ADD_PERM_GROUP, payload: newGroupFinal }).catch((error) =>
-      console.log(error)
-    )
+  const createGroup = async () => {
+    const newGroup = {
+      name: groupName,
+      members: members,
+      bio: groupBio,
+      loc: loc,
+      locRange: locRange,
+      minAge: ageRange[0],
+      maxAge: ageRange[1],
+      genderPref: genderPref,
+      permanent: true,
+      datetime: "",
+    }
+    dispatch({
+      type: ADD_PERM_GROUP,
+      payload: await addPermGroup(newGroup),
+    }).catch((error) => console.log(error))
   }
   const updateSearch = async (term) => {
     setSearchTerm(term)
     if (term.length > 0) {
       const newFriends = await searchUser(term)
-      setFriends(newFriends)
+      setFriends(newFriends.filter((user) => !members.includes(user)))
     } else {
       setFriends([])
     }

@@ -1,3 +1,6 @@
+import API from "@aws-amplify/api"
+import { Auth } from "aws-amplify"
+
 export const getPermGroups = async () => {
   const Authorization = (await Auth.currentAuthenticatedUser())
     .signInUserSession.idToken.jwtToken
@@ -25,7 +28,11 @@ export const addPermGroup = async (group) => {
       "Content-Type": "application/json",
     },
   }
-  const data = await API.post("GeneralEndpoint", `/groups`, apiRequest)
+  const data = await API.post(
+    "GeneralEndpoint",
+    `/groups/groupdata`,
+    apiRequest
+  )
 
   return data
 }
