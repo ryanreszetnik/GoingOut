@@ -22,13 +22,14 @@ export default function SignUp({ navigation }) {
   const [gender, setGender] = useState("")
   //const [renderDate, setRender] = useState(false)
   const [birthdate, setBirthday] = useState("")
+  const [name, setName] = useState("")
 
   async function signUp() {
     try {
       await Auth.signUp({
         username,
         password,
-        attributes: { email, phone_number, gender, birthdate },
+        attributes: { email, phone_number, gender, birthdate, name },
       })
       console.log(" Sign-up Confirmed")
       navigation.navigate("ConfirmSignUp")
@@ -57,6 +58,14 @@ export default function SignUp({ navigation }) {
             autoCorrect={false}
             secureTextEntry
             textContentType='password'
+          />
+          <AppTextInput
+            value={name}
+            onChangeText={(text) => setName(text)}
+            leftIcon='person'
+            placeholder='Enter Full Name'
+            autoCapitalize='none'
+            autoCorrect={false}
           />
           {
             //For Future date picker

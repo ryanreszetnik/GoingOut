@@ -36,8 +36,6 @@ export default function FriendSearch({ navigation }) {
           leftIcon='magnify'
           placeholder='Search For Users'
           autoCapitalize='none'
-          keyboardType='email-address'
-          textContentType='emailAddress'
         />
       </View>
       <UserList users={friends} onPress={onSelect} />

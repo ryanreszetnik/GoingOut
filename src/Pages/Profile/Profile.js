@@ -12,6 +12,7 @@ import Friends from "./Friends"
 import UserProfile from "./UserProfile"
 import UserFriends from "./UserFriends"
 import FriendSearch from "./FriendSearch"
+import { TouchableOpacity } from "react-native-gesture-handler"
 
 export default function Profile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
@@ -23,7 +24,7 @@ export default function Profile({ navigation }) {
         options={{
           headerTitle: user.username,
           headerRight: () => (
-            <View style={styles.headerView}>
+            <TouchableOpacity style={styles.headerView}>
               <Text
                 onPress={() => navigation.navigate("Edit Profile")}
                 style={styles.headerText}
@@ -37,13 +38,36 @@ export default function Profile({ navigation }) {
                 color='tomato'
                 onPress={() => navigation.navigate("Edit Profile")}
               />
-            </View>
+            </TouchableOpacity>
           ),
         }}
       />
       <ProfileStack.Screen name='Edit Profile' component={EditProfile} />
       <ProfileStack.Screen name='Confirm Email' component={ConfirmNewEmail} />
-      <ProfileStack.Screen name='Friends' component={Friends} />
+      <ProfileStack.Screen
+        name='Friends'
+        component={Friends}
+        options={{
+          headerTitle: "Friends",
+          headerRight: () => (
+            <TouchableOpacity style={styles.headerView}>
+              <Text
+                onPress={() => navigation.navigate("Search Friends")}
+                style={styles.headerText}
+              >
+                Add Friends
+              </Text>
+              <FontAwesome5
+                style={{ marginRight: 20 }}
+                size={20}
+                name='plus'
+                color='tomato'
+                onPress={() => navigation.navigate("Edit Profile")}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <ProfileStack.Screen name='User Profile' component={UserProfile} />
       <ProfileStack.Screen name='User Friends' component={UserFriends} />
       <ProfileStack.Screen name='Search Friends' component={FriendSearch} />
