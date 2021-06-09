@@ -3,85 +3,104 @@ import { View, Text, StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../../Components/AppButton"
+import { SET_USER_GROUPS } from "../../Actions/authActions"
+import { REMOVE_PERM_GROUP, SET_CUR_GROUP } from "../../Actions/groupActions"
 export default function ViewSingleGroup({ navigation }) {
+  const dispatch = useDispatch()
   const curID = useSelector((state) => state.groups.curGroup)
   const group = useSelector((state) =>
     state.groups.permGroups.find((group) => group.groupId === curID)
   )
+  const groups = useSelector((state) => state.groups.permGroups)
 
   const editGroup = () => {
     navigation.navigate("Edit Group")
   }
 
+  const leaveGroup = async () => {
+    dispatch({ type: REMOVE_PERM_GROUP, payload: curID })
+    dispatch({
+      type: SET_USER_GROUPS,
+      payload: groups.map((group) => group.groupId),
+    })
+    dispatch({ type: SET_CUR_GROUP, payload: null })
+    navigation.navigate("View Perm Groups")
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.attributeContainer}>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='form-textbox'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Group Name`}
-          </Text>
-          <Text style={styles.attributeTxt}>{group.name}</Text>
+    <View>
+      {useSelector((state) => state.groups.curGroup) !== null && (
+        <View style={styles.container}>
+          <View style={styles.attributeContainer}>
+            <View style={styles.txtField}>
+              <Text>
+                <MaterialCommunityIcons
+                  name='form-textbox'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`  Group Name`}
+              </Text>
+              <Text style={styles.attributeTxt}>{group.name}</Text>
+            </View>
+            <View style={styles.txtField}>
+              <Text>
+                <MaterialCommunityIcons
+                  name='card-text'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`  Bio`}
+              </Text>
+              <Text style={styles.attributeTxt}>{group.bio}</Text>
+            </View>
+            <View style={styles.txtField}>
+              <Text>
+                <MaterialCommunityIcons
+                  name='google-maps'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`  Location`}
+              </Text>
+              <Text style={styles.attributeTxt}>
+                {/*group.location*/ "placeholder"}
+              </Text>
+            </View>
+            <View style={styles.txtField}>
+              <Text>
+                <MaterialCommunityIcons
+                  name='numeric'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`  Average Age`}
+              </Text>
+              <Text style={styles.attributeTxt}>{group.averageAge}</Text>
+            </View>
+            <View style={styles.txtField}>
+              <Text>
+                <MaterialCommunityIcons
+                  name='gender-male-female'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`  Average Gender`}
+              </Text>
+              <Text style={styles.attributeTxt}>{group.averageGender}</Text>
+            </View>
+          </View>
+          <View style={{ alignItems: "center" }}>
+            <AppButton title='Edit Group' onPress={editGroup} />
+            <AppButton title='Leave Group' onPress={leaveGroup} />
+          </View>
         </View>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='card-text'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Bio`}
-          </Text>
-          <Text style={styles.attributeTxt}>{group.bio}</Text>
-        </View>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='google-maps'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Location`}
-          </Text>
-          <Text style={styles.attributeTxt}>
-            {/*group.location*/ "placeholder"}
-          </Text>
-        </View>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='numeric'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Average Age`}
-          </Text>
-          <Text style={styles.attributeTxt}>{group.averageAge}</Text>
-        </View>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='gender-male-female'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Average Gender`}
-          </Text>
-          <Text style={styles.attributeTxt}>{group.averageGender}</Text>
-        </View>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <AppButton title='Edit Group' onPress={editGroup} />
-      </View>
+      )}
     </View>
   )
 }

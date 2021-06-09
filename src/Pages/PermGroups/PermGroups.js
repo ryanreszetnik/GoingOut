@@ -12,6 +12,8 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import MemberList from "./MemberList"
 import MemberProfile from "./MemberProfile"
 import EditGroup from "./EditGroup"
+import Chat from "./Chat"
+import AddMembers from "./AddMembers"
 const PermGroupNavigator = createStackNavigator()
 const newGroupInitial = {
   name: "",
@@ -75,8 +77,31 @@ export default function PermGroups({ navigation }) {
           ),
         }}
       />
+      <PermGroupNavigator.Screen
+        name='Chat'
+        component={Chat}
+        options={{
+          headerTitle: "Group Chat",
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.headerView}
+              onPress={() => navigation.navigate("View Single Group")}
+            >
+              <Text style={styles.headerText}>View Group Info</Text>
+              <FontAwesome5
+                style={{ marginRight: 20 }}
+                size={20}
+                name='info'
+                color='tomato'
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+
       <PermGroupNavigator.Screen name='Members' component={MemberList} />
       <PermGroupNavigator.Screen name='Edit Group' component={EditGroup} />
+      <PermGroupNavigator.Screen name='Add Members' component={AddMembers} />
       <PermGroupNavigator.Screen
         name='Member Profile'
         component={MemberProfile}

@@ -3,6 +3,7 @@ import { View, Text } from "react-native"
 import UserList from "../../../Components/UserList"
 import { useSelector, useDispatch } from "react-redux"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
+import AppButton from "../../../Components/AppButton"
 
 export default function MemberList({ navigation }) {
   const curID = useSelector((state) => state.groups.curGroup)
@@ -19,6 +20,10 @@ export default function MemberList({ navigation }) {
   return (
     <View>
       <UserList users={members} onPress={onPress} />
+      <AppButton
+        title='Add Members'
+        onPress={() => navigation.navigate("Add Members")}
+      />
     </View>
   )
 }

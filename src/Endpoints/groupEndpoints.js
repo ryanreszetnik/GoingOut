@@ -64,3 +64,17 @@ export const deleteGroup = async (id) => {
   const data = await API.del("GeneralEndpoint", "/groups/groupdata", apiRequest)
   return data
 }
+
+export const updateGroup = async (group) => {
+  const signInUserSession = (await Auth.currentAuthenticatedUser())
+    .signInUserSession
+  const apiRequest = {
+    body: group,
+    headers: {
+      Authorization: signInUserSession.idToken.jwtToken,
+      "Content-Type": "application/json",
+    },
+  }
+  const data = await API.put("GeneralEndpoint", "/groups/groupdata", apiRequest)
+  return data
+}

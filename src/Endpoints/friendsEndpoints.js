@@ -17,7 +17,6 @@ export const searchUser = async (search) => {
     `/searchusers?search=${search}`,
     apiRequest
   )
-  console.log(data)
   return data
 }
 
@@ -49,13 +48,13 @@ export const getFriends = async (sub) => {
       "Content-Type": "application/json",
     },
   }
-  console.log("Searching for friend",sub)
+  console.log("Searching for friend", sub)
   const data = await API.get(
     "GeneralEndpoint",
     `/friends?user=${sub}`,
     apiRequest
   )
-  console.log("Got friend",data);
+  console.log("Got friend", data)
 
   return data
 }

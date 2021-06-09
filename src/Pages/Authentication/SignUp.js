@@ -61,7 +61,7 @@ export default function SignUp({ navigation }) {
           <AppTextInput
             value={name}
             onChangeText={(text) => setName(text)}
-            leftIcon='person'
+            leftIcon='form-textbox'
             placeholder='Enter Full Name'
             autoCapitalize='none'
             autoCorrect={false}
