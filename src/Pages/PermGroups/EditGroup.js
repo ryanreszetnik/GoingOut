@@ -46,7 +46,7 @@ export default function EditGroup({ navigation }) {
     }
     dispatch({ type: EDIT_PERM_GROUP, payload: newGroup })
     console.log(await updateGroup(newGroup))
-    //navigation.navigate("View Single Group")
+    navigation.navigate("View Single Group")
   }
 
   return (

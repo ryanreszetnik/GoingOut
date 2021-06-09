@@ -12,7 +12,7 @@ export const getPermGroups = async () => {
       "Content-Type": "application/json",
     },
   }
-  const data = await API.get("GeneralEndpoint", `/groups`, apiRequest)
+  const data = await API.get("GeneralEndpoint", `/groups/groupdata`, apiRequest)
 
   return data
 }
@@ -49,7 +49,7 @@ export const removePermGroup = async (id) => {
       "Content-Type": "application/json",
     },
   }
-  const data = await API.del("GeneralEndpoint", `/groups`, apiRequest)
+  const data = await API.del("GeneralEndpoint", `/groups/groupdata`, apiRequest)
 
   return data
 }

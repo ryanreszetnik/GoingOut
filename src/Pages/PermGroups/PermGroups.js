@@ -1,9 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import MonthPicker from "../../../Components/MonthPicker"
 import CreatePermGroup from "./CreatePermGroup"
 import ViewPermGroups from "./ViewPermGroups"
@@ -14,6 +14,9 @@ import MemberProfile from "./MemberProfile"
 import EditGroup from "./EditGroup"
 import Chat from "./Chat"
 import AddMembers from "./AddMembers"
+import { SET_PERM_GROUPS } from "../../Actions/groupActions"
+import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
+
 const PermGroupNavigator = createStackNavigator()
 const newGroupInitial = {
   name: "",
@@ -29,6 +32,16 @@ const newGroupInitial = {
   genderPreference: "Neutral",
 }
 export default function PermGroups({ navigation }) {
+  const dispatch = useDispatch()
+
+  const updateGroups = async () => {
+    const payload = await getPermGroups()
+    dispatch({ type: SET_PERM_GROUPS, payload })
+  }
+  useEffect(() => {
+    updateGroups()
+  }, [])
+
   return (
     <PermGroupNavigator.Navigator>
       <PermGroupNavigator.Screen

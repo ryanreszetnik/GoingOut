@@ -11,7 +11,7 @@ export default function groupsReducer(state=INITIAL_STATE, action){
         case REMOVE_PERM_GROUP:
             return {...state, permGroups:[...state.permGroups.filter((group)=>group.groupId !== action.payload)]}
         case SET_PERM_GROUPS:
-            return {...state, permGroups:[action.payload]}
+            return {...state, permGroups:action.payload}
         case ADD_MEMBERS:
             return {...state, permGroups:state.permGroups.map((group) => (group.groupId !== state.curGroup)?{...group}:{...group, members:action.payload})}
         case EDIT_PERM_GROUP:
