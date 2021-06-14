@@ -6,7 +6,6 @@ import AppButton from "../../../Components/AppButton"
 import UserList from "../../../Components/UserList"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 import { REQUEST } from "../../Constants/friendConstants"
-import { createGroup } from "../../Endpoints/groupEndpoints"
 
 export default function Notifications({ navigation }) {
   const friends = useSelector((state) => state.friends.friends)

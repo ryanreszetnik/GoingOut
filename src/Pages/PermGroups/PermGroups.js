@@ -18,6 +18,7 @@ import { SET_PERM_GROUPS } from "../../Actions/groupActions"
 import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
 
 const PermGroupNavigator = createStackNavigator()
+
 const newGroupInitial = {
   name: "",
   members: [],
@@ -32,12 +33,14 @@ const newGroupInitial = {
   genderPreference: "Neutral",
 }
 export default function PermGroups({ navigation }) {
+  const sub = useSelector((state) => state.userSession.userData.attributes.sub)
   const dispatch = useDispatch()
 
   const updateGroups = async () => {
-    const payload = await getPermGroups()
+    const payload = await getPermGroups(sub)
     dispatch({ type: SET_PERM_GROUPS, payload })
   }
+
   useEffect(() => {
     updateGroups()
   }, [])

@@ -16,7 +16,7 @@ import { ADD_PERM_GROUP, EDIT_PERM_GROUP } from "../../Actions/groupActions"
 import { addPermGroup } from "../../Endpoints/permGroupsEndpoints"
 import uuid from "react-native-uuid"
 import { SET_USER_GROUPS } from "../../Actions/authActions"
-import { updateGroup } from "../../Endpoints/groupEndpoints"
+import { updateGroup } from "../../Endpoints/permGroupsEndpoints"
 
 export default function EditGroup({ navigation }) {
   const group = useSelector((state) => state.groups.permGroups).find(

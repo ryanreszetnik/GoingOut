@@ -7,12 +7,15 @@ import { searchUser } from "../../Endpoints/friendsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import AppButton from "../../../Components/AppButton"
 import { ADD_MEMBERS } from "../../Actions/groupActions"
+import { addMembers } from "../../Endpoints/permGroupsEndpoints"
 
 export default function AddMembers({ navigation }) {
   const dispatch = useDispatch()
+  const curId = useSelector((state) => state.groups.curGroup)
   const group = useSelector((state) => state.groups.permGroups).find(
-    (group) => group.groupId === useSelector((state) => state.groups.curGroup)
+    (group) => group.groupId === curId
   )
+
   const [members, setMembers] = useState(group.members)
   const curMembers = group.members
   const [searchTerm, setSearchTerm] = useState("")
@@ -35,8 +38,9 @@ export default function AddMembers({ navigation }) {
   const onPress = (user) => {
     setMembers([...members, user])
   }
-  const addMembers = () => {
+  const saveChanges = async () => {
     dispatch({ type: ADD_MEMBERS, payload: members })
+    console.log(await addMembers(members, curId))
     navigation.navigate("Members")
   }
 
@@ -62,7 +66,7 @@ export default function AddMembers({ navigation }) {
         />
       </View>
       <View style={styles.buttonArea}>
-        <AppButton title='Save Changes' onPress={addMembers} />
+        <AppButton title='Save Changes' onPress={saveChanges} />
       </View>
     </ScrollView>
   )

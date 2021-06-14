@@ -1,10 +1,19 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector, batch } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../../Components/AppButton"
 import { SET_USER_GROUPS } from "../../Actions/authActions"
-import { REMOVE_PERM_GROUP, SET_CUR_GROUP } from "../../Actions/groupActions"
+import {
+  REMOVE_MEMBERS,
+  REMOVE_PERM_GROUP,
+  SET_CUR_GROUP,
+} from "../../Actions/groupActions"
+import {
+  removeMembers,
+  removePermGroup,
+} from "../../Endpoints/permGroupsEndpoints"
+
 export default function ViewSingleGroup({ navigation }) {
   const dispatch = useDispatch()
   const curID = useSelector((state) => state.groups.curGroup)
@@ -12,18 +21,32 @@ export default function ViewSingleGroup({ navigation }) {
     state.groups.permGroups.find((group) => group.groupId === curID)
   )
   const groups = useSelector((state) => state.groups.permGroups)
+  const sub = useSelector((state) => state.userSession.userData.attributes.sub)
 
   const editGroup = () => {
     navigation.navigate("Edit Group")
   }
 
   const leaveGroup = async () => {
-    dispatch({ type: REMOVE_PERM_GROUP, payload: curID })
-    dispatch({
-      type: SET_USER_GROUPS,
-      payload: groups.map((group) => group.groupId),
+    batch(() => {
+      dispatch({ type: REMOVE_PERM_GROUP, payload: curID })
+      dispatch({
+        type: REMOVE_MEMBERS,
+        payload: group.members.filter((member) => member.sub !== sub),
+      })
+      dispatch({
+        type: SET_USER_GROUPS,
+        payload: groups.map((group) => group.groupId),
+      })
+      dispatch({ type: SET_CUR_GROUP, payload: null })
     })
-    dispatch({ type: SET_CUR_GROUP, payload: null })
+    group.members.length === 1
+      ? await removePermGroup(curID, sub)
+      : await removeMembers(
+          group.members.filter((member) => member.sub !== sub, sub),
+          curID,
+          [sub]
+        )
     navigation.navigate("View Perm Groups")
   }
 

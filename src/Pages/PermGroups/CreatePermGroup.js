@@ -52,13 +52,12 @@ export default function CreatePermGroup({ navigation }) {
       datetime: "",
       groupId: uuid.v4(),
     }
-
-    batch(async () => {
+    const payload = await addPermGroup(newGroup)
+    batch(() => {
       dispatch({
         type: ADD_PERM_GROUP,
-        payload: await addPermGroup(newGroup),
+        payload: payload,
       })
-
       // dispatch({
       //   type: SET_USER_GROUPS,
       //   payload: groups.map((group) => group.groupId),
