@@ -25,9 +25,9 @@ export default function ViewProfile({ navigation }) {
     }
   }
 
-  if (!profile) {
-    getProfile()
-  }
+  // if (!profile) {
+  //   getProfile()
+  // }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#e0e0e0" }}>

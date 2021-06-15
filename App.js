@@ -21,11 +21,17 @@ import {
   LOGGED_IN,
   LOGGED_OUT,
   INITIALIZING,
+  LOADING_DATA,
 } from "./src/Constants/authConstants"
 import TempGroups from "./src/Pages/TempGroups/TempGroups"
 
 import PermGroups from "./src/Pages/PermGroups/PermGroups"
 import Notifications from "./src/Pages/Notifications/Notifications"
+import { appLoad } from "./src/Endpoints/generalEndpoints"
+import { SET_PROFILE } from "./src/Actions/profileActions"
+import { SET_PERM_GROUPS, SET_TEMP_GROUPS } from "./src/Actions/groupActions"
+import { SET_CHATS } from "./src/Actions/chatActions"
+import { SET_FRIENDS } from "./src/Actions/friendActions"
 
 Amplify.configure({ Auth: awsConfig, endpoints: endpoints })
 
@@ -50,6 +56,7 @@ const AuthenticationNavigator = (props) => {
 }
 
 const TabNavigator = () => {
+
   return (
     <Tab.Navigator>
       <Tab.Screen name='Notifications' component={Notifications} />
@@ -58,6 +65,35 @@ const TabNavigator = () => {
       <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>
   )
+}
+
+const LoadingData = ()=>{
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    initializeAppState();
+  }, []);
+  const initializeAppState = async()=>{
+    const initialAppData = await appLoad();
+    dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN });
+    batch(() => {
+      dispatch({ type: SET_PROFILE, payload: initialAppData.profile });
+      dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups });
+      dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempgroups });
+      dispatch({ type: SET_CHATS, payload: initialAppData.messages });
+      dispatch({ type: SET_FRIENDS, payload: initialAppData.friends });
+    });
+  }
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator size="large" color="tomato" />
+      <Button
+        title="Loading App Data"
+        color="tomato"
+      />
+    </View>
+  );
 }
 
 const Initializing = () => {
@@ -92,7 +128,7 @@ function App() {
         payload: await Auth.currentUserInfo(),
       })
       console.log(" User is signed in", await Auth.currentUserInfo())
-      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
+      dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
     } catch (err) {
       console.log(" User is not signed in")
       batch(() => {
@@ -104,6 +140,7 @@ function App() {
   return (
     <NavigationContainer>
       {authStatus === INITIALIZING && <Initializing />}
+      {authStatus === LOADING_DATA && <LoadingData/>}
       {authStatus === LOGGED_IN && <TabNavigator />}
       {authStatus === LOGGED_OUT && <AuthenticationNavigator />}
     </NavigationContainer>

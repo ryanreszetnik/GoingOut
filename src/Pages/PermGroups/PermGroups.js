@@ -12,7 +12,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import MemberList from "./MemberList"
 import MemberProfile from "./MemberProfile"
 import EditGroup from "./EditGroup"
-import Chat from "./Chat"
+import ChatView from "./ChatView"
 import AddMembers from "./AddMembers"
 import { SET_PERM_GROUPS } from "../../Actions/groupActions"
 import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
@@ -41,9 +41,9 @@ export default function PermGroups({ navigation }) {
     dispatch({ type: SET_PERM_GROUPS, payload })
   }
 
-  useEffect(() => {
-    updateGroups()
-  }, [])
+  // useEffect(() => {
+  //   updateGroups()
+  // }, [])
 
   return (
     <PermGroupNavigator.Navigator>
@@ -94,8 +94,8 @@ export default function PermGroups({ navigation }) {
         }}
       />
       <PermGroupNavigator.Screen
-        name='Chat'
-        component={Chat}
+        name='Chat View'
+        component={ChatView}
         options={{
           headerTitle: "Group Chat",
           headerRight: () => (

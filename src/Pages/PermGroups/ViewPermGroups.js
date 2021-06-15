@@ -7,7 +7,7 @@ export default function ViewPermGroups({ navigation }) {
   const groups = useSelector((state) => state.groups.permGroups)
   const dispatch = useDispatch()
   const moveToView = () => {
-    navigation.navigate("Chat")
+    navigation.navigate("Chat View")
   }
   return (
     <View>
