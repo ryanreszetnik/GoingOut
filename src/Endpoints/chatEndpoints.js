@@ -1,9 +1,9 @@
-import API from "@aws-amplify/api";
-import { Auth } from "aws-amplify";
+import API from "@aws-amplify/api"
+import { Auth } from "aws-amplify"
 
 export const sendMessage = async (message) => {
   const Authorization = (await Auth.currentAuthenticatedUser())
-    .signInUserSession.idToken.jwtToken;
+    .signInUserSession.idToken.jwtToken
 
   const apiRequest = {
     body: message,
@@ -11,11 +11,7 @@ export const sendMessage = async (message) => {
       Authorization,
       "Content-Type": "application/json",
     },
-  };
-  const data = await API.post(
-    "GeneralEndpoint",
-    "/messages",
-    apiRequest
-  );
-  return data;
-};
+  }
+  const data = await API.post("GeneralEndpoint", "/messages", apiRequest)
+  return data
+}
