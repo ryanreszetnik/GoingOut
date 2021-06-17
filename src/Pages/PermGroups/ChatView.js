@@ -9,7 +9,9 @@ import { ADD_CHAT } from "../../Actions/chatActions"
 
 export default function ChatView() {
   const curID = useSelector((state) => state.groups.curGroup)
-  const messages = useSelector((state) => state.chats.find(chat=>chat.groupId===curID).messages);
+  const chat =useSelector((state) => state.chats.find(chat=>chat.groupId===curID))
+  
+  const messages = chat?chat.messages:[];
   const profile = useSelector(state=>state.profile)
   const dispatch = useDispatch();
   const sendMess = async(text) => {

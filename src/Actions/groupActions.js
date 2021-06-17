@@ -9,3 +9,5 @@ export const REMOVE_MEMBERS = "REMOVE_MEMBERS"
 export const SET_MATCHES = "SET_MATCHES"
 export const ADD_MATCH = "ADD_MATCH"
 export const SET_FOUND_MATCHES = "SET_FOUND_MATCHES"
+export const SET_DATE = "SET_DATE";
+export const SET_CUR_BASE_GROUP = "SET_CUR_BASE_GROUP";

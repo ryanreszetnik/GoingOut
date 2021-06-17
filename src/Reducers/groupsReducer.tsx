@@ -1,8 +1,10 @@
-import { SET_CUR_GROUP, ADD_PERM_GROUP, REMOVE_PERM_GROUP, SET_PERM_GROUPS, ADD_MEMBERS, EDIT_PERM_GROUP, REMOVE_MEMBERS, ADD_MATCH, SET_MATCHES, SET_FOUND_MATCHES} from "../Actions/groupActions";
+import { SET_CUR_GROUP, ADD_PERM_GROUP, REMOVE_PERM_GROUP, SET_PERM_GROUPS, ADD_MEMBERS, EDIT_PERM_GROUP, REMOVE_MEMBERS, ADD_MATCH, SET_MATCHES, SET_FOUND_MATCHES, SET_CUR_BASE_GROUP} from "../Actions/groupActions";
 
-const INITIAL_STATE = {permGroups:[], tempGroups:[], matches:[], foundMatches:[], curGroup:null}
+const INITIAL_STATE = {permGroups:[], tempGroups:[], matches:[], curGroup:null,curBaseGroup:null}
 export default function groupsReducer(state=INITIAL_STATE, action){
     switch(action.type){
+        case SET_CUR_BASE_GROUP:
+            return {...state,curBaseGroup:action.payload}
         case SET_CUR_GROUP:
             return {...state, curGroup:action.payload}    
         case ADD_PERM_GROUP:
@@ -21,8 +23,6 @@ export default function groupsReducer(state=INITIAL_STATE, action){
             return {...state, matches:action.payload}
         case ADD_MATCH:
             return {...state, matches:[...state.matches, action.payload]}
-        case SET_FOUND_MATCHES:
-            return {...state, foundMatches:action.payload}
         default:
             return state;
     }

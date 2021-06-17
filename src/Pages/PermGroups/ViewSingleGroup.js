@@ -52,15 +52,15 @@ export default function ViewSingleGroup({ navigation }) {
 
   return (
     <View>
-      {useSelector((state) => state.groups.curGroup) !== null && (
+      {group&& (
         <View style={styles.container}>
           <View style={styles.attributeContainer}>
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='form-textbox'
+                  name="form-textbox"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Group Name`}
@@ -70,9 +70,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='card-text'
+                  name="card-text"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Bio`}
@@ -82,9 +82,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='google-maps'
+                  name="google-maps"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Location`}
@@ -96,9 +96,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='numeric'
+                  name="numeric"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Average Age`}
@@ -108,9 +108,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='gender-male-female'
+                  name="gender-male-female"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Average Gender`}
@@ -119,13 +119,17 @@ export default function ViewSingleGroup({ navigation }) {
             </View>
           </View>
           <View style={{ alignItems: "center" }}>
-            <AppButton title='Edit Group' onPress={editGroup} />
-            <AppButton title='Leave Group' onPress={leaveGroup} />
+            <AppButton title="Edit Group" onPress={editGroup} />
+            <AppButton
+              title="Find Matches"
+              onPress={() => navigation.navigate("Select Day For Search")}
+            />
+            <AppButton title="Leave Group" onPress={leaveGroup} />
           </View>
         </View>
       )}
     </View>
-  )
+  );
 }
 const styles = StyleSheet.create({
   container: {
