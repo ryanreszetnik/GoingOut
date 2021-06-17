@@ -7,8 +7,8 @@ import { SET_CUR_PROFILE } from "../../../Actions/friendActions"
 export default function MatchMemberList({ navigation }) {
   const curID = useSelector((state) => state.groups.curGroup)
   const members = useSelector((state) =>
-    state.groups.foundMatches.find((group) => group.groupId === curID)
-  ).members
+    state.potentialMatches.foundMatches.find((group) => group.groupId === curID)
+  ).members;
 
   const dispatch = useDispatch()
 

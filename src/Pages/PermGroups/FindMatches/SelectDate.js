@@ -12,6 +12,7 @@ const dates = ["2021-06-20", "2021-06-21", "2021-06-23", "2021-06-22"];
 export default function SelectDate({navigation}) {
     const dispatch =useDispatch();
     const curGroupId = useSelector(state=>state.groups.curGroup)
+    // const dates = useSelector(state=>state.groups.permGroups.find(gr=>gr.groupId===curGroupId))
 
     const selectDate=async(date)=>{
         dispatch({type:SET_DATE,payload:date})
