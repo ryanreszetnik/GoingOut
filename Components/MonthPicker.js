@@ -2,16 +2,13 @@ import React, { useState } from "react"
 import { SafeAreaView, Text } from "react-native"
 import CalendarPicker from "react-native-calendar-picker"
 import moment from "moment"
-export default function MonthPicker({ initialDate, updateDate }) {
-  const [date, setDate] = useState(initialDate)
+export default function MonthPicker({ updateDate }) {
   const changeDate = (day) => {
-    updateDate(day)
-    setDate(day)
+    updateDate(moment(day).format("YYYY-MM-DD"))
   }
   return (
     <SafeAreaView>
       <CalendarPicker
-        selectedStartDate={initialDate}
         restrictMonthNavigation={true}
         minDate={moment()}
         maxDate={moment().endOf("month").add(1, "days").endOf("month")}
