@@ -7,21 +7,23 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 export default function DatesList({ dates, onPress, onDelete }) {
   const datePreview = (date) => {
     return (
-      <TouchableOpacity
-        style={styles.container}
-        key={date}
-        onPress={() => onPress(date)}
-      >
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{date}</Text>
-        </View>
+      <View key={date}>
+        <TouchableOpacity
+          style={styles.container}
+          key={date}
+          onPress={() => onPress(date)}
+        >
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{date}</Text>
+          </View>
+        </TouchableOpacity>
         <FontAwesome5
           name='times'
           color='red'
           onPress={() => onDelete(date)}
           style={styles.icon}
         />
-      </TouchableOpacity>
+      </View>
     )
   }
 

@@ -45,11 +45,10 @@ export default function CreatePermGroup({ navigation }) {
       bio: groupBio,
       loc: loc,
       locRange: locRange,
-      minAge: ageRange[0],
-      maxAge: ageRange[1],
+      ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
       genderPref: genderPref,
       permanent: true,
-      datetime: "",
+      dates: [],
       groupId: uuid.v4(),
     }
     const payload = await addPermGroup(newGroup)

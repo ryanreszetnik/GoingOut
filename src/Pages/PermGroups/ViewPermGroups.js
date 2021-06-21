@@ -7,9 +7,9 @@ import { SET_CUR_BASE_GROUP } from "../../Actions/groupActions"
 
 export default function ViewPermGroups({ navigation }) {
   const groups = useSelector((state) => state.groups.permGroups)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const moveToView = (id) => {
-    dispatch({ type: SET_CUR_BASE_GROUP,payload:id });
+    dispatch({ type: SET_CUR_BASE_GROUP, payload: id })
     navigation.navigate("Chat View")
   }
   return (
@@ -19,15 +19,11 @@ export default function ViewPermGroups({ navigation }) {
           <GroupPreview
             group={group}
             key={group.groupId}
-            onPress={()=>moveToView(group.groupId)}
+            onPress={() => moveToView(group.groupId)}
             id={group.groupId}
           />
         )
       })}
-      <AppButton
-        title='Matches!'
-        onPress={() => navigation.navigate("Matches")}
-      />
     </View>
   )
 }

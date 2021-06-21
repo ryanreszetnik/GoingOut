@@ -14,7 +14,9 @@ import AppButton from "../../../Components/AppButton"
 import { ADD_FRIEND } from "../../Actions/friendActions"
 import {
   ADD_PERM_GROUP,
+  ADD_USER_MATCH,
   EDIT_PERM_GROUP,
+  REMOVE_USER_MATCH,
   SET_DATE,
   SET_USER_MATCHES,
 } from "../../Actions/groupActions"
@@ -25,6 +27,10 @@ import { updateGroup } from "../../Endpoints/permGroupsEndpoints"
 import MonthPicker from "../../../Components/MonthPicker"
 import DatesList from "../../../Components/DatesList"
 import { Checkbox } from "react-native-paper"
+import {
+  addPotentialMatch,
+  removePotentialMatch,
+} from "../../Endpoints/matchingEndpoints"
 
 export default function EditGroup({ navigation }) {
   const group = useSelector((state) => state.groups.permGroups).find(
@@ -37,22 +43,56 @@ export default function EditGroup({ navigation }) {
   const [ageRange, setAgeRange] = useState([group.minAge, group.maxAge])
   const [loc, setLoc] = useState(group.loc)
   const [genderPref, setPref] = useState(group.genderPref)
-  const [dates, setDates] = useState([])
+  const potentialMatches = useSelector(
+    (state) => state.potentialMatches.userMatches
+  ).map((match) => {
+    return { ...match, maxAge: 100 }
+  })
+  const curDates = group.dates
+  const [dates, setDates] = useState(group.dates)
+
   const [checked, setChecked] = useState("unchecked")
 
   const addDate = (date) => {
     if (!dates.includes(date)) {
       setDates([...dates, date])
+      console.log(curDates)
     }
+
+    const payload = {
+      date,
+      groupId: group.groupId,
+      bio: groupBio,
+      genderPref,
+      lat: loc.lat,
+      lon: loc.lon,
+      locRange,
+      minAge: ageRange[0],
+      maxAge: 100,
+      name: groupName,
+      averageAge: group.averageAge,
+      averageGender: group.averageGender,
+    }
+    dispatch({ type: ADD_USER_MATCH, payload })
   }
   const onDelete = (date) => {
     setDates(dates.filter((day) => day !== date))
+    dispatch({
+      type: REMOVE_USER_MATCH,
+      payload: {
+        date,
+        groupId: group.groupId,
+      },
+    })
   }
+
   const onEdit = (date) => {
     if (checked === "unchecked") {
       dispatch({ type: SET_DATE, payload: date })
+      // navigation.navigate("Select Day Info")
     }
   }
+
   const editGroup = async () => {
     const newGroup = {
       groupId: group.groupId,
@@ -60,15 +100,24 @@ export default function EditGroup({ navigation }) {
       bio: groupBio,
       loc,
       locRange: locRange,
-      ageRange: { min: ageRange[0], max: ageRange[1] },
+      ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
       genderPref,
       dates,
       members: group.members,
+      averageAge: group.averageAge,
+      averageGendeR: group.averageGender,
     }
-    dispatch({ type: EDIT_PERM_GROUP, payload: newGroup })
-
-    console.log(await updateGroup(newGroup))
-    //need another api call to put userMatches
+    dispatch({ type: EDIT_PERM_GROUP, payload: await updateGroup(newGroup) })
+    await potentialMatches.forEach(async (match) => {
+      if (!curDates.includes(match.date)) {
+        await addPotentialMatch(match)
+      }
+    })
+    await curDates.forEach(async (date) => {
+      if (!potentialMatches.map((match) => match.date).includes(date)) {
+        await removePotentialMatch({ date, groupId: group.groupId })
+      }
+    })
     navigation.navigate("View Single Group")
   }
 
@@ -92,6 +141,7 @@ export default function EditGroup({ navigation }) {
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <MonthPicker updateDate={addDate} />
+      <Text>Dates List</Text>
       <DatesList dates={dates} onDelete={onDelete} onPress={onEdit} />
       <Checkbox.Item
         label='Keep default preferences for all selected dates'
