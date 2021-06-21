@@ -14,6 +14,7 @@ export default function FriendSearch({ navigation }) {
     setSearchTerm(term)
     if (term.length > 0) {
       const newFriends = await searchUser(term)
+      console.log(newFriends)
       setFriends(newFriends)
     } else {
       setFriends([])

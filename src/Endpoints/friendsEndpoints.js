@@ -17,7 +17,7 @@ export const searchUser = async (search) => {
     `/searchusers?search=${search}`,
     apiRequest
   )
-  return data
+  return JSON.parse(data.body)
 }
 
 export const requestFriend = async (sub) => {
@@ -32,7 +32,6 @@ export const requestFriend = async (sub) => {
     },
   }
   const data = await API.post("GeneralEndpoint", `/friends`, apiRequest)
-  console.log(data)
 
   return data
 }
@@ -54,7 +53,7 @@ export const getFriends = async (sub) => {
     `/friends?user=${sub}`,
     apiRequest
   )
-  console.log("Got friend", data)
+  console.log("Got friends", data)
 
   return data
 }
