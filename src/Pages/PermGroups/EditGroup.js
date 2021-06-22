@@ -48,10 +48,8 @@ export default function EditGroup({ navigation }) {
   ).map((match) => {
     return { ...match, maxAge: 100 }
   })
-  const curDates = group.dates
+  const [curDates, setCurDates] = useState(group.dates)
   const [dates, setDates] = useState(group.dates)
-
-  const [checked, setChecked] = useState("unchecked")
 
   const addDate = (date) => {
     if (!dates.includes(date)) {
@@ -86,36 +84,26 @@ export default function EditGroup({ navigation }) {
     })
   }
 
-  const onEdit = (date) => {
-    if (checked === "unchecked") {
-      dispatch({ type: SET_DATE, payload: date })
-      // navigation.navigate("Select Day Info")
-    }
-  }
-
   const editGroup = async () => {
     const newGroup = {
       groupId: group.groupId,
       name: groupName,
       bio: groupBio,
       loc,
-      locRange: locRange,
+      locRange,
       ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
       genderPref,
       dates,
       members: group.members,
       averageAge: group.averageAge,
-      averageGendeR: group.averageGender,
+      averageGender: group.averageGender,
     }
-    dispatch({ type: EDIT_PERM_GROUP, payload: await updateGroup(newGroup) })
+    const payload = await updateGroup(newGroup)
+    console.log(payload)
+    dispatch({ type: EDIT_PERM_GROUP, payload })
     await potentialMatches.forEach(async (match) => {
       if (!curDates.includes(match.date)) {
         await addPotentialMatch(match)
-      }
-    })
-    await curDates.forEach(async (date) => {
-      if (!potentialMatches.map((match) => match.date).includes(date)) {
-        await removePotentialMatch({ date, groupId: group.groupId })
       }
     })
     navigation.navigate("View Single Group")
@@ -142,25 +130,7 @@ export default function EditGroup({ navigation }) {
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <MonthPicker updateDate={addDate} />
       <Text>Dates List</Text>
-      <DatesList dates={dates} onDelete={onDelete} onPress={onEdit} />
-      <Checkbox.Item
-        label='Keep default preferences for all selected dates'
-        position='leading'
-        status={checked}
-        onPress={() =>
-          checked === "checked"
-            ? setChecked("unchecked")
-            : setChecked("checked")
-        }
-        uncheckedColor='tomato'
-        color='tomato'
-        style={{
-          borderWidth: 0.5,
-          borderColor: "black",
-          width: "95%",
-          alignSelf: "center",
-        }}
-      />
+      <DatesList dates={dates} onDelete={onDelete} curDates={curDates} />
       <View style={{ alignItems: "center" }}>
         <AppButton title='Save Changes' onPress={editGroup} />
       </View>

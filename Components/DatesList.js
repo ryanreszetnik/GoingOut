@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 
-export default function DatesList({ dates, onPress, onDelete }) {
+export default function DatesList({ dates, onPress, onDelete, curDates }) {
   const datePreview = (date) => {
     return (
       <View key={date}>
@@ -17,12 +17,14 @@ export default function DatesList({ dates, onPress, onDelete }) {
             <Text style={styles.text}>{date}</Text>
           </View>
         </TouchableOpacity>
-        <FontAwesome5
-          name='times'
-          color='red'
-          onPress={() => onDelete(date)}
-          style={styles.icon}
-        />
+        {!curDates.includes(date) && (
+          <FontAwesome5
+            name='times'
+            color='red'
+            onPress={() => onDelete(date)}
+            style={styles.icon}
+          />
+        )}
       </View>
     )
   }

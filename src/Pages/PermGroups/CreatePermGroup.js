@@ -41,14 +41,12 @@ export default function CreatePermGroup({ navigation }) {
   const createGroup = async () => {
     const newGroup = {
       name: groupName,
-      members: members,
+      members: members.map((member) => member.sub),
       bio: groupBio,
       loc: loc,
       locRange: locRange,
       ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
       genderPref: genderPref,
-      permanent: true,
-      dates: [],
       groupId: uuid.v4(),
     }
     const payload = await addPermGroup(newGroup)
@@ -57,10 +55,10 @@ export default function CreatePermGroup({ navigation }) {
         type: ADD_PERM_GROUP,
         payload: payload,
       })
-      // dispatch({
-      //   type: SET_USER_GROUPS,
-      //   payload: groups.map((group) => group.groupId),
-      // })
+      dispatch({
+        type: SET_USER_GROUPS,
+        payload: groups.map((group) => group.groupId),
+      })
     })
     navigation.navigate("View Perm Groups")
   }

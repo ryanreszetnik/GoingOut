@@ -39,18 +39,6 @@ const newGroupInitial = {
   genderPreference: "Neutral",
 }
 export default function PermGroups({ navigation }) {
-  const sub = useSelector((state) => state.userSession.userData.attributes.sub)
-  const dispatch = useDispatch()
-
-  const updateGroups = async () => {
-    const payload = await getPermGroups(sub)
-    dispatch({ type: SET_PERM_GROUPS, payload })
-  }
-
-  // useEffect(() => {
-  //   updateGroups()
-  // }, [])
-
   return (
     <PermGroupNavigator.Navigator>
       <PermGroupNavigator.Screen
