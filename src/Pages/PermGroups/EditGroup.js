@@ -104,6 +104,7 @@ export default function EditGroup({ navigation }) {
     await potentialMatches.forEach(async (match) => {
       if (!curDates.includes(match.date)) {
         await addPotentialMatch(match)
+        dispatch({ type: ADD_TEMP_GROUP, payload: match })
       }
     })
     navigation.navigate("View Single Group")

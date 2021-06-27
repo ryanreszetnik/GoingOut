@@ -16,11 +16,7 @@ import ChatView from "./ChatView"
 import AddMembers from "./AddMembers"
 import { SET_PERM_GROUPS } from "../../Actions/groupActions"
 import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
-import Matches from "./Matches"
-import AddMatches from "./FindMatches/AddMatches"
-import MatchMemberList from "./FindMatches/MatchMemberList"
-import SelectDate from "./FindMatches/SelectDate"
-import ViewSingleMatch from "./FindMatches/ViewSingleMatch"
+import SelectDate from "../TempGroups/FindMatches/SelectDate"
 import SelectDayInfo from "./SelectDayInfo"
 
 const PermGroupNavigator = createStackNavigator()
@@ -61,26 +57,7 @@ export default function PermGroups({ navigation }) {
           ),
         }}
       />
-      <PermGroupNavigator.Screen
-        name='Matches'
-        component={Matches}
-        options={{
-          headerRight: () => (
-            <TouchableOpacity
-              style={styles.headerView}
-              onPress={() => navigation.navigate("Search For Matches")}
-            >
-              <Text style={styles.headerText}>Find Matches</Text>
-              <FontAwesome5
-                style={{ marginRight: 20 }}
-                size={20}
-                name='search'
-                color='tomato'
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
+
       <PermGroupNavigator.Screen
         name='Create Group'
         component={CreatePermGroup}
@@ -107,27 +84,7 @@ export default function PermGroups({ navigation }) {
           ),
         }}
       />
-      <PermGroupNavigator.Screen
-        name='View Single Match'
-        component={ViewSingleMatch}
-        options={{
-          headerTitle: "Match Info",
-          headerRight: () => (
-            <TouchableOpacity
-              style={styles.headerView}
-              onPress={() => navigation.navigate("Match Member List")}
-            >
-              <Text style={styles.headerText}>View Members</Text>
-              <FontAwesome5
-                style={{ marginRight: 20 }}
-                size={20}
-                name='users'
-                color='tomato'
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
+
       <PermGroupNavigator.Screen
         name='Chat View'
         component={ChatView}
@@ -151,17 +108,10 @@ export default function PermGroups({ navigation }) {
       />
 
       <PermGroupNavigator.Screen name='Members' component={MemberList} />
-      <PermGroupNavigator.Screen
-        name='Match Member List'
-        component={MatchMemberList}
-        options={{ headerTitle: "Members" }}
-      />
+
       <PermGroupNavigator.Screen name='Edit Group' component={EditGroup} />
       <PermGroupNavigator.Screen name='Add Members' component={AddMembers} />
-      <PermGroupNavigator.Screen
-        name='Search For Matches'
-        component={AddMatches}
-      />
+
       <PermGroupNavigator.Screen
         name='Select Day For Search'
         component={SelectDate}
