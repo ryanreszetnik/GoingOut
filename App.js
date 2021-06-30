@@ -5,7 +5,7 @@ import { awsConfig, endpoints } from "./src/aws-exports"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
-
+import FlashMessage from "react-native-flash-message"
 import SignIn from "./src/Pages/Authentication/SignIn"
 import SignUp from "./src/Pages/Authentication/SignUp"
 import ConfirmSignUp from "./src/Pages/Authentication/ConfirmSignUp"
@@ -56,7 +56,6 @@ const AuthenticationNavigator = (props) => {
 }
 
 const TabNavigator = () => {
-
   return (
     <Tab.Navigator>
       <Tab.Screen name='Notifications' component={Notifications} />
@@ -67,33 +66,31 @@ const TabNavigator = () => {
   )
 }
 
-const LoadingData = ()=>{
-  const dispatch = useDispatch();
+const LoadingData = () => {
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    initializeAppState();
-  }, []);
-  const initializeAppState = async()=>{
-    const initialAppData = await appLoad();
-    dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN });
+    initializeAppState()
+  }, [])
+  const initializeAppState = async () => {
+    console.log(await appLoad())
+    const initialAppData = await appLoad()
+    dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
     batch(() => {
-      dispatch({ type: SET_PROFILE, payload: initialAppData.profile });
-      dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups });
-      dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempgroups });
-      dispatch({ type: SET_CHATS, payload: initialAppData.messages });
-      dispatch({ type: SET_FRIENDS, payload: initialAppData.friends });
-    });
+      dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
+      dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups })
+      dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempgroups })
+      dispatch({ type: SET_CHATS, payload: initialAppData.messages })
+      dispatch({ type: SET_FRIENDS, payload: initialAppData.friends })
+    })
   }
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" color="tomato" />
-      <Button
-        title="Loading App Data"
-        color="tomato"
-      />
+      <ActivityIndicator size='large' color='tomato' />
+      <Button title='Loading App Data' color='tomato' />
     </View>
-  );
+  )
 }
 
 const Initializing = () => {
@@ -140,7 +137,7 @@ function App() {
   return (
     <NavigationContainer>
       {authStatus === INITIALIZING && <Initializing />}
-      {authStatus === LOADING_DATA && <LoadingData/>}
+      {authStatus === LOADING_DATA && <LoadingData />}
       {authStatus === LOGGED_IN && <TabNavigator />}
       {authStatus === LOGGED_OUT && <AuthenticationNavigator />}
     </NavigationContainer>

@@ -48,41 +48,7 @@ export default function EditGroup({ navigation }) {
   ).map((match) => {
     return { ...match, maxAge: 100 }
   })
-  const [curDates, setCurDates] = useState(group.dates)
-  const [dates, setDates] = useState(group.dates)
-
-  const addDate = (date) => {
-    if (!dates.includes(date)) {
-      setDates([...dates, date])
-      console.log(curDates)
-    }
-
-    const payload = {
-      date,
-      groupId: group.groupId,
-      bio: groupBio,
-      genderPref,
-      lat: loc.lat,
-      lon: loc.lon,
-      locRange,
-      minAge: ageRange[0],
-      maxAge: 100,
-      name: groupName,
-      averageAge: group.averageAge,
-      averageGender: group.averageGender,
-    }
-    dispatch({ type: ADD_USER_MATCH, payload })
-  }
-  const onDelete = (date) => {
-    setDates(dates.filter((day) => day !== date))
-    dispatch({
-      type: REMOVE_USER_MATCH,
-      payload: {
-        date,
-        groupId: group.groupId,
-      },
-    })
-  }
+  const dates = group.dates
 
   const editGroup = async () => {
     const newGroup = {
@@ -129,9 +95,6 @@ export default function EditGroup({ navigation }) {
       <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
-      <MonthPicker updateDate={addDate} />
-      <Text>Dates List</Text>
-      <DatesList dates={dates} onDelete={onDelete} curDates={curDates} />
       <View style={{ alignItems: "center" }}>
         <AppButton title='Save Changes' onPress={editGroup} />
       </View>
