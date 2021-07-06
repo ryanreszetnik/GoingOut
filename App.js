@@ -58,8 +58,6 @@ const AuthenticationNavigator = (props) => {
 }
 
 const TabNavigator = () => {
-
-  
   return (
     <Fragment>
       <SocketClient/>
@@ -82,8 +80,9 @@ const LoadingData = () => {
   const initializeAppState = async () => {
     console.log(await appLoad())
     const initialAppData = await appLoad()
-    dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
+    
     batch(() => {
+      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN });
       dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
       dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups })
       dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempgroups })
@@ -123,16 +122,17 @@ function App() {
 
   async function checkAuthState() {
     try {
-      dispatch({
-        type: SET_AUTH_USER,
-        payload: await Auth.currentAuthenticatedUser(),
+      batch(() => {
+        dispatch({
+          type: SET_AUTH_USER,
+          payload: await Auth.currentAuthenticatedUser(),
+        })
+        dispatch({
+          type: SET_CURR_USER_DATA,
+          payload: await Auth.currentUserInfo(),
+        })
+        dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
       })
-      dispatch({
-        type: SET_CURR_USER_DATA,
-        payload: await Auth.currentUserInfo(),
-      })
-      console.log(" User is signed in", await Auth.currentUserInfo())
-      dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
     } catch (err) {
       console.log(" User is not signed in")
       batch(() => {
