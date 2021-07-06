@@ -10,7 +10,7 @@ import { ADD_CHAT } from "../../Actions/chatActions"
 export default function ChatView() {
   const curID = useSelector((state) => state.groups.curGroup)
   const chat =useSelector((state) => state.chats.find(chat=>chat.groupId===curID))
-  
+  const socket = useSelector(state=>state.userSession.socket)
   const messages = chat?chat.messages:[];
   const profile = useSelector(state=>state.profile)
   const dispatch = useDispatch();
@@ -26,10 +26,16 @@ export default function ChatView() {
 
     dispatch({ type: ADD_CHAT, payload:newMessage });
     try{
-    console.log(await sendMessage(newMessage));
+    // console.log(await sendMessage(newMessage));
+    console.log(socket.send(JSON.stringify({
+      action:"sendMessage",
+      data:newMessage
+      
+    })))
     }catch(e){
       console.log(e)
     }
+    
     console.log(JSON.stringify(newMessage));
   };
 
