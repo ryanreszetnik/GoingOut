@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react"
 import { StyleSheet, Text, View, ActivityIndicator, Button } from "react-native"
 import Amplify, { Auth } from "aws-amplify"
-import { awsConfig, endpoints } from "./src/aws-exports";
+import { awsConfig, endpoints } from "./src/aws-exports"
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -33,7 +33,7 @@ import { SET_PROFILE } from "./src/Actions/profileActions"
 import { SET_PERM_GROUPS, SET_TEMP_GROUPS } from "./src/Actions/groupActions"
 import { SET_CHATS } from "./src/Actions/chatActions"
 import { SET_FRIENDS } from "./src/Actions/friendActions"
-import SocketClient from "./src/Socket/SocketClient";
+import SocketClient from "./src/Socket/SocketClient"
 
 Amplify.configure({ Auth: awsConfig, endpoints: endpoints })
 
@@ -60,15 +60,15 @@ const AuthenticationNavigator = (props) => {
 const TabNavigator = () => {
   return (
     <Fragment>
-      <SocketClient/>
+      <SocketClient />
       <Tab.Navigator>
-        <Tab.Screen name="Notifications" component={Notifications} />
-        <Tab.Screen name="Temp Groups" component={TempGroups} />
-        <Tab.Screen name="Perm Groups" component={PermGroups} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name='Notifications' component={Notifications} />
+        <Tab.Screen name='Temp Groups' component={TempGroups} />
+        <Tab.Screen name='Perm Groups' component={PermGroups} />
+        <Tab.Screen name='Profile' component={Profile} />
       </Tab.Navigator>
     </Fragment>
-  );
+  )
 }
 
 const LoadingData = () => {
@@ -78,11 +78,10 @@ const LoadingData = () => {
     initializeAppState()
   }, [])
   const initializeAppState = async () => {
-    console.log(await appLoad())
     const initialAppData = await appLoad()
-    
+
     batch(() => {
-      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN });
+      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
       dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
       dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups })
       dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempGroups })
@@ -114,7 +113,6 @@ const Initializing = () => {
 
 function App() {
   const authStatus = useSelector((state) => state.userSession.authStatus)
-  const user = useSelector((state) => state.userSession.user)
   const dispatch = useDispatch()
   useEffect(() => {
     checkAuthState()
@@ -122,16 +120,15 @@ function App() {
 
   async function checkAuthState() {
     try {
-        dispatch({
-          type: SET_AUTH_USER,
-          payload: await Auth.currentAuthenticatedUser(),
-        })
-        dispatch({
-          type: SET_CURR_USER_DATA,
-          payload: await Auth.currentUserInfo(),
-        })
-        dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
-      
+      dispatch({
+        type: SET_AUTH_USER,
+        payload: currentAuthenticatedUser,
+      })
+      dispatch({
+        type: SET_CURR_USER_DATA,
+        payload: currentUserInfo,
+      })
+      dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
     } catch (err) {
       console.log(" User is not signed in")
       batch(() => {

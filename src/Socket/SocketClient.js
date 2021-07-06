@@ -8,9 +8,10 @@ import { MESSAGE_SENT, RECEIVE_MESSAGE } from "./socket.constants";
 export default function SocketClient() {
   const token = useSelector(
     (state) => state.userSession.user.signInUserSession.accessToken.jwtToken
-  );
-  const dispatch = useDispatch();
+  )
+  const dispatch = useDispatch()
   useEffect(() => {
+
     const socket = new WebSocket(`${socketURL}?token=${token}`);
     dispatch({ type: SET_SOCKET,payload:socket });
     socket.onmessage=function(event){
@@ -22,11 +23,13 @@ export default function SocketClient() {
       }catch(e){
          console.log("No event data: ", event);
         return;
+
       }
-      if(!data.action){
-        console.log("No event action: ", event);
-        return;
+      if (!data.action) {
+        console.log("No event action: ", event)
+        return
       }
+
       //add more cases as needed
       switch (data.action) {
         case RECEIVE_MESSAGE:
@@ -36,12 +39,12 @@ export default function SocketClient() {
           console.log("Message Sent Success:", body);
           break;
         default:
-          console.log("No Event Action Match", event);
+          console.log("No Event Action Match", event)
       }
     }
-    
-    return () => socket.close(); 
-  }, []);
-  
-  return <Fragment/>;
+
+    return () => socket.close()
+  }, [])
+
+  return <Fragment />
 }

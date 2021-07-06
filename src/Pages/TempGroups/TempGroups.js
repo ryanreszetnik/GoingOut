@@ -9,6 +9,7 @@ import CreateTempGroup from "./CreateTempGroup"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { View, Text, StyleSheet } from "react-native"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
+import ViewSingleTempGroup from "./ViewSingleTempGroup"
 
 const TempGroupNavigator = createStackNavigator()
 
@@ -68,6 +69,27 @@ export default function TempGroups({ navigation }) {
               onPress={() => navigation.navigate("Match Member List")}
             >
               <Text style={styles.headerText}>View Members</Text>
+              <FontAwesome5
+                style={{ marginRight: 20 }}
+                size={20}
+                name='users'
+                color='tomato'
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <TempGroupNavigator.Screen
+        name='View Single Temp Group'
+        component={ViewSingleTempGroup}
+        options={{
+          headerTitle: "Event Details",
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.headerView}
+              onPress={() => navigation.navigate("Matches")}
+            >
+              <Text style={styles.headerText}>Find Matches</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
