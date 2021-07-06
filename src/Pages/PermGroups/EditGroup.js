@@ -25,7 +25,6 @@ import uuid from "react-native-uuid"
 import { SET_USER_GROUPS } from "../../Actions/authActions"
 import { updateGroup } from "../../Endpoints/permGroupsEndpoints"
 import MonthPicker from "../../../Components/MonthPicker"
-import DatesList from "../../../Components/DatesList"
 import { Checkbox } from "react-native-paper"
 import {
   addPotentialMatch,
@@ -43,12 +42,6 @@ export default function EditGroup({ navigation }) {
   const [ageRange, setAgeRange] = useState([group.minAge, group.maxAge])
   const [loc, setLoc] = useState(group.loc)
   const [genderPref, setPref] = useState(group.genderPref)
-  const potentialMatches = useSelector(
-    (state) => state.potentialMatches.userMatches
-  ).map((match) => {
-    return { ...match, maxAge: 100 }
-  })
-  const dates = group.dates
 
   const editGroup = async () => {
     const newGroup = {
@@ -59,20 +52,12 @@ export default function EditGroup({ navigation }) {
       locRange,
       ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
       genderPref,
-      dates,
       members: group.members,
       averageAge: group.averageAge,
       averageGender: group.averageGender,
     }
     const payload = await updateGroup(newGroup)
-    console.log(payload)
     dispatch({ type: EDIT_PERM_GROUP, payload })
-    await potentialMatches.forEach(async (match) => {
-      if (!curDates.includes(match.date)) {
-        await addPotentialMatch(match)
-        dispatch({ type: ADD_TEMP_GROUP, payload: match })
-      }
-    })
     navigation.navigate("View Single Group")
   }
 

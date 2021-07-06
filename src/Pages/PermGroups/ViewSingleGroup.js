@@ -13,7 +13,6 @@ import {
   removeMembers,
   removePermGroup,
 } from "../../Endpoints/permGroupsEndpoints"
-import DatesList from "../../../Components/DatesList"
 import { ScrollView } from "react-native-gesture-handler"
 
 export default function ViewSingleGroup({ navigation }) {
@@ -95,13 +94,6 @@ export default function ViewSingleGroup({ navigation }) {
                 {/*group.location*/ "placeholder"}
               </Text>
             </View>
-            <Text>Current Dates</Text>
-            <DatesList
-              dates={group.dates}
-              curDates={group.dates}
-              onDelete={() => {}}
-              onPress={() => {}}
-            />
           </View>
           <View style={{ alignItems: "center" }}>
             <AppButton title='Edit Group' onPress={editGroup} />

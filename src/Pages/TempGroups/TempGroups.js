@@ -40,13 +40,13 @@ export default function TempGroups({ navigation }) {
         name='Matches'
         component={Matches}
         options={{
-          headerTitle: "Match Info",
+          headerTitle: "Chat",
           headerRight: () => (
             <TouchableOpacity
               style={styles.headerView}
               onPress={() => navigation.navigate("Search For Matches")}
             >
-              <Text style={styles.headerText}>View Members</Text>
+              <Text style={styles.headerText}>Serach For Matches</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}

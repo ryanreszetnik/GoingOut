@@ -2,7 +2,7 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useDispatch, useSelector, batch } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-import uuid from 'react-native-uuid'
+import uuid from "react-native-uuid"
 import { SET_USER_GROUPS } from "../../../Actions/authActions"
 import { ADD_MATCH } from "../../../Actions/groupActions"
 import AppButton from "../../../../Components/AppButton"
@@ -10,26 +10,26 @@ import { createMatch } from "../../../Endpoints/matchingEndpoints"
 
 export default function ViewSingleMatch({ navigation }) {
   const dispatch = useDispatch()
-  const curID = useSelector((state) => state.groups.curBaseGroup);
-   const curGroupID = useSelector((state) => state.groups.curGroup);
+  const curID = useSelector((state) => state.groups.curBaseGroup)
+  const curGroupID = useSelector((state) => state.groups.curGroup)
   const group = useSelector((state) =>
     state.potentialMatches.foundMatches.find(
       (match) => match.groupId === curGroupID
     )
-  );
-  console.log(JSON.stringify(group),curID)
+  )
+  console.log(JSON.stringify(group), curID)
 
-  const acceptMatch = async() => {
+  const acceptMatch = async () => {
     const matchObj = {
       date: group.date,
       groupId: curID,
       otherGroupId: curGroupID,
       matchId: uuid.v4(),
-    };
+    }
     console.log(matchObj)
-    await createMatch(matchObj);
+    await createMatch(matchObj)
 
-    dispatch({ type: ADD_MATCH, payload:matchObj })
+    dispatch({ type: ADD_MATCH, payload: matchObj })
     navigation.navigate("Matches")
   }
 

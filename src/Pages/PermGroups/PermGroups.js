@@ -16,7 +16,6 @@ import ChatView from "./ChatView"
 import AddMembers from "./AddMembers"
 import { SET_PERM_GROUPS } from "../../Actions/groupActions"
 import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
-import SelectDate from "../TempGroups/FindMatches/SelectDate"
 import SelectDayInfo from "./SelectDayInfo"
 
 const PermGroupNavigator = createStackNavigator()
@@ -112,10 +111,6 @@ export default function PermGroups({ navigation }) {
       <PermGroupNavigator.Screen name='Edit Group' component={EditGroup} />
       <PermGroupNavigator.Screen name='Add Members' component={AddMembers} />
 
-      <PermGroupNavigator.Screen
-        name='Select Day For Search'
-        component={SelectDate}
-      />
       <PermGroupNavigator.Screen
         name='Member Profile'
         component={MemberProfile}

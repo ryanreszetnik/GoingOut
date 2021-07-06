@@ -9,6 +9,7 @@ import GroupPreview from "../../../Components/GroupPreview"
 import moment from "moment"
 import { showMessage, hideMessage } from "react-native-flash-message"
 import FlashMessage from "react-native-flash-message"
+import { addTempGroup } from "../../Endpoints/tempGroupsEndpoints"
 
 export default function CreateTempGroup({ navigation }) {
   const groups = useSelector((state) => state.groups.permGroups)
@@ -32,7 +33,7 @@ export default function CreateTempGroup({ navigation }) {
       setFormattedTime(moment(date).format("h:mm a"))
     }
   }
-  const createEvent = () => {
+  const createEvent = async () => {
     if (formattedTime === "" || date === "" || selectedGroup === undefined) {
       scrollRef.current?.scrollTo({
         y: 0,
@@ -66,15 +67,18 @@ export default function CreateTempGroup({ navigation }) {
     } else {
       const payload = {
         ...selectedGroup,
+        members: selectedGroup.members.map((member) => member.sub),
         date,
         time: formattedTime,
         baseGroups: [selectedGroup.groupId],
+        isVisible: false,
       }
       dispatch({ type: ADD_TEMP_GROUP, payload })
-      //API call
+      await addTempGroup(payload)
       navigation.navigate("View Temp Groups")
     }
   }
+
   return (
     <ScrollView ref={scrollRef}>
       <Text>Select Group</Text>
