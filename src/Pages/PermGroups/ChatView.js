@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from "react-redux"
 import Chat from "../../../Components/Chat"
 import uuid from "react-native-uuid"
 import moment from "moment"
-import { sendMessage } from "../../Endpoints/chatEndpoints"
+
 import { ADD_CHAT } from "../../Actions/chatActions"
+import { sendMessage } from "../../Socket/SocketMethods"
 
 export default function ChatView() {
   const curID = useSelector((state) => state.groups.curGroup)
   const chat = useSelector((state) =>
     state.chats.find((chat) => chat.groupId === curID)
   )
-  const socket = useSelector((state) => state.userSession.socket)
   const messages = chat ? chat.messages : []
   const profile = useSelector((state) => state.profile)
   const dispatch = useDispatch()
@@ -26,23 +26,16 @@ export default function ChatView() {
     }
 
     dispatch({ type: ADD_CHAT, payload: newMessage })
-    try {
-      socket.send(
-        JSON.stringify({
-          action: "sendMessage",
-          data: newMessage,
-        })
-      )
-    } catch (e) {
-      console.log(e)
-    }
+    sendMessage(newMessage)
 
     console.log(JSON.stringify(newMessage))
   }
 
-  return (
-    <View>
-      <Chat sendMessage={sendMess} messages={messages} />
-    </View>
-  )
+  console.log(JSON.stringify(newMessage))
 }
+
+return (
+  <View>
+    <Chat sendMessage={sendMess} messages={messages} />
+  </View>
+)
