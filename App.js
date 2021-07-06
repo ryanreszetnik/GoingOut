@@ -120,19 +120,15 @@ function App() {
 
   async function checkAuthState() {
     try {
-      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser()
-      const currentUserInfo = await Auth.currentUserInfo()
-      batch(() => {
-        dispatch({
-          type: SET_AUTH_USER,
-          payload: currentAuthenticatedUser,
-        })
-        dispatch({
-          type: SET_CURR_USER_DATA,
-          payload: currentUserInfo,
-        })
-        dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
+      dispatch({
+        type: SET_AUTH_USER,
+        payload: currentAuthenticatedUser,
       })
+      dispatch({
+        type: SET_CURR_USER_DATA,
+        payload: currentUserInfo,
+      })
+      dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
     } catch (err) {
       console.log(" User is not signed in")
       batch(() => {
