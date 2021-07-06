@@ -79,7 +79,7 @@ const LoadingData = () => {
     batch(() => {
       dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
       dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups })
-      dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempgroups })
+      dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempGroups })
       dispatch({ type: SET_CHATS, payload: initialAppData.messages })
       dispatch({ type: SET_FRIENDS, payload: initialAppData.friends })
     })
