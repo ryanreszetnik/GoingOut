@@ -1,15 +1,13 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React from "react"
-import ViewSingleMatch from "./FindMatches/ViewSingleMatch"
-import Matches from "./Matches"
+import Matches from "./Matching/Matches"
 import ViewTempGroups from "./ViewTempGroups"
-import MatchMemberList from "./FindMatches/MatchMemberList"
-import AddMatches from "./FindMatches/AddMatches"
 import CreateTempGroup from "./CreateTempGroup"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { View, Text, StyleSheet } from "react-native"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import ViewSingleTempGroup from "./ViewSingleTempGroup"
+import TempGroupChatView from "./TempGroupChatView"
 
 const TempGroupNavigator = createStackNavigator()
 
@@ -39,7 +37,7 @@ export default function TempGroups({ navigation }) {
       />
       <TempGroupNavigator.Screen
         name='Matches'
-        component={Matches}
+        component={TempGroupChatView}
         options={{
           headerTitle: "Chat",
           headerRight: () => (
@@ -59,27 +57,6 @@ export default function TempGroups({ navigation }) {
         }}
       />
       <TempGroupNavigator.Screen
-        name='View Single Match'
-        component={ViewSingleMatch}
-        options={{
-          headerTitle: "Match Info",
-          headerRight: () => (
-            <TouchableOpacity
-              style={styles.headerView}
-              onPress={() => navigation.navigate("Match Member List")}
-            >
-              <Text style={styles.headerText}>View Members</Text>
-              <FontAwesome5
-                style={{ marginRight: 20 }}
-                size={20}
-                name='users'
-                color='tomato'
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
-      <TempGroupNavigator.Screen
         name='View Single Temp Group'
         component={ViewSingleTempGroup}
         options={{
@@ -89,25 +66,21 @@ export default function TempGroups({ navigation }) {
               style={styles.headerView}
               onPress={() => navigation.navigate("Matches")}
             >
-              <Text style={styles.headerText}>Find Matches</Text>
+              <Text style={styles.headerText}>Chat</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name='users'
+                name='comments'
                 color='tomato'
               />
             </TouchableOpacity>
           ),
         }}
       />
-      <TempGroupNavigator.Screen
-        name='Match Member List'
-        component={MatchMemberList}
-        options={{ headerTitle: "Members" }}
-      />
+
       <TempGroupNavigator.Screen
         name='Search For Matches'
-        component={AddMatches}
+        component={Matches}
       />
       <TempGroupNavigator.Screen
         name='Create Temp Group'

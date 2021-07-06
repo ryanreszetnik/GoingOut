@@ -37,6 +37,7 @@ export default function CreatePermGroup({ navigation }) {
   ])
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
+  const groups = useSelector((state) => state.groups.permGroups)
 
   const createGroup = async () => {
     const newGroup = {

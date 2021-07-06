@@ -77,9 +77,9 @@ const LoadingData = () => {
   useEffect(() => {
     initializeAppState()
   }, [])
+
   const initializeAppState = async () => {
     const initialAppData = await appLoad()
-
     batch(() => {
       dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
       dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
@@ -122,11 +122,11 @@ function App() {
     try {
       dispatch({
         type: SET_AUTH_USER,
-        payload: currentAuthenticatedUser,
+        payload: await Auth.currentAuthenticatedUser(),
       })
       dispatch({
         type: SET_CURR_USER_DATA,
-        payload: currentUserInfo,
+        payload: await Auth.currentUserInfo(),
       })
       dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
     } catch (err) {

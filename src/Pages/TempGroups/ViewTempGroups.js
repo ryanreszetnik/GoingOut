@@ -23,7 +23,6 @@ export default function ViewTempGroups({ navigation }) {
   return (
     <ScrollView>
       {groups.map((group) => {
-        console.log(group)
         return (
           <TempGroupPreview
             group={group}

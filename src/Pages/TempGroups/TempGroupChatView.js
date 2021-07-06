@@ -7,8 +7,8 @@ import moment from "moment"
 import { sendMessage } from "../../Endpoints/chatEndpoints"
 import { ADD_CHAT } from "../../Actions/chatActions"
 
-export default function ChatView() {
-  const curID = useSelector((state) => state.groups.curGroup)
+export default function TempGroupChatView() {
+  const curID = useSelector((state) => state.groups.curTempGroup)
   const chat = useSelector((state) =>
     state.chats.find((chat) => chat.groupId === curID)
   )
@@ -27,6 +27,7 @@ export default function ChatView() {
 
     dispatch({ type: ADD_CHAT, payload: newMessage })
     try {
+      // console.log(await sendMessage(newMessage));
       socket.send(
         JSON.stringify({
           action: "sendMessage",

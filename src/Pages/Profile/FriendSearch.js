@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppTextInput from "../../../Components/AppTextInput"
 import UserList from "../../../Components/UserList"
@@ -9,13 +9,13 @@ import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 export default function FriendSearch({ navigation }) {
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
+  const sub = useSelector((state) => state.userSession.userData).attributes.sub
 
   const updateSearch = async (term) => {
     setSearchTerm(term)
     if (term.length > 0) {
       const newFriends = await searchUser(term)
-      console.log(newFriends)
-      setFriends(newFriends)
+      setFriends(newFriends.filter((friend) => friend.sub !== sub))
     } else {
       setFriends([])
     }

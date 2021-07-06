@@ -5,15 +5,19 @@ import AppButton from "../../../Components/AppButton"
 import MonthPicker from "../../../Components/MonthPicker"
 import { ADD_TEMP_GROUP } from "../../Actions/groupActions"
 import GroupPreview from "../../../Components/GroupPreview"
-//import DateTimePicker from "@react-native-community/datetimepicker"
+import DateTimePicker from "@react-native-community/datetimepicker"
 import moment from "moment"
 import { showMessage, hideMessage } from "react-native-flash-message"
 import FlashMessage from "react-native-flash-message"
 import { addTempGroup } from "../../Endpoints/tempGroupsEndpoints"
+import uuid from "react-native-uuid"
+import AppTextInput from "../../../Components/AppTextInput"
 
 export default function CreateTempGroup({ navigation }) {
   const groups = useSelector((state) => state.groups.permGroups)
   const dispatch = useDispatch()
+  const [name, setName] = useState("")
+  const [bio, setBio] = useState("")
   const [selectedGroup, setSelectedGroup] = useState()
   const [date, setDate] = useState("")
   const [time, setTime] = useState(new Date())
@@ -67,11 +71,14 @@ export default function CreateTempGroup({ navigation }) {
     } else {
       const payload = {
         ...selectedGroup,
+        groupId: uuid.v4(),
         members: selectedGroup.members.map((member) => member.sub),
         date,
         time: formattedTime,
         baseGroups: [selectedGroup.groupId],
         isVisible: false,
+        name,
+        bio,
       }
       dispatch({ type: ADD_TEMP_GROUP, payload })
       await addTempGroup(payload)
@@ -103,6 +110,22 @@ export default function CreateTempGroup({ navigation }) {
           )
         })}
       </View>
+      <Text>Event Name</Text>
+      <AppTextInput
+        value={name}
+        onChangeText={(text) => setName(text)}
+        leftIcon='card-text'
+        placeholder='Enter Event Name'
+        autoCapitalize='none'
+      />
+      <Text>Event Bio</Text>
+      <AppTextInput
+        value={bio}
+        onChangeText={(text) => setBio(text)}
+        leftIcon='card-text'
+        placeholder='Enter a short Bio'
+        autoCapitalize='none'
+      />
       <Text>Select Date</Text>
       <MonthPicker
         updateDate={(date) => {
@@ -111,7 +134,7 @@ export default function CreateTempGroup({ navigation }) {
         }}
       />
 
-      {/* {selected && (
+      {selected && (
         <DateTimePicker
           value={time}
           mode='time'
@@ -119,7 +142,7 @@ export default function CreateTempGroup({ navigation }) {
           display='default'
           onChange={setTimePicker}
         />
-      )} */}
+      )}
       {formattedTime !== "" && <Text>Selected Time: {formattedTime}</Text>}
       <AppButton title='Create Event' onPress={createEvent} />
       <FlashMessage />
