@@ -3,7 +3,12 @@ import {Message,Group,EditGroup,EditTempGroup,CreateTempGroup} from '../Types/so
 import { SEND_MESSAGE } from './socket.constants';
 let socket = null;
 function updateSocket(){
-    socket = store.getState().userSession.socket;
+  const state = store.getState();
+  try{
+    socket = state.userSession.socket;
+  }catch(e){
+    console.log("socket or sub does not exist")
+  }
 }
 store.subscribe(updateSocket);
 const socketSend = (action, data) => {
@@ -23,6 +28,9 @@ const socketSend = (action, data) => {
 export const sendMessage = (message:Message)=>{
     socketSend(SEND_MESSAGE,message)
 }
+export const updateFriendRequest = (friendSub:string, confirm:boolean)=>{
+  socketSend("",{friendSub,confirm})
+}
 //Perm Group Methods
 export const createPermGroup = (group:Group)=>{}
 export const editPermGroup = (group:EditGroup)=>{}
@@ -37,8 +45,4 @@ export const leaveTempGroup = (groupId:string) => {};
 //Matching Methods
 export const matchWithGroup = (baseGroup:string, requestGroup:string)=>{};
 export const sendMergeRequest = (baseGroup:string, matchId:string) => {};
-
-
-
-
 

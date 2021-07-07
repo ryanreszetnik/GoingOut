@@ -5,3 +5,4 @@ export const MESSAGE_SENT = "messageSent";
 
 //outgoing events (api gateway endpoints)
 export const SEND_MESSAGE = "sendMessage"
+export const SEND_FRIEND_REQUEST ="friendRequest"

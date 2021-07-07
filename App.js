@@ -12,6 +12,8 @@ import ConfirmSignUp from "./src/Pages/Authentication/ConfirmSignUp"
 import Profile from "./src/Pages/Profile/Profile"
 import ForgotPassword from "./src/Pages/Authentication/ForgotPassword"
 import { useDispatch, useSelector, batch } from "react-redux"
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import Fontawesome from "react-native-vector-icons/FontAwesome";
 
 import {
   SET_AUTH_STATUS,
@@ -61,14 +63,82 @@ const TabNavigator = () => {
   return (
     <Fragment>
       <SocketClient />
-      <Tab.Navigator>
-        <Tab.Screen name='Notifications' component={Notifications} />
-        <Tab.Screen name='Temp Groups' component={TempGroups} />
-        <Tab.Screen name='Perm Groups' component={PermGroups} />
-        <Tab.Screen name='Profile' component={Profile} />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName = "ios-information-circle";
+            let iconType = "ion";
+            switch (route.name) {
+              case "Notifications":
+                iconName = focused ? "notifications" : "notifications-outline";
+                break;
+              case "Temp Groups":
+                iconName = focused ? "calendar" : "calendar-outline";
+
+                break;
+              case "Perm Groups":
+                iconName = focused ? "chatbubbles" : "chatbubbles-outline";
+                break;
+              case "Profile":
+                iconName = focused ? "user" : "user-o";
+                iconType = "font";
+                break;
+            }
+            if (iconType === "ion") {
+              return <Ionicons name={iconName} size={size} color={color} />;
+            } else {
+              return <Fontawesome name={iconName} size={size} color={color} />;
+            }
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: "tomato",
+          inactiveTintColor: "gray",
+        }}
+      >
+        <Tab.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{
+            tabBarBadge: null,
+            tabBarLabel: () => {
+              return null;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Temp Groups"
+          component={TempGroups}
+          options={{
+            tabBarBadge: null,
+            tabBarLabel: () => {
+              return null;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Perm Groups"
+          component={PermGroups}
+          options={{
+            tabBarBadge: null,
+            tabBarLabel: () => {
+              return null;
+            },
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarBadge: null,
+            tabBarLabel: () => {
+              return null;
+            },
+          }}
+        />
       </Tab.Navigator>
     </Fragment>
-  )
+  );
 }
 
 const LoadingData = () => {

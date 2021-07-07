@@ -31,11 +31,12 @@ export default function ChatView() {
     console.log(JSON.stringify(newMessage))
   }
 
-  console.log(JSON.stringify(newMessage))
+  
+  return (
+    <View>
+      <Chat sendMessage={sendMess} messages={messages} />
+    </View>
+  );
 }
 
-return (
-  <View>
-    <Chat sendMessage={sendMess} messages={messages} />
-  </View>
-)
+

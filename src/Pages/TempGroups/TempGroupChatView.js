@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 import Chat from "../../../Components/Chat"
 import uuid from "react-native-uuid"
 import moment from "moment"
-import { sendMessage } from "../../Endpoints/chatEndpoints"
 import { ADD_CHAT } from "../../Actions/chatActions"
+import { sendMessage } from "../../Socket/SocketMethods"
 
 export default function TempGroupChatView() {
   const curID = useSelector((state) => state.groups.curTempGroup)
@@ -26,17 +26,7 @@ export default function TempGroupChatView() {
     }
 
     dispatch({ type: ADD_CHAT, payload: newMessage })
-    try {
-      // console.log(await sendMessage(newMessage));
-      socket.send(
-        JSON.stringify({
-          action: "sendMessage",
-          data: newMessage,
-        })
-      )
-    } catch (e) {
-      console.log(e)
-    }
+    sendMessage(newMessage)
 
     console.log(JSON.stringify(newMessage))
   }
