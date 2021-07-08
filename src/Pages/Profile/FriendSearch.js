@@ -8,6 +8,7 @@ import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 
 export default function FriendSearch({ navigation }) {
   const [searchTerm, setSearchTerm] = useState("")
+  //const actualFriends = useSelector(state=>state.friends);
   const [friends, setFriends] = useState([])
   const sub = useSelector((state) => state.userSession.userData).attributes.sub
 
@@ -21,6 +22,8 @@ export default function FriendSearch({ navigation }) {
     }
   }
   const dispatch = useDispatch()
+
+  //useEffect(() => {updateSearch(searchTerm);}, [actualFriends.friends]);
 
   const onSelect = (profile) => {
     dispatch({ type: SET_CUR_PROFILE, payload: profile })

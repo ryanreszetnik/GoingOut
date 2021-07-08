@@ -2,21 +2,19 @@ import React, { useEffect } from "react"
 import { View, Text, StyleSheet, Image } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import AppButton from "../../../Components/AppButton"
-import {
-  acceptRequest,
-  deleteFriend,
-  requestFriend,
-} from "../../Endpoints/friendsEndpoints"
+// import {
+//   acceptRequest,
+//   deleteFriend,
+//   requestFriend,
+// } from "../../Endpoints/friendsEndpoints"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import {
-  ACCEPT_REQUEST,
-  ADD_FRIEND,
-  REMOVE_FRIEND,
   SET_CUR_PROFILE,
   SET_OTHER_FRIENDS,
 } from "../../Actions/friendActions"
 import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
+import { updateFriendRequest } from "../../Socket/SocketMethods"
 
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
@@ -24,8 +22,9 @@ export default function UserProfile({ navigation }) {
   const dispatch = useDispatch()
   const sendRequest = async () => {
     try {
-      console.log(await requestFriend(profile.sub))
-      dispatch({ type: ADD_FRIEND, payload: profile })
+      // console.log(await requestFriend(profile.sub))
+      // dispatch({ type: ADD_FRIEND, payload: profile })
+      updateFriendRequest(profile.sub,true)
     } catch (error) {
       console.log(error)
     }
@@ -33,21 +32,22 @@ export default function UserProfile({ navigation }) {
   }
   const requestAccept = async () => {
     try {
-      const ret = await acceptRequest(profile.sub)
-      dispatch({ type: ACCEPT_REQUEST, payload: profile })
+      //const ret = await acceptRequest(profile.sub)
+      // dispatch({ type: ACCEPT_REQUEST, payload: profile })
+      updateFriendRequest(profile.sub, true);
     } catch (error) {
       console.log(error)
     }
     // navigation.navigate("Friends")
   }
   const removeFriend = async () => {
-    console.log(profile.status)
     try {
-      const ret = await deleteFriend(profile.sub)
-      console.log(ret)
-      dispatch({ type: REMOVE_FRIEND, payload: profile })
-      console.log(profile.sub)
-      console.log("new List", friendsList)
+      // const ret = await deleteFriend(profile.sub)
+      // console.log(ret)
+      // dispatch({ type: REMOVE_FRIEND, payload: profile })
+      // console.log(profile.sub)
+      // console.log("new List", friendsList)
+      updateFriendRequest(profile.sub, false);
     } catch (error) {
       console.log(error)
     }
