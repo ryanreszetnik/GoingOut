@@ -1,26 +1,29 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import AppButton from "../../../../Components/AppButton"
 import { useDispatch, useSelector } from "react-redux"
 import uuid from "react-native-uuid"
-import { ADD_MATCH } from "../../../Actions/groupActions"
+import { ADD_MATCH, SET_CUR_TEMP_GROUP } from "../../../Actions/groupActions"
 import { matchWithGroup } from "../../../Socket/SocketMethods"
 
 export default function ViewSingleMatch({ navigation }) {
   const dispatch = useDispatch()
   const groupId = useSelector((state) => state.groups.curBaseGroup)
-  const otherGroupId = useSelector((state) => state.groups.curTempGroup)
+  const otherGroupId = useSelector((state) => state.groups.curMatch)
   const matches = useSelector((state) => state.groups.matches)
+  const filteredMatches = matches.filter((group) => group.groupId === groupId)
+  console.log(matches.find((group) => group.otherGroupId === otherGroupId))
   const matched =
     matches.length > 0
-      ? matches.find((group) => group.otherGroupId === otherGroupId).groupId ===
-        groupId
+      ? filteredMatches.find((group) => group.otherGroupId === otherGroupId) !==
+          undefined &&
+        filteredMatches.find((group) => group.otherGroupId === otherGroupId)
+          .groupId === groupId
       : false
   const onPress = () => {
     !matched && matchWithGroup(groupId, uuid.v4(), otherGroupId)
     navigation.navigate("Match Chat View")
   }
-
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>

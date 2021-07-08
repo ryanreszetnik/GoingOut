@@ -4,11 +4,12 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
 
 export default function TempGroupPreview({ group, onPress, id }) {
-  const baseGroups = group.baseGroups.map((id) =>
-    useSelector((state) => state.groups.permGroups).find(
-      (group) => group.groupId === id
-    )
-  )
+  // const baseGroups = group.baseGroups.map((id) =>
+  //   useSelector((state) => state.groups.permGroups).find(
+  //     (group) => group.groupId === id
+  //   )
+  // )
+  const baseGroups = []
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <Text style={styles.header}>{group.name}</Text>
