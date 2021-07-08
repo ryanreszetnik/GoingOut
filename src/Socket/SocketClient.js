@@ -8,6 +8,7 @@ import { UPDATE_FRIEND, ADD_FRIEND, REMOVE_FRIEND } from "../Actions/friendActio
 import { ADD_PERM_GROUP } from "../Actions/groupActions";
 
 export default function SocketClient() {
+  const [localSocket,setLocalSocket] = useState(null);
   const token = useSelector(
     (state) => state.userSession.user.signInUserSession.accessToken.jwtToken
   )
@@ -28,11 +29,22 @@ export default function SocketClient() {
       }
     }
 
+    useEffect(() => {
+      console.log("socket now", localSocket?localSocket.readyState:"No socket");
+    }, [localSocket]);
 
   useEffect(() => {
 
     const socket = new WebSocket(`${socketURL}?token=${token}`);
-    dispatch({ type: SET_SOCKET,payload:socket });
+    
+    
+    socket.onopen=function(event){
+      dispatch({ type: SET_SOCKET, payload: socket });
+    }
+   
+    socket.onerror=function(event){
+      console.log("SOCKET ERROR",event)
+    }
     socket.onmessage=function(event){
       let data;
       let body;

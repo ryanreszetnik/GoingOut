@@ -36,7 +36,9 @@ export const updateFriendRequest = (friendSub:string, confirm:boolean)=>{
 export const createPermGroup = (group:Group)=>{
   socketSend(CREATE_PERM_GROUP,group)
 }
-export const editPermGroup = (group:EditGroup)=>{}
+export const editPermGroup = (group:EditGroup)=>{
+  console.log("Edit Group",group)
+}
 export const addPermGroupMembers = (groupId:string, members:string[])=>{}
 export const leavePermGroup = (groupId:string)=>{}
 //Temp group Methods

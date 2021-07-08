@@ -39,25 +39,27 @@ export default function EditGroup({ navigation }) {
   const [locRange, setLocRange] = useState(group.locRange)
   const [groupName, setGroupName] = useState(group.name)
   const [groupBio, setGroupBio] = useState(group.bio)
-  const [ageRange, setAgeRange] = useState([group.minAge, group.maxAge])
+  const [ageRange, setAgeRange] = useState([group.ageRange.minAge, group.ageRange.maxAge])
   const [loc, setLoc] = useState(group.loc)
   const [genderPref, setPref] = useState(group.genderPref)
 
   const editGroup = async () => {
     const newGroup = {
       groupId: group.groupId,
-      name: groupName,
-      bio: groupBio,
-      loc,
-      locRange,
-      ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
-      genderPref,
-      members: group.members,
-      averageAge: group.averageAge,
-      averageGender: group.averageGender,
-    }
-    const payload = await updateGroup(newGroup)
-    dispatch({ type: EDIT_PERM_GROUP, payload })
+      ...(groupName !== group.name ? { name: groupName } : {}),
+      ...(groupBio !== group.bio ? { bio: groupBio } : {}),
+      ...(loc.lat !== group.loc.lat || loc.lon !== group.loc.lon
+        ? { loc }
+        : {}),
+      ...(locRange !== group.locRange ? { locRange } : {}),
+      ...(ageRange.minAge !== group.ageRange.minAge ||
+      ageRange.maxAge !== group.ageRange.maxAge
+        ? { ageRange: { minAge: ageRange[0], maxAge: ageRange[1] } }
+        : {}),
+      ...(genderPref !== group.genderPref ? { genderPref } : {}),
+    };
+    //const payload = await updateGroup(newGroup)
+    //dispatch({ type: EDIT_PERM_GROUP, payload })
     navigation.navigate("View Single Group")
   }
 
