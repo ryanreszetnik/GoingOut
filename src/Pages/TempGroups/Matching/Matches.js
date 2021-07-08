@@ -3,6 +3,7 @@ import { View, Text, Button, ActivityIndicator } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import TempGroupPreview from "../../../../Components/TempGroupPreview"
 import {
+  SET_CUR_MATCH,
   SET_CUR_TEMP_GROUP,
   SET_FOUND_MATCHES,
 } from "../../../Actions/groupActions"
@@ -11,7 +12,7 @@ import { searchMatches } from "../../../Endpoints/tempGroupsEndpoints"
 export default function Matches({ navigation }) {
   const dispatch = useDispatch()
   const moveToView = (id) => {
-    dispatch({ type: SET_CUR_TEMP_GROUP, payload: id })
+    dispatch({ type: SET_CUR_MATCH, payload: id })
     navigation.navigate("View Single Match")
   }
   const [matches, setMatches] = useState(
@@ -28,7 +29,7 @@ export default function Matches({ navigation }) {
     }
     loadMatches()
   }, [])
-  console.log(matches)
+
   return (
     <View>
       {matches.length === 0 ? (

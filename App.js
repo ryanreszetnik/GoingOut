@@ -12,8 +12,8 @@ import ConfirmSignUp from "./src/Pages/Authentication/ConfirmSignUp"
 import Profile from "./src/Pages/Profile/Profile"
 import ForgotPassword from "./src/Pages/Authentication/ForgotPassword"
 import { useDispatch, useSelector, batch } from "react-redux"
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import Fontawesome from "react-native-vector-icons/FontAwesome";
+import Ionicons from "react-native-vector-icons/Ionicons"
+import Fontawesome from "react-native-vector-icons/FontAwesome"
 
 import {
   SET_AUTH_STATUS,
@@ -32,7 +32,11 @@ import PermGroups from "./src/Pages/PermGroups/PermGroups"
 import Notifications from "./src/Pages/Notifications/Notifications"
 import { appLoad } from "./src/Endpoints/generalEndpoints"
 import { SET_PROFILE } from "./src/Actions/profileActions"
-import { SET_PERM_GROUPS, SET_TEMP_GROUPS } from "./src/Actions/groupActions"
+import {
+  SET_MATCHES,
+  SET_PERM_GROUPS,
+  SET_TEMP_GROUPS,
+} from "./src/Actions/groupActions"
 import { SET_CHATS } from "./src/Actions/chatActions"
 import { SET_FRIENDS } from "./src/Actions/friendActions"
 import SocketClient from "./src/Socket/SocketClient"
@@ -66,28 +70,28 @@ const TabNavigator = () => {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName = "ios-information-circle";
-            let iconType = "ion";
+            let iconName = "ios-information-circle"
+            let iconType = "ion"
             switch (route.name) {
               case "Notifications":
-                iconName = focused ? "notifications" : "notifications-outline";
-                break;
+                iconName = focused ? "notifications" : "notifications-outline"
+                break
               case "Temp Groups":
-                iconName = focused ? "calendar" : "calendar-outline";
+                iconName = focused ? "calendar" : "calendar-outline"
 
-                break;
+                break
               case "Perm Groups":
-                iconName = focused ? "chatbubbles" : "chatbubbles-outline";
-                break;
+                iconName = focused ? "chatbubbles" : "chatbubbles-outline"
+                break
               case "Profile":
-                iconName = focused ? "user" : "user-o";
-                iconType = "font";
-                break;
+                iconName = focused ? "user" : "user-o"
+                iconType = "font"
+                break
             }
             if (iconType === "ion") {
-              return <Ionicons name={iconName} size={size} color={color} />;
+              return <Ionicons name={iconName} size={size} color={color} />
             } else {
-              return <Fontawesome name={iconName} size={size} color={color} />;
+              return <Fontawesome name={iconName} size={size} color={color} />
             }
           },
         })}
@@ -97,48 +101,48 @@ const TabNavigator = () => {
         }}
       >
         <Tab.Screen
-          name="Notifications"
+          name='Notifications'
           component={Notifications}
           options={{
             tabBarBadge: null,
             tabBarLabel: () => {
-              return null;
+              return null
             },
           }}
         />
         <Tab.Screen
-          name="Temp Groups"
+          name='Temp Groups'
           component={TempGroups}
           options={{
             tabBarBadge: null,
             tabBarLabel: () => {
-              return null;
+              return null
             },
           }}
         />
         <Tab.Screen
-          name="Perm Groups"
+          name='Perm Groups'
           component={PermGroups}
           options={{
             tabBarBadge: null,
             tabBarLabel: () => {
-              return null;
+              return null
             },
           }}
         />
         <Tab.Screen
-          name="Profile"
+          name='Profile'
           component={Profile}
           options={{
             tabBarBadge: null,
             tabBarLabel: () => {
-              return null;
+              return null
             },
           }}
         />
       </Tab.Navigator>
     </Fragment>
-  );
+  )
 }
 
 const LoadingData = () => {
@@ -157,6 +161,7 @@ const LoadingData = () => {
       dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempGroups })
       dispatch({ type: SET_CHATS, payload: initialAppData.messages })
       dispatch({ type: SET_FRIENDS, payload: initialAppData.friends })
+      dispatch({ type: SET_MATCHES, payload: initialAppData.matches })
     })
   }
 
