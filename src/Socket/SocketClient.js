@@ -1,15 +1,34 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { socketURL } from "../aws-exports";
-import { useDispatch, useSelector } from "react-redux";
-import { SET_SOCKET } from "../Actions/authActions";
+import { useDispatch, useSelector, batch } from "react-redux";
+import { SET_SOCKET, SET_USER_GROUPS } from "../Actions/authActions";
 import { ADD_CHAT } from "../Actions/chatActions";
-import { MESSAGE_SENT, RECEIVE_MESSAGE } from "./socket.constants";
+import { FRIEND_UPDATE, MESSAGE_SENT, NEW_PERM_GROUP, RECEIVE_MESSAGE } from "./socket.constants";
+import { UPDATE_FRIEND, ADD_FRIEND, REMOVE_FRIEND } from "../Actions/friendActions";
+import { ADD_PERM_GROUP } from "../Actions/groupActions";
 
 export default function SocketClient() {
   const token = useSelector(
     (state) => state.userSession.user.signInUserSession.accessToken.jwtToken
   )
+  const groups = useSelector((state) => state.groups.permGroups);
   const dispatch = useDispatch()
+
+    const updateFriend= (body)=>{
+      console.log(body.status)
+      if(body.status==="NOTHING"){
+       //remove friend
+       dispatch({ type: REMOVE_FRIEND, payload: body });
+      }else if(body.status ==="CONFIRMED"){
+        //update friend
+        dispatch({ type: UPDATE_FRIEND, payload: body });
+      }else{
+        //add friend
+        dispatch({ type: ADD_FRIEND, payload: body });
+      }
+    }
+
+
   useEffect(() => {
 
     const socket = new WebSocket(`${socketURL}?token=${token}`);
@@ -38,6 +57,22 @@ export default function SocketClient() {
         case MESSAGE_SENT:
           console.log("Message Sent Success:", body);
           break;
+        case FRIEND_UPDATE:
+          updateFriend(body);
+          break;
+        case NEW_PERM_GROUP:
+          batch(() => {
+            dispatch({
+              type: ADD_PERM_GROUP,
+              payload: body,
+            });
+            dispatch({
+              type: SET_USER_GROUPS,
+              payload: groups.map((group) => group.groupId),
+            })
+          })
+        break;
+
         default:
           console.log("No Event Action Match", event)
       }

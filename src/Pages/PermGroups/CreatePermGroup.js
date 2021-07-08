@@ -16,6 +16,7 @@ import { ADD_PERM_GROUP } from "../../Actions/groupActions"
 import { addPermGroup } from "../../Endpoints/permGroupsEndpoints"
 import uuid from "react-native-uuid"
 import { SET_USER_GROUPS } from "../../Actions/authActions"
+import { createPermGroup } from "../../Socket/SocketMethods"
 
 export default function CreatePermGroup({ navigation }) {
   const dispatch = useDispatch()
@@ -37,7 +38,7 @@ export default function CreatePermGroup({ navigation }) {
   ])
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
-  const groups = useSelector((state) => state.groups.permGroups)
+  
 
   const createGroup = async () => {
     const newGroup = {
@@ -50,17 +51,7 @@ export default function CreatePermGroup({ navigation }) {
       genderPref: genderPref,
       groupId: uuid.v4(),
     }
-    const payload = await addPermGroup(newGroup)
-    batch(() => {
-      dispatch({
-        type: ADD_PERM_GROUP,
-        payload: payload,
-      })
-      dispatch({
-        type: SET_USER_GROUPS,
-        payload: groups.map((group) => group.groupId),
-      })
-    })
+    createPermGroup(newGroup);
     navigation.navigate("View Perm Groups")
   }
   const updateSearch = async (term) => {

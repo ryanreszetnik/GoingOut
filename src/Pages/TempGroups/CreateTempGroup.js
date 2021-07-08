@@ -5,7 +5,7 @@ import AppButton from "../../../Components/AppButton"
 import MonthPicker from "../../../Components/MonthPicker"
 import { ADD_TEMP_GROUP } from "../../Actions/groupActions"
 import GroupPreview from "../../../Components/GroupPreview"
-import DateTimePicker from "@react-native-community/datetimepicker"
+//import DateTimePicker from "@react-native-community/datetimepicker"
 import moment from "moment"
 import { showMessage, hideMessage } from "react-native-flash-message"
 import FlashMessage from "react-native-flash-message"
@@ -134,7 +134,7 @@ export default function CreateTempGroup({ navigation }) {
         }}
       />
 
-      {selected && (
+      {/*selected && (
         <DateTimePicker
           value={time}
           mode='time'
@@ -142,7 +142,7 @@ export default function CreateTempGroup({ navigation }) {
           display='default'
           onChange={setTimePicker}
         />
-      )}
+      )*/}
       {formattedTime !== "" && <Text>Selected Time: {formattedTime}</Text>}
       <AppButton title='Create Event' onPress={createEvent} />
       <FlashMessage />
