@@ -2,12 +2,15 @@ import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
-
-export default function ViewSingleTempGroup() {
+import AppButton from "../../../Components/AppButton"
+export default function ViewSingleTempGroup({ navigation }) {
   const curGroup = useSelector((state) => state.groups.curTempGroup)
   const event = useSelector((state) =>
     state.groups.tempGroups.find((group) => group.groupId === curGroup)
   )
+  const onPress = () => {
+    navigation.navigate("Search For Matches")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.attributeContainer}>
@@ -49,6 +52,7 @@ export default function ViewSingleTempGroup() {
             {/*group.location*/ "placeholder"}
           </Text>
         </View>
+        <AppButton title='Find Matches' onPress={onPress}></AppButton>
       </View>
     </View>
   )

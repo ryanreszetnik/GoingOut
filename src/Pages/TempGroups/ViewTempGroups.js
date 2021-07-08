@@ -20,6 +20,7 @@ export default function ViewTempGroups({ navigation }) {
 
     navigation.navigate("View Single Temp Group")
   }
+
   return (
     <ScrollView>
       {groups.map((group) => {

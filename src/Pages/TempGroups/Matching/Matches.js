@@ -1,42 +1,54 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, Button } from "react-native"
+import { View, Text, Button, ActivityIndicator } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import GroupPreview from "../../../../Components/GroupPreview"
-import { SET_MATCHES } from "../../../Actions/groupActions"
+import TempGroupPreview from "../../../../Components/TempGroupPreview"
+import {
+  SET_CUR_TEMP_GROUP,
+  SET_FOUND_MATCHES,
+} from "../../../Actions/groupActions"
 import { searchMatches } from "../../../Endpoints/tempGroupsEndpoints"
 
 export default function Matches({ navigation }) {
   const dispatch = useDispatch()
-  const moveToView = () => {
-    navigation.navigate("Chat View")
+  const moveToView = (id) => {
+    dispatch({ type: SET_CUR_TEMP_GROUP, payload: id })
+    navigation.navigate("View Single Match")
   }
   const [matches, setMatches] = useState(
-    useSelector((state) => state.groups.matches)
+    useSelector((state) => state.groups.foundMatches)
   )
   const curBaseGroup = useSelector((state) => state.groups.curBaseGroup)
 
   useEffect(() => {
     const loadMatches = async () => {
-      setMatches(matches === [] ? await searchMatches(curBaseGroup) : matches)
-      dispatch({ type: SET_MATCHES, payload: matches })
-      console.log(await searchMatches(curBaseGroup))
+      setMatches(
+        matches.length === 0 ? await searchMatches(curBaseGroup) : matches
+      )
+      dispatch({ type: SET_FOUND_MATCHES, payload: matches })
     }
-
     loadMatches()
   }, [])
-
+  console.log(matches)
   return (
     <View>
-      {matches.map((group) => {
-        return (
-          <GroupPreview
-            group={group}
-            key={group.groupId}
-            onPress={moveToView}
-            id={group.groupId}
-          />
-        )
-      })}
+      {matches.length === 0 ? (
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <ActivityIndicator size='large' color='tomato' />
+        </View>
+      ) : (
+        matches.map((group) => {
+          return (
+            <TempGroupPreview
+              group={group}
+              key={group.groupId}
+              onPress={() => moveToView(group.groupId)}
+              id={group.groupId}
+            />
+          )
+        })
+      )}
     </View>
   )
 }

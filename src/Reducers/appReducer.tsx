@@ -4,7 +4,6 @@ import groupsReducer from './groupsReducer';
 import profileReducer from './profileReducer';
 import userSessionReducer from './userSessionReducer';
 import friendReducer from "./friendReducer"
-import potentialMatchesReducer from "./potentialMatchesReducer"
 
 
 const rootReducer = combineReducers({
@@ -13,6 +12,5 @@ const rootReducer = combineReducers({
     groups:groupsReducer,
     chats:chatReducer,
     friends:friendReducer,
-    potentialMatches:potentialMatchesReducer
 });
 export default rootReducer;
