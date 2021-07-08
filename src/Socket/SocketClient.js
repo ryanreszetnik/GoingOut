@@ -5,6 +5,8 @@ import { SET_SOCKET, SET_USER_GROUPS } from "../Actions/authActions"
 import { ADD_CHAT } from "../Actions/chatActions"
 import {
   FRIEND_UPDATE,
+  GROUPS_MERGED,
+  MATCH_ACCEPTED,
   MESSAGE_SENT,
   NEW_PERM_GROUP,
   RECEIVE_MESSAGE,
@@ -14,7 +16,11 @@ import {
   ADD_FRIEND,
   REMOVE_FRIEND,
 } from "../Actions/friendActions"
-import { ADD_PERM_GROUP } from "../Actions/groupActions"
+import {
+  ADD_MATCH,
+  ADD_PERM_GROUP,
+  ADD_TEMP_GROUP,
+} from "../Actions/groupActions"
 
 export default function SocketClient() {
   const token = useSelector(
@@ -78,7 +84,12 @@ export default function SocketClient() {
             })
           })
           break
-
+        case GROUPS_MERGED:
+          dispatch({ type: ADD_TEMP_GROUP, payload: body })
+          break
+        case MATCH_ACCEPTED:
+          dispatch({ type: ADD_MATCH, payload: body })
+          break
         default:
           console.log("No Event Action Match", event)
       }

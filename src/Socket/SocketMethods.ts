@@ -1,6 +1,6 @@
 import store from '../Store/store'
 import {Message,Group,EditGroup,EditTempGroup,CreateTempGroup} from '../Types/socketDTO.types'
-import { CREATE_PERM_GROUP, SEND_FRIEND_REQUEST, SEND_MESSAGE } from './socket.constants';
+import { ACCEPT_MATCH, CREATE_PERM_GROUP, REQUEST_MERGE, SEND_FRIEND_REQUEST, SEND_MESSAGE } from './socket.constants';
 let socket = null;
 function updateSocket(){
   const state = store.getState();
@@ -45,7 +45,12 @@ export const deleteTempGroup = (groupId:string) => {};
 export const editTempGroup = (group:EditTempGroup) => {};
 export const addTempGroupMembers = (groupId:string, members:string[]) => {};
 export const leaveTempGroup = (groupId:string) => {};
+
 //Matching Methods
-export const matchWithGroup = (baseGroup:string, requestGroup:string)=>{};
-export const sendMergeRequest = (baseGroup:string, matchId:string) => {};
+export const matchWithGroup = (groupId:string, matchId:string, otherGroupId:string)=>{
+  socketSend(ACCEPT_MATCH, {groupId, matchId, otherGroupId})
+};
+export const sendMergeRequest = (baseGroup:string, matchId:string, otherGroup:string) => {
+  socketSend(REQUEST_MERGE, {baseGroup, matchId, otherGroup})
+};
 

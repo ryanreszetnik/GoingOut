@@ -1,16 +1,33 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import AppButton from "../../../../Components/AppButton"
+import { useDispatch, useSelector } from "react-redux"
+import uuid from "react-native-uuid"
+import { ADD_MATCH } from "../../../Actions/groupActions"
+import { matchWithGroup } from "../../../Socket/SocketMethods"
 
 export default function ViewSingleMatch({ navigation }) {
+  const dispatch = useDispatch()
+  const groupId = useSelector((state) => state.groups.curBaseGroup)
+  const otherGroupId = useSelector((state) => state.groups.curTempGroup)
+  const matches = useSelector((state) => state.groups.matches)
+  const matched =
+    matches.length > 0
+      ? matches.find((group) => group.otherGroupId === otherGroupId).groupId ===
+        groupId
+      : false
   const onPress = () => {
+    !matched && matchWithGroup(groupId, uuid.v4(), otherGroupId)
     navigation.navigate("Match Chat View")
   }
+
   return (
     <View style={styles.container}>
-      <Text></Text>
       <View style={{ alignItems: "center" }}>
-        <AppButton title='Start Chatting' onPress={onPress}></AppButton>
+        <AppButton
+          title={matched ? "Chat" : "Start Chatting"}
+          onPress={onPress}
+        ></AppButton>
       </View>
     </View>
   )
