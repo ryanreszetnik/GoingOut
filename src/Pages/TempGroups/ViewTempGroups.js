@@ -5,16 +5,14 @@ import { ScrollView } from "react-native-gesture-handler"
 import { batch, useDispatch, useSelector } from "react-redux"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
 import {
-  SET_CUR_BASE_GROUP,
   SET_CUR_TEMP_GROUP,
 } from "../../Actions/groupActions"
 
 export default function ViewTempGroups({ navigation }) {
-  const groups = useSelector((state) => state.groups.tempGroups)
+  const groups = useSelector((state) => state.tempGroups)
   const dispatch = useDispatch()
   const moveToView = (id) => {
     batch(() => {
-      dispatch({ type: SET_CUR_BASE_GROUP, payload: id })
       dispatch({ type: SET_CUR_TEMP_GROUP, payload: id })
     })
 

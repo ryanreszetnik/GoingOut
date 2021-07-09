@@ -6,9 +6,9 @@ import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 import AppButton from "../../../Components/AppButton"
 
 export default function MemberList({ navigation }) {
-  const curID = useSelector((state) => state.groups.curGroup)
+  const curID = useSelector((state) => state.current.permGroup)
   const members = useSelector((state) =>
-    state.groups.permGroups.find((group) => group.groupId === curID)
+    state.permGroups.find((group) => group.groupId === curID)
   ).members
 
   const dispatch = useDispatch()

@@ -8,8 +8,9 @@ import { View, Text, StyleSheet } from "react-native"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import ViewSingleTempGroup from "./ViewSingleTempGroup"
 import TempGroupChatView from "./TempGroupChatView"
-import MatchChatView from "./Matching/MatchChatView"
-import ViewSingleMatch from "./Matching/ViewSingleMatch"
+import MatchChatView from "./Matches/MatchChatView"
+import ViewSingleMatch from "./Matches/ViewSingleMatch"
+import ViewPotentialMatch from "./Matching/ViewPotentialMatch"
 import Merging from "./Matching/Merging"
 
 const TempGroupNavigator = createStackNavigator()
@@ -92,6 +93,11 @@ export default function TempGroups({ navigation }) {
       <TempGroupNavigator.Screen
         name='Search For Matches'
         component={Matches}
+      />
+      <TempGroupNavigator.Screen
+        name='View Single Potential Match'
+        component={ViewPotentialMatch}
+        options={{ headerTitle: "Match Info" }}
       />
       <TempGroupNavigator.Screen
         name='View Single Match'

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { View, Text, Button, TextInput, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { useDispatch, useSelector, batch } from "react-redux"
+import { useSelector, batch } from "react-redux"
 import moment from "moment"
 import MultiSlider from "@ptomasroos/react-native-multi-slider"
 import { ScrollView } from "react-native-gesture-handler"
@@ -19,7 +19,6 @@ import { SET_USER_GROUPS } from "../../Actions/authActions"
 import { createPermGroup } from "../../Socket/SocketMethods"
 
 export default function CreatePermGroup({ navigation }) {
-  const dispatch = useDispatch()
   const [locRange, setLocRange] = useState(25)
   const [groupName, setGroupName] = useState()
   const [groupBio, setGroupBio] = useState()

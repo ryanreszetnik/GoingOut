@@ -8,29 +8,24 @@ import { matchWithGroup } from "../../../Socket/SocketMethods"
 
 export default function ViewSingleMatch({ navigation }) {
   const dispatch = useDispatch()
-  const groupId = useSelector((state) => state.groups.curBaseGroup)
-  const otherGroupId = useSelector((state) => state.groups.curMatch)
-  const matches = useSelector((state) => state.groups.matches)
-  const filteredMatches = matches.filter((group) => group.groupId === groupId)
-  console.log(matches.find((group) => group.otherGroupId === otherGroupId))
-  const matched =
-    matches.length > 0
-      ? filteredMatches.find((group) => group.otherGroupId === otherGroupId) !==
-          undefined &&
-        filteredMatches.find((group) => group.otherGroupId === otherGroupId)
-          .groupId === groupId
-      : false
+  const groupId = useSelector((state) => state.current.tempGroup)
+  const matchId = useSelector((state) => state.current.match)
+  
+  const match = useSelector((state) => state.matches.find(ma=>ma.matchId===matchId))
+
   const onPress = () => {
-    !matched && matchWithGroup(groupId, uuid.v4(), otherGroupId)
+    console.log("Going to existing match")
     navigation.navigate("Match Chat View")
   }
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
+           <Text>Match</Text>
         <AppButton
-          title={matched ? "Chat" : "Start Chatting"}
+          title={"Chat"}
           onPress={onPress}
-        ></AppButton>
+        />
+        <Text>{match.otherGroup.groupId}</Text>
       </View>
     </View>
   )

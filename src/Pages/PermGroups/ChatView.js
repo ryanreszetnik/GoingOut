@@ -9,7 +9,7 @@ import { ADD_CHAT } from "../../Actions/chatActions"
 import { sendMessage } from "../../Socket/SocketMethods"
 
 export default function ChatView() {
-  const curID = useSelector((state) => state.groups.curGroup)
+  const curID = useSelector((state) => state.current.permGroup)
   const chat = useSelector((state) =>
     state.chats.find((chat) => chat.groupId === curID)
   )

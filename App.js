@@ -154,15 +154,20 @@ const LoadingData = () => {
 
   const initializeAppState = async () => {
     const initialAppData = await appLoad()
-    batch(() => {
-      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
-      dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
-      dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups })
-      dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempGroups })
-      dispatch({ type: SET_CHATS, payload: initialAppData.messages })
-      dispatch({ type: SET_FRIENDS, payload: initialAppData.friends })
-      dispatch({ type: SET_MATCHES, payload: initialAppData.matches })
-    })
+    console.log(initialAppData)
+    if(!initialAppData){
+      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
+    }else{
+      batch(() => {
+        dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
+        dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
+        dispatch({ type: SET_PERM_GROUPS, payload: initialAppData.groups })
+        dispatch({ type: SET_TEMP_GROUPS, payload: initialAppData.tempGroups })
+        dispatch({ type: SET_CHATS, payload: initialAppData.messages })
+        dispatch({ type: SET_FRIENDS, payload: initialAppData.friends })
+        dispatch({ type: SET_MATCHES, payload: initialAppData.matches })
+      })
+    }
   }
 
   return (

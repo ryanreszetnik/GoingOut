@@ -12,10 +12,15 @@ export const appLoad = async () => {
       "Content-Type": "application/json",
     },
   };
-  const data = await API.get(
+  let data;
+  try{
+   data = await API.get(
     "GeneralEndpoint",
     "/",
     apiRequest
   );
+  }catch(e){
+    return false;
+  }
   return data;
 };

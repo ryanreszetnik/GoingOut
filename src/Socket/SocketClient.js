@@ -27,7 +27,7 @@ export default function SocketClient() {
   const token = useSelector(
     (state) => state.userSession.user.signInUserSession.accessToken.jwtToken
   )
-  const groups = useSelector((state) => state.groups.permGroups)
+  const groups = useSelector((state) => state.permGroups)
   const dispatch = useDispatch()
 
   const updateFriend = (body) => {

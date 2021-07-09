@@ -32,8 +32,8 @@ import {
 } from "../../Endpoints/matchingEndpoints"
 
 export default function EditGroup({ navigation }) {
-  const group = useSelector((state) => state.groups.permGroups).find(
-    (group) => group.groupId === useSelector((state) => state.groups.curGroup)
+  const group = useSelector((state) => state.permGroups).find(
+    (group) => group.groupId === useSelector((state) => state.current.permGroup)
   )
   const dispatch = useDispatch()
   const [locRange, setLocRange] = useState(group.locRange)

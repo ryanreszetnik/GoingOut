@@ -6,13 +6,13 @@ import { useSelector, useDispatch } from "react-redux"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import AppButton from "../../../Components/AppButton"
-import { ADD_MEMBERS } from "../../Actions/groupActions"
+import { ADD_PERM_MEMBERS } from "../../Actions/groupActions"
 import { addMembers } from "../../Endpoints/permGroupsEndpoints"
 
 export default function AddMembers({ navigation }) {
   const dispatch = useDispatch()
-  const curId = useSelector((state) => state.groups.curGroup)
-  const group = useSelector((state) => state.groups.permGroups).find(
+  const curId = useSelector((state) => state.current.permGroup)
+  const group = useSelector((state) => state.permGroups).find(
     (group) => group.groupId === curId
   )
 
@@ -39,7 +39,7 @@ export default function AddMembers({ navigation }) {
     setMembers([...members, user])
   }
   const saveChanges = async () => {
-    dispatch({ type: ADD_MEMBERS, payload: members })
+    dispatch({ type: ADD_PERM_MEMBERS, payload: members })
     console.log(await addMembers(members, curId))
     navigation.navigate("Members")
   }

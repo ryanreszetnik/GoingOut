@@ -6,14 +6,10 @@ import { SET_CUR_GROUP } from "../src/Actions/groupActions"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 
 export default function GroupPreview({ group, onPress, id }) {
-  const dispatch = useDispatch()
-  const onSelect = () => {
-    dispatch({ type: SET_CUR_GROUP, payload: id })
-    onPress()
-  }
+  
 
   return (
-    <TouchableOpacity onPress={onSelect} style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <Text style={styles.header}>{group.name}</Text>
     </TouchableOpacity>
   )
