@@ -29,7 +29,7 @@ export default function ViewPotentialMatch({ navigation }) {
           title={"Start Chatting"}
           onPress={onPress}
         />
-        <Text>{match.name}</Text>
+        <Text>{match?match.name:JSON.stringify(match)}</Text>
       </View>
     </View>
   )
