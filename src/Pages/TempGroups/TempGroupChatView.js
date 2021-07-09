@@ -8,7 +8,7 @@ import { ADD_CHAT } from "../../Actions/chatActions"
 import { sendMessage } from "../../Socket/SocketMethods"
 
 export default function TempGroupChatView() {
-  const curID = useSelector((state) => state.groups.curTempGroup)
+  const curID = useSelector((state) => state.current.tempGroup)
   const chat = useSelector((state) =>
     state.chats.find((chat) => chat.groupId === curID)
   )
