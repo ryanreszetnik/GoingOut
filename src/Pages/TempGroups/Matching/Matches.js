@@ -15,20 +15,19 @@ export default function Matches({ navigation }) {
     dispatch({ type: SET_CUR_FOUND_MATCH, payload: id })
     navigation.navigate("View Single Potential Match")
   }
-  const [matches, setMatches] = useState(
-    useSelector((state) => state.foundMatches)
-  )
+  const matches= useSelector((state) => state.foundMatches)
+  
   const curBaseGroup = useSelector((state) => state.current.tempGroup)
 
   useEffect(() => {
     const loadMatches = async () => {
-      setMatches(
-        matches.length === 0 ? await searchMatches(curBaseGroup) : matches
-      )
-      dispatch({ type: SET_FOUND_MATCHES, payload: matches })
-    }
-    loadMatches()
-  }, [])
+      dispatch({
+        type: SET_FOUND_MATCHES,
+        payload: await searchMatches(curBaseGroup),
+      });
+    };
+    loadMatches();
+  }, [curBaseGroup]);
 
   return (
     <View>

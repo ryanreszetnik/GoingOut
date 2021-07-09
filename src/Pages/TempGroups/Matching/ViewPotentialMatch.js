@@ -13,7 +13,7 @@ export default function ViewPotentialMatch({ navigation }) {
   
   const match =useSelector((state) => state.foundMatches.find(ma=>ma.groupId===matchId))
   
-  console.log(match)
+  console.log(match,matchId,useSelector((state) => state.foundMatches))
   const onPress = () => {
     
     console.log("CREATE NEW MATCH")
