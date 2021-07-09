@@ -14,7 +14,7 @@ import uuid from "react-native-uuid"
 import AppTextInput from "../../../Components/AppTextInput"
 
 export default function CreateTempGroup({ navigation }) {
-  const groups = useSelector((state) => state.groups.permGroups)
+  const groups = useSelector((state) => state.permGroups)
   const dispatch = useDispatch()
   const [name, setName] = useState("")
   const [bio, setBio] = useState("")
