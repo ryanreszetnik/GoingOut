@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import uuid from "react-native-uuid"
 import { ADD_MATCH, SET_CUR_TEMP_GROUP } from "../../../Actions/groupActions"
 import { matchWithGroup } from "../../../Socket/SocketMethods"
+import UserList from "../../../../Components/UserList"
 
 export default function ViewPotentialMatch({ navigation }) {
   const dispatch = useDispatch()
@@ -17,22 +18,21 @@ export default function ViewPotentialMatch({ navigation }) {
   const onPress = () => {
     
     console.log("CREATE NEW MATCH")
-      // matchWithGroup(groupId, uuid.v4(), match.otherGroup.groupId)
+      matchWithGroup(groupId, uuid.v4(), match.groupId)
    
     navigation.navigate("Match Chat View")
   }
   return (
     <View style={styles.container}>
       <View style={{ alignItems: "center" }}>
-        <Text>Potential Match</Text>
-        <AppButton
-          title={"Start Chatting"}
-          onPress={onPress}
-        />
-        <Text>{match?match.name:JSON.stringify(match)}</Text>
+        <Text>{`Group Name: ${match.name}`}</Text>
+        <Text>{`Group Bio: ${match.bio}`}</Text>
+        <Text>{`Time: ${match.time}`}</Text>
+        <UserList onPress={()=>{}} users={match.members}/>
+        <AppButton title={"Start Chatting"} onPress={onPress} />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

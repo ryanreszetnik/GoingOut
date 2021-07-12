@@ -14,8 +14,9 @@ import {
   removePermGroup,
 } from "../../Endpoints/permGroupsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
+import TempGroupPreview from "../../../Components/TempGroupPreview"
 
-export default function ViewSingleGroup({ navigation }) {
+export default function ViewSingleGroup({ navigation,tabNavigator }) {
   const dispatch = useDispatch()
   const curID = useSelector((state) => state.current.permGroup)
   const group = useSelector((state) =>
@@ -26,6 +27,12 @@ export default function ViewSingleGroup({ navigation }) {
 
   const editGroup = () => {
     navigation.navigate("Edit Group")
+  }
+  const createEvent=()=>{
+      navigation.navigate("Create Temp From Perm")
+  }
+  const goToEvent=(gr)=>{
+
   }
 
   const leaveGroup = async () => {
@@ -59,9 +66,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='form-textbox'
+                  name="form-textbox"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Group Name`}
@@ -71,9 +78,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='card-text'
+                  name="card-text"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Bio`}
@@ -83,9 +90,9 @@ export default function ViewSingleGroup({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='google-maps'
+                  name="google-maps"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Location`}
@@ -94,15 +101,26 @@ export default function ViewSingleGroup({ navigation }) {
                 {/*group.location*/ "placeholder"}
               </Text>
             </View>
+            <View style={styles.txtField}>
+              <Text>{`Events`}</Text>
+              {group.tempGroups.map((gr) => {
+                const grData = useSelector((state) =>
+                  state.tempGroups.find((gro) => gro.groupId === gr)
+                );
+                return <TempGroupPreview group={grData} onPress={goToEvent} />;
+              })}
+            </View>
           </View>
+
           <View style={{ alignItems: "center" }}>
-            <AppButton title='Edit Group' onPress={editGroup} />
-            <AppButton title='Leave Group' onPress={leaveGroup} />
+            <AppButton title="Edit Group" onPress={editGroup} />
+            <AppButton title="Create Event" onPress={createEvent} />
+            <AppButton title="Leave Group" onPress={leaveGroup} />
           </View>
         </View>
       )}
     </ScrollView>
-  )
+  );
 }
 const styles = StyleSheet.create({
   container: {

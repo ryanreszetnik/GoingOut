@@ -104,7 +104,7 @@ const TabNavigator = () => {
           name='Notifications'
           component={Notifications}
           options={{
-            tabBarBadge: null,
+            tabBarBadge: 2,
             tabBarLabel: () => {
               return null
             },
@@ -236,3 +236,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 })
+

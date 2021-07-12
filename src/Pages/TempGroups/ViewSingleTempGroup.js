@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native"
 import { useSelector,useDispatch } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../../Components/AppButton"
-import MatchPreview from "./Matching/MatchPreview"
+import MatchPreview from "./Matches/MatchPreview"
 import { SET_CUR_MATCH } from '../../Actions/groupActions';
 export default function ViewSingleTempGroup({ navigation }) {
   const curGroup = useSelector((state) => state.current.tempGroup)
@@ -17,8 +17,12 @@ const dispatch = useDispatch();
     navigation.navigate("Search For Matches")
   }
   const goToMatch = (match)=>{
+    console.log(match.matchId, match.otherGroup.name)
     dispatch({type:SET_CUR_MATCH,payload:match.matchId})
     navigation.navigate("View Single Match")
+  }
+  const goToMembers = ()=>{
+    navigation.navigate("Members");
   }
   
   return (
@@ -63,8 +67,15 @@ const dispatch = useDispatch();
           </Text>
         </View>
         <AppButton title="Find Matches" onPress={onPress}></AppButton>
-        {matches.map(match=>{
-          return <MatchPreview key={match.matchId} match ={match} onPress={goToMatch}/>;
+        <AppButton title="Members" onPress={goToMembers} />
+        {matches.map((match) => {
+          return (
+            <MatchPreview
+              key={match.matchId}
+              match={match}
+              onPress={goToMatch}
+            />
+          );
         })}
       </View>
     </View>

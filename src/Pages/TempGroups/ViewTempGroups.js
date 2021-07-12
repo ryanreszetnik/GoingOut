@@ -9,7 +9,10 @@ import {
 } from "../../Actions/groupActions"
 
 export default function ViewTempGroups({ navigation }) {
-  const groups = useSelector((state) => state.tempGroups)
+  const groups = useSelector((state) => state.tempGroups.sort(function (a, b) {
+    return `${a.date}T${a.time}` < `${b.date}T${b.time}`;
+  }))
+
   const dispatch = useDispatch()
   const moveToView = (id) => {
     batch(() => {

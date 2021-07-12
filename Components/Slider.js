@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import MultiSlider from "@ptomasroos/react-native-multi-slider"
 import { Platform, View, Text, StyleSheet } from "react-native"
 
+const optionsArray =[...[...Array(30).keys()].map(k=>k+16),60,65,70,75,80,85,90,95,100]
+
 const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
   const multiSliderValuesChange = (values) => setMultiSliderValue(values)
 
@@ -21,8 +23,8 @@ const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
           markerStyle={{
             ...Platform.select({
               ios: {
-                height: 30,
-                width: 30,
+                height: 28,
+                width: 28,
                 shadowColor: "#000000",
                 shadowOffset: {
                   width: 0,
@@ -32,8 +34,8 @@ const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
                 shadowOpacity: 0.1,
               },
               android: {
-                height: 30,
-                width: 30,
+                height: 28,
+                width: 28,
                 borderRadius: 50,
                 backgroundColor: "#1792E8",
               },
@@ -42,8 +44,8 @@ const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
           pressedMarkerStyle={{
             ...Platform.select({
               android: {
-                height: 30,
-                width: 30,
+                height: 28,
+                width: 28,
                 borderRadius: 20,
                 backgroundColor: "#148ADC",
               },
@@ -63,15 +65,16 @@ const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
           }}
           values={[multiSliderValue[0], multiSliderValue[1]]}
           sliderLength={280}
+          optionsArray={optionsArray}
           onValuesChange={multiSliderValuesChange}
-          min={0}
-          max={100}
+          // min={0}
+          // max={100}
           allowOverlap={false}
-          minMarkerOverlapDistance={10}
+          minMarkerOverlapDistance={28}
         />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

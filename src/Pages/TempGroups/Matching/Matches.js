@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, Button, ActivityIndicator } from "react-native"
+import { View, Text, Button, ActivityIndicator,StyleSheet } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
-import TempGroupPreview from "../../../../Components/TempGroupPreview"
+
 import {
   SET_CUR_FOUND_MATCH,
   SET_CUR_TEMP_GROUP,
   SET_FOUND_MATCHES,
 } from "../../../Actions/groupActions"
 import { searchMatches } from "../../../Endpoints/tempGroupsEndpoints"
+import PotentialMatchPreview from "./PotentialMatchPreview"
 
 export default function Matches({ navigation }) {
   const dispatch = useDispatch()
@@ -23,6 +24,10 @@ export default function Matches({ navigation }) {
     const loadMatches = async () => {
       dispatch({
         type: SET_FOUND_MATCHES,
+        payload: null,
+      });
+      dispatch({
+        type: SET_FOUND_MATCHES,
         payload: await searchMatches(curBaseGroup),
       });
     };
@@ -31,24 +36,33 @@ export default function Matches({ navigation }) {
 
   return (
     <View>
-      {matches.length === 0 ? (
+      {!matches ? (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
         >
-          <ActivityIndicator size='large' color='tomato' />
+          <ActivityIndicator size="large" color="tomato" />
         </View>
       ) : (
-        matches.map((group) => {
-          return (
-            <TempGroupPreview
-              group={group}
-              key={group.groupId}
-              onPress={() => moveToView(group.groupId)}
-              id={group.groupId}
-            />
-          )
-        })
+        <View style={styles.container}>
+          {matches.map((match) => {
+            return (
+              <PotentialMatchPreview
+                match={match}
+                key={match.groupId}
+                onPress={moveToView}
+              />
+            );
+          })}
+        </View>
       )}
     </View>
-  )
+  );
 }
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor:"#DDD",
+    minHeight:"100%",
+    display:"flex",
+    flexDirection:"row"
+  },
+});

@@ -1,33 +1,73 @@
 import React from "react"
-import { View, Text } from "react-native"
+import { View, Text,StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useDispatch, useSelector } from "react-redux"
 import AppButton from "../../../Components/AppButton"
+import TempGroupPreview from "../../../Components/TempGroupPreview"
 import UserList from "../../../Components/UserList"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 import { REQUEST } from "../../Constants/friendConstants"
 import { appLoad } from "../../Endpoints/generalEndpoints"
+import Notification from "./Notification"
+
+const sampleNotifications = [
+  {message:"Someone started following you"},
+  {message:"New Event Created"}
+]
 
 export default function Notifications({ navigation }) {
   const friends = useSelector((state) => state.friends.friends)
+  const requests = friends.filter((friend) => friend.status === REQUEST)
   const dispatch = useDispatch()
-
+  const tempGroups = useSelector(state=>state.tempGroups);
+  const nextEvent = tempGroups.sort(function(a,b){
+    return `${a.date}T${a.time}`<`${b.date}T${b.time}`
+  })[0];
   const selectUser = (profile) => {
     dispatch({ type: SET_CUR_PROFILE, payload: profile })
     navigation.navigate("User Profile")
   }
-  const sendLoad = async()=>{
-    console.log(await appLoad())
+  const moveToView = (id)=>{
+
   }
+  
 
   return (
     <SafeAreaView>
-      <Text>Requests From:</Text>
-      <UserList
-        onPress={selectUser}
-        users={friends.filter((friend) => friend.status === REQUEST)}
-      />
-      <AppButton title="load app" onPress={sendLoad}/>
+      <View style={styles.container}>
+        <Text style={styles.header}>Requests From:</Text>
+        {requests.length > 0 ? (
+          <UserList onPress={selectUser} users={requests} />
+        ) : (
+          <Text>No Requests</Text>
+        )}
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.header}>Next Event</Text>
+        {nextEvent?
+        <TempGroupPreview
+          group={nextEvent}
+          key={nextEvent.groupId}
+          onPress={() => moveToView(nextEvent.groupId)}
+          id={nextEvent.groupId}
+        />:<Text>No events</Text>}
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.header}>Notifications</Text>
+        {sampleNotifications.map((not) => {
+          return <Notification key={JSON.stringify(not)} notification={not} />;
+        })}
+      </View>
     </SafeAreaView>
-  )
+  );
 }
+const styles = StyleSheet.create({
+  container:{
+    borderBottomColor:"black",
+     borderBottomWidth: 0.5,
+     paddingBottom:10
+  },header:{
+    fontSize:20,
+    fontWeight:"600"
+  }
+});
