@@ -1,5 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react"
-import { StyleSheet, Text, View, ActivityIndicator, Button } from "react-native"
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  Button,
+  LayoutAnimation,
+} from "react-native"
 import Amplify, { Auth } from "aws-amplify"
 import { awsConfig, endpoints } from "./src/aws-exports"
 import { NavigationContainer } from "@react-navigation/native"
@@ -147,17 +154,17 @@ const TabNavigator = () => {
 
 const LoadingData = () => {
   const dispatch = useDispatch()
-
+  const user = useSelector((state) => state.userSession.user)
   useEffect(() => {
     initializeAppState()
-  }, [])
+  }, [user])
 
   const initializeAppState = async () => {
+    console.log(await appLoad())
     const initialAppData = await appLoad()
-    console.log(initialAppData)
-    if(!initialAppData){
+    if (!initialAppData) {
       dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
-    }else{
+    } else {
       batch(() => {
         dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
         dispatch({ type: SET_PROFILE, payload: initialAppData.profile })
@@ -236,4 +243,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 })
-

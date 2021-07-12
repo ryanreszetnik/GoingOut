@@ -9,6 +9,8 @@ import {
   MATCH_ACCEPTED,
   MESSAGE_SENT,
   NEW_PERM_GROUP,
+  PERM_GROUP_DELETED,
+  PERM_GROUP_LEFT,
   RECEIVE_MESSAGE,
 } from "./socket.constants"
 import {
@@ -20,10 +22,12 @@ import {
   ADD_MATCH,
   ADD_PERM_GROUP,
   ADD_TEMP_GROUP,
+  REMOVE_MATCH,
+  REMOVE_PERM_GROUP,
 } from "../Actions/groupActions"
 
 export default function SocketClient() {
-  const [localSocket,setLocalSocket] = useState(null);
+  const [localSocket, setLocalSocket] = useState(null)
   const token = useSelector(
     (state) => state.userSession.user.signInUserSession.accessToken.jwtToken
   )
@@ -44,32 +48,32 @@ export default function SocketClient() {
     }
   }
 
-    useEffect(() => {
-      console.log("socket now", localSocket?localSocket.readyState:"No socket");
-    }, [localSocket]);
+  useEffect(() => {
+    console.log(
+      "socket now",
+      localSocket ? localSocket.readyState : "No socket"
+    )
+  }, [localSocket])
 
   useEffect(() => {
+    const socket = new WebSocket(`${socketURL}?token=${token}`)
 
-    const socket = new WebSocket(`${socketURL}?token=${token}`);
-    
-    
-    socket.onopen=function(event){
-      dispatch({ type: SET_SOCKET, payload: socket });
+    socket.onopen = function (event) {
+      dispatch({ type: SET_SOCKET, payload: socket })
     }
-   
-    socket.onerror=function(event){
-      console.log("SOCKET ERROR",event)
-    }
-    socket.onmessage=function(event){
-      let data;
-      let body;
-      try{
-       data = JSON.parse(event.data)
-       body = data.body
-      }catch(e){
-         console.log("No event data: ", event);
-        return;
 
+    socket.onerror = function (event) {
+      console.log("SOCKET ERROR", event)
+    }
+    socket.onmessage = function (event) {
+      let data
+      let body
+      try {
+        data = JSON.parse(event.data)
+        body = data.body
+      } catch (e) {
+        console.log("No event data: ", event)
+        return
       }
       if (!data.action) {
         console.log("No event action: ", event)
@@ -100,7 +104,10 @@ export default function SocketClient() {
           })
           break
         case GROUPS_MERGED:
-          dispatch({ type: ADD_TEMP_GROUP, payload: body })
+          batch(() => {
+            dispatch({ type: ADD_TEMP_GROUP, payload: body })
+            dispatch({ type: REMOVE_MATCH, payload: body.match.matchId })
+          })
           break
         case MATCH_ACCEPTED:
           dispatch({ type: ADD_MATCH, payload: body })

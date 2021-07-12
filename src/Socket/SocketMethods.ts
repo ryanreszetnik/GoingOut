@@ -1,6 +1,7 @@
 import store from '../Store/store'
+import { Match } from '../Types/common.types';
 import {Message,Group,EditGroup,EditTempGroup,CreateTempGroup} from '../Types/socketDTO.types'
-import { ACCEPT_MATCH, CREATE_PERM_GROUP, REQUEST_MERGE, SEND_FRIEND_REQUEST, SEND_MESSAGE } from './socket.constants';
+import { ACCEPT_MATCH, ADD_PERM_GROUP_MEMBERS, ADD_TEMP_GROUP_MEMBERS, CREATE_PERM_GROUP, CREATE_TEMP_GROUP, DELETE_TEMP_GROUP, EDIT_PERM_GROUP, EDIT_TEMP_GROUP, LEAVE_PERM_GROUP, LEAVE_TEMP_GROUP, REQUEST_MERGE, SEND_FRIEND_REQUEST, SEND_MESSAGE } from './socket.constants';
 let socket = null;
 function updateSocket(){
   const state = store.getState();
@@ -37,22 +38,36 @@ export const createPermGroup = (group:Group)=>{
   socketSend(CREATE_PERM_GROUP,group)
 }
 export const editPermGroup = (group:EditGroup)=>{
-  console.log("Edit Group",group)
+  socketSend(EDIT_PERM_GROUP, group)
 }
-export const addPermGroupMembers = (groupId:string, members:string[])=>{}
-export const leavePermGroup = (groupId:string)=>{}
+export const addPermGroupMembers = (groupId:string, subs:string[])=>{
+  socketSend(ADD_PERM_GROUP_MEMBERS, {groupId, subs})
+}
+export const leavePermGroup = (group:Group, leave:boolean)=>{
+  socketSend(LEAVE_PERM_GROUP, {group, leave})
+}
 //Temp group Methods
-export const createTempGroup = (group:CreateTempGroup) => {};
-export const deleteTempGroup = (groupId:string) => {};
-export const editTempGroup = (group:EditTempGroup) => {};
-export const addTempGroupMembers = (groupId:string, members:string[]) => {};
-export const leaveTempGroup = (groupId:string) => {};
+export const createTempGroup = (group:CreateTempGroup) => {
+  socketSend(CREATE_TEMP_GROUP, group)
+};
+export const deleteTempGroup = (groupId:string) => {
+  socketSend(DELETE_TEMP_GROUP, groupId)
+};
+export const editTempGroup = (group:EditTempGroup) => {
+  socketSend(EDIT_TEMP_GROUP, group)
+};
+export const addTempGroupMembers = (groupId:string, subs:string[]) => {
+  socketSend(ADD_TEMP_GROUP_MEMBERS, {groupId, subs})
+};
+export const leaveTempGroup = (groupId:string) => {
+  socketSend(LEAVE_TEMP_GROUP, groupId)
+};
 
 //Matching Methods
 export const matchWithGroup = (groupId:string, matchId:string, otherGroupId:string)=>{
   socketSend(ACCEPT_MATCH, {groupId, matchId, otherGroupId})
 };
-export const sendMergeRequest = (baseGroup:string, matchId:string, otherGroup:string) => {
-  socketSend(REQUEST_MERGE, {baseGroup, matchId, otherGroup})
+export const sendMergeRequest = (group:Group, match) => {
+  socketSend(REQUEST_MERGE, {group, match})
 };
 
