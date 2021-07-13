@@ -156,13 +156,11 @@ const LoadingData = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.userSession.user)
   useEffect(() => {
-    console.log(user)
     initializeAppState()
   }, [user])
 
   const initializeAppState = async () => {
     const initialAppData = await appLoad()
-    console.log(initialAppData)
     if (!initialAppData) {
       dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
     } else {
