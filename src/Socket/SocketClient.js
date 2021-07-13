@@ -59,7 +59,7 @@ export default function SocketClient() {
   }, [localSocket])
 
   useEffect(() => {
-    const socket = new WebSocket(`${socketURL}?token=${token}`)
+    let socket = new WebSocket(`${socketURL}?token=${token}`)
 
     socket.onopen = function (event) {
       dispatch({ type: SET_SOCKET, payload: socket })
