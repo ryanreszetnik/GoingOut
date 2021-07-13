@@ -14,6 +14,9 @@ function updateSocket(){
 store.subscribe(updateSocket);
 const socketSend = (action, data) => {
   console.log("sending",action,data)
+  if(!socket){
+    socket.connect()
+  }
   try {
     socket.send(
       JSON.stringify({

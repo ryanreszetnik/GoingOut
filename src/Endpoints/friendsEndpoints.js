@@ -6,7 +6,6 @@ export const searchUser = async (search) => {
     .signInUserSession.idToken.jwtToken
 
   const apiRequest = {
-    body: {},
     headers: {
       Authorization,
       "Content-Type": "application/json",
@@ -41,7 +40,6 @@ export const getFriends = async (sub) => {
     .signInUserSession.idToken.jwtToken
 
   const apiRequest = {
-    body: {},
     headers: {
       Authorization,
       "Content-Type": "application/json",

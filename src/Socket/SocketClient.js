@@ -9,8 +9,10 @@ import {
   MATCH_ACCEPTED,
   MESSAGE_SENT,
   NEW_PERM_GROUP,
+  NEW_TEMP_GROUP,
   PERM_GROUP_DELETED,
   PERM_GROUP_LEFT,
+  PERM_GROUP_UPDATED,
   RECEIVE_MESSAGE,
 } from "./socket.constants"
 import {
@@ -22,6 +24,7 @@ import {
   ADD_MATCH,
   ADD_PERM_GROUP,
   ADD_TEMP_GROUP,
+  EDIT_PERM_GROUP,
   REMOVE_MATCH,
   REMOVE_PERM_GROUP,
 } from "../Actions/groupActions"
@@ -61,6 +64,16 @@ export default function SocketClient() {
     socket.onopen = function (event) {
       dispatch({ type: SET_SOCKET, payload: socket })
     }
+    socket.onclose = function(e) {
+      console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+      setTimeout(function() {
+        try{
+          socket.connect();
+        }catch(e){
+          socket = new WebSocket(`${socketURL}?token=${token}`)
+        }
+      }, 1000);
+    };
 
     socket.onerror = function (event) {
       console.log("SOCKET ERROR", event)
@@ -111,6 +124,12 @@ export default function SocketClient() {
           break
         case MATCH_ACCEPTED:
           dispatch({ type: ADD_MATCH, payload: body })
+          break
+        case PERM_GROUP_UPDATED:
+          dispatch({type:EDIT_PERM_GROUP,payload:body})
+          break
+        case NEW_TEMP_GROUP:
+          dispatch({ type: ADD_TEMP_GROUP, payload:body });
           break
         default:
           console.log("No Event Action Match", event)

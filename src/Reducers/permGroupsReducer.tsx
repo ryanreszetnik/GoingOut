@@ -19,7 +19,7 @@ export default function permGroupsReducer(state = INITIAL_STATE, action) {
     case EDIT_PERM_GROUP://PermGroup
         return state.map(gr=>{
             if(gr.groupId===action.payload.groupId){
-                return action.payload;
+                return {...gr,...action.payload};
             }
             return gr;
         });

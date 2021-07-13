@@ -6,19 +6,20 @@ export const appLoad = async () => {
     .signInUserSession.idToken.jwtToken
 
   const apiRequest = {
-    body: {},
     headers: {
       Authorization,
       "Content-Type": "application/json",
     },
   }
+  console.log(apiRequest)
   let data
   try {
     data = await API.get("GeneralEndpoint", "/", apiRequest)
-  } finally {
-    // }catch(e){
-    //   return false;
-    // }
-  }
+  
+    }catch(error){
+      console.log("ERROR:")
+      console.log(JSON.stringify(error))
+    }
+  
   return data
 }

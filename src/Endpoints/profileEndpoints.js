@@ -5,7 +5,6 @@ export const getUser = async (sub) => {
   const Authorization = (await Auth.currentAuthenticatedUser())
     .signInUserSession.idToken.jwtToken
   const apiRequest = {
-    body: {},
     headers: {
       Authorization,
       "Content-Type": "application/json",

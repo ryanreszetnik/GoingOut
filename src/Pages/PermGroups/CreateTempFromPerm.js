@@ -13,6 +13,7 @@ import Slider from "../../../Components/Slider";
 import uuid from "react-native-uuid";
 import AppTextInput from "../../../Components/AppTextInput";
 import GenderPreference from "../../../Components/GenderPreference";
+import { createTempGroup } from "../../Socket/SocketMethods";
 
 
 
@@ -73,9 +74,12 @@ const baseGroup = useSelector((state) => state.permGroups.find(gr=>gr.groupId===
       showMessage(message);
     } else {
       const payload = {
-        ...baseGroup,
         groupId: uuid.v4(),
         members: baseGroup.members.map((member) => member.sub),
+        averageGender:baseGroup.averageGender,
+        averageAge:baseGroup.averageAge,
+        loc:baseGroup.loc,
+        locRange:baseGroup.locRange,
         date,
         time: formattedTime,
         baseGroups: [baseGroup.groupId],
@@ -87,8 +91,9 @@ const baseGroup = useSelector((state) => state.permGroups.find(gr=>gr.groupId===
         name:useDefault?baseGroup.name:name,
         bio:useDefault?baseGroup.bio:bio,
       };
-      dispatch({ type: ADD_TEMP_GROUP, payload });
-      await addTempGroup(payload);
+      // dispatch({ type: ADD_TEMP_GROUP, payload });
+      // await addTempGroup(payload);
+      createTempGroup(payload)
       navigation.navigate("View Single Group");
     }
   };

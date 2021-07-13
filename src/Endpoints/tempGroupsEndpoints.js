@@ -26,7 +26,6 @@ export const searchMatches = async (id) => {
   const Authorization = (await Auth.currentAuthenticatedUser())
     .signInUserSession.idToken.jwtToken
   const apiRequest = {
-    body: {},
     headers: {
       id,
       Authorization,

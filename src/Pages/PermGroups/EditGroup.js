@@ -30,6 +30,7 @@ import {
   addPotentialMatch,
   removePotentialMatch,
 } from "../../Endpoints/matchingEndpoints"
+import { editPermGroup } from "../../Socket/SocketMethods"
 
 export default function EditGroup({ navigation }) {
   const group = useSelector((state) => state.permGroups).find(
@@ -58,6 +59,7 @@ export default function EditGroup({ navigation }) {
         : {}),
       ...(genderPref !== group.genderPref ? { genderPref } : {}),
     };
+    editPermGroup(newGroup);
     //const payload = await updateGroup(newGroup)
     //dispatch({ type: EDIT_PERM_GROUP, payload })
     navigation.navigate("View Single Group")

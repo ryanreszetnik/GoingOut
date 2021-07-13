@@ -406,7 +406,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - boost-for-react-native
 
 EXTERNAL SOURCES:
@@ -533,14 +533,14 @@ SPEC CHECKSUMS:
   EXApplication: 47e6e78f70d07f538eeb544d5d0abe3287ac7043
   EXConstants: c00cd53a17a65b2e53ddb3890e4e74d3418e406e
   EXErrorRecovery: 397b8830a66d45fc8018943475a2d530f91a65c4
-  EXFileSystem: 4bdd642677111e1ddcac33afc555b068d2efd63c
+  EXFileSystem: 35769beb727d5341d1276fd222710f9704f7164e
   EXFont: f9ec1eff7d8d7874cdc5d87ce532b2d61b62a451
   EXImageLoader: 1ad8b491fd0f3200b57b37ecb1801abeb6549926
   EXKeepAwake: da3b8472c2739a1edcd63b121ae4ab751aa325d4
   EXPermissions: ea8d63dd052737765bd350b2ca7cee9bcfd5e18e
-  EXSplashScreen: 30c4ae9c47025560352cfe178748b04ce0e2c029
-  EXStructuredHeaders: b1ea7df74211663d155b088daf0aefa215d64837
-  EXUpdates: 87cfb0dcb29199b0a4d567ef96d546dfb2e6fff7
+  EXSplashScreen: b59a58feda693c17f1af73c715e4e058919fcb7c
+  EXStructuredHeaders: 0c3b4c8030ec5ed2c3bc0b64f5af81005b9cb5c8
+  EXUpdates: 3bcd7a0fda56c88951ff3eaa207e68dcaabe9f19
   FBLazyVector: 3bb422f41b18121b71783a905c10e58606f7dc3e
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
@@ -577,17 +577,17 @@ SPEC CHECKSUMS:
   UMBarCodeScannerInterface: 96a01d81ff0c7febbfefc2d7396db9e7462d8c68
   UMCameraInterface: 8ad433fdadca22703ebeb614d42b814092d38d69
   UMConstantsInterface: 55c79ca258a3ede70480fed85e3843899cd47ea3
-  UMCore: fa8360bafce09c33041df0cdead98ab1198b22b8
+  UMCore: 0da048c9753abcea0042258e6ad0fed77811f7e1
   UMFaceDetectorInterface: 4db950a25e785796a237bcebb8fff05078c4fb61
   UMFileSystemInterface: 4a92ee36e6c2757833031718f8496690fa931280
   UMFontInterface: 81a951117d03f57aa636fba3992adefd0191f200
   UMImageLoaderInterface: 5cd09b41630dc8aef7619fabc497c01c0f6b715c
   UMPermissionsInterface: 4351145563e703c521fe2299e08227bc3584b94a
-  UMReactNativeAdapter: e89ade57da1cd2a8ee605f5f7c17e654b8ae8249
+  UMReactNativeAdapter: 7b458ca3d4497b5114e6bb766b223432bad22d8a
   UMSensorsInterface: 50439b47826e716a514cbd7384aebe9ab4fde5f4
   UMTaskManagerInterface: 482155764886069beb1bc7fcf6036f12e4ad0751
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
 
 PODFILE CHECKSUM: 545379470078c396a2a0567a4c85e2da38b841b9
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.10.1
