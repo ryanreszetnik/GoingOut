@@ -1,20 +1,37 @@
+import uuid from "react-native-uuid"
+import moment from "moment"
 import React from "react"
 import { View, Text } from "react-native"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import Chat from "../../../../Components/Chat"
+import { ADD_CHAT } from "../../../Actions/chatActions"
+import { sendMessage } from "../../../Socket/SocketMethods"
 export default function MatchChatView({ navigation }) {
-  const curMatchId = useSelector((state) => state.current.match);
-  const curMatch = useSelector(state=>state.matches.find(match=>match.matchId===curMatchId))
-  
-  const sendMessage=()=>{
+  const curMatchId = useSelector((state) => state.current.match)
+  const chat = useSelector((state) =>
+    state.chats.find((chat) => chat.groupId === curMatchId)
+  )
 
+  const messages = chat ? chat.messages : []
+  const profile = useSelector((state) => state.profile)
+  const dispatch = useDispatch()
+  const sendMess = async (text) => {
+    const newMessage = {
+      datetime: moment(),
+      groupId: curMatchId,
+      messageId: uuid.v4(),
+      message: text,
+      sender: { name: profile.name, username: profile.username },
+    }
+
+    dispatch({ type: ADD_CHAT, payload: newMessage })
+    sendMessage(newMessage)
+
+    console.log(JSON.stringify(newMessage))
   }
-  const messages = []
-  const groupId = "Some Group"
   return (
     <View>
-      
-      <Chat messages={messages} sendMessage={sendMessage}/>
+      <Chat messages={messages} sendMessage={sendMess} />
     </View>
-  );
+  )
 }

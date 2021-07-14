@@ -4,7 +4,10 @@ import { Auth } from "aws-amplify"
 export const appLoad = async () => {
   const Authorization = (await Auth.currentAuthenticatedUser())
     .signInUserSession.idToken.jwtToken
-
+  console.log(
+    (await Auth.currentAuthenticatedUser()).signInUserSession.accessToken
+      .jwtToken
+  )
   const apiRequest = {
     headers: {
       Authorization,
@@ -15,11 +18,10 @@ export const appLoad = async () => {
   let data
   try {
     data = await API.get("GeneralEndpoint", "/", apiRequest)
-  
-    }catch(error){
-      console.log("ERROR:")
-      console.log(JSON.stringify(error))
-    }
-  
+  } catch (error) {
+    console.log("ERROR:")
+    console.log(JSON.stringify(error))
+  }
+
   return data
 }

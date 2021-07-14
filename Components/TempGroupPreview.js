@@ -4,20 +4,24 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
 
 export default function TempGroupPreview({ group, onPress }) {
-  
-  const baseGroups = !group?null:group.baseGroups.map((id) =>{
-    let gr = useSelector((state) => state.permGroups).find(
-      (group) => group.groupId === id
-    )
-    if(!group){
-      gr = useSelector((state) => state.tempGroups).find(
-      (group) => group.groupId === id
-    )}
-    return gr;
-    }
-  ).filter(gr=>gr!==undefined)
-  
- // const baseGroups = []
+  const baseGroups = !group
+    ? null
+    : group.baseGroups
+        .map((id) => {
+          let gr = [
+            ...useSelector((state) => state.permGroups),
+            ...useSelector((state) => state.tempGroups),
+          ].find((group) => group.groupId === id)
+          if (!group) {
+            gr = useSelector((state) => state.tempGroups).find(
+              (group) => group.groupId === id
+            )
+          }
+          return gr
+        })
+        .filter((gr) => gr !== undefined)
+
+  // const baseGroups = []
   return (
     <View>
       {baseGroups ? (
@@ -29,7 +33,7 @@ export default function TempGroupPreview({ group, onPress }) {
             <Text>
               {`Groups:  `}
               {baseGroups.map((group) => {
-                return <Text key={group.groupId}>{group.name}</Text>;
+                return <Text key={group.groupId}>{group.name}</Text>
               })}
             </Text>
           )}
@@ -38,7 +42,7 @@ export default function TempGroupPreview({ group, onPress }) {
         <Text>Group Not Found</Text>
       )}
     </View>
-  );
+  )
 }
 const styles = StyleSheet.create({
   container: {

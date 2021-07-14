@@ -70,7 +70,7 @@ export const leaveTempGroup = (groupId:string) => {
 export const matchWithGroup = (groupId:string, matchId:string, otherGroupId:string)=>{
   socketSend(ACCEPT_MATCH, {groupId, matchId, otherGroupId})
 };
-export const sendMergeRequest = (group:Group, match) => {
-  socketSend(REQUEST_MERGE, {group, match})
+export const sendMergeRequest = (data) => {
+  socketSend(REQUEST_MERGE, data)
 };
 

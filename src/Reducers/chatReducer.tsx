@@ -8,9 +8,12 @@ export default function chatReducer(state=INITIAL_STATE, action){
                 ...action.payload
             ]
         case ADD_CHAT:
+            if(!state.find(chat=>chat.groupId===action.payload.groupId)){
+                return [...state,{groupId:action.payload.groupId,lastMessage:action.payload,messages:[action.payload]}]
+            }
             return state.map(chat=>{
                 if(chat.groupId===action.payload.groupId){
-                    return {...chat,messages:[...chat.messages,action.payload]}
+                    return {...chat,messages:[...chat.messages,action.payload],lastMessage:action.payload}
                 }
                 return chat;
             });

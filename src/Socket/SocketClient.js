@@ -64,16 +64,19 @@ export default function SocketClient() {
     socket.onopen = function (event) {
       dispatch({ type: SET_SOCKET, payload: socket })
     }
-    socket.onclose = function(e) {
-      console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
-      setTimeout(function() {
-        try{
-          socket.connect();
-        }catch(e){
+    socket.onclose = function (e) {
+      console.log(
+        "Socket is closed. Reconnect will be attempted in 1 second.",
+        e.reason
+      )
+      setTimeout(function () {
+        try {
+          socket.connect()
+        } catch (e) {
           socket = new WebSocket(`${socketURL}?token=${token}`)
         }
-      }, 1000);
-    };
+      }, 1000)
+    }
 
     socket.onerror = function (event) {
       console.log("SOCKET ERROR", event)
@@ -92,7 +95,7 @@ export default function SocketClient() {
         console.log("No event action: ", event)
         return
       }
-
+      console.log("Recieved", data)
       //add more cases as needed
       switch (data.action) {
         case RECEIVE_MESSAGE:
@@ -119,17 +122,17 @@ export default function SocketClient() {
         case GROUPS_MERGED:
           batch(() => {
             dispatch({ type: ADD_TEMP_GROUP, payload: body })
-            dispatch({ type: REMOVE_MATCH, payload: body.match.matchId })
+            dispatch({ type: REMOVE_MATCH, payload: body.groupId })
           })
           break
         case MATCH_ACCEPTED:
           dispatch({ type: ADD_MATCH, payload: body })
           break
         case PERM_GROUP_UPDATED:
-          dispatch({type:EDIT_PERM_GROUP,payload:body})
+          dispatch({ type: EDIT_PERM_GROUP, payload: body })
           break
         case NEW_TEMP_GROUP:
-          dispatch({ type: ADD_TEMP_GROUP, payload:body });
+          dispatch({ type: ADD_TEMP_GROUP, payload: body })
           break
         default:
           console.log("No Event Action Match", event)

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react"
-import { View, Text, Button, ActivityIndicator,StyleSheet } from "react-native"
+import {
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView,
+} from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 
 import {
@@ -16,8 +23,8 @@ export default function Matches({ navigation }) {
     dispatch({ type: SET_CUR_FOUND_MATCH, payload: id })
     navigation.navigate("View Single Potential Match")
   }
-  const matches= useSelector((state) => state.foundMatches)
-  
+  const matches = useSelector((state) => state.foundMatches)
+
   const curBaseGroup = useSelector((state) => state.current.tempGroup)
 
   useEffect(() => {
@@ -25,17 +32,17 @@ export default function Matches({ navigation }) {
       dispatch({
         type: SET_FOUND_MATCHES,
         payload: null,
-      });
+      })
       dispatch({
         type: SET_FOUND_MATCHES,
         payload: await searchMatches(curBaseGroup),
-      });
-    };
-    loadMatches();
-  }, [curBaseGroup]);
+      })
+    }
+    loadMatches()
+  }, [curBaseGroup])
 
   return (
-    <View>
+    <ScrollView>
       {!matches ? (
         <View
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
@@ -51,18 +58,19 @@ export default function Matches({ navigation }) {
                 key={match.groupId}
                 onPress={moveToView}
               />
-            );
+            )
           })}
         </View>
       )}
-    </View>
-  );
+    </ScrollView>
+  )
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:"#DDD",
-    minHeight:"100%",
-    display:"flex",
-    flexDirection:"row"
+    backgroundColor: "#DDD",
+    minHeight: "100%",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
-});
+})

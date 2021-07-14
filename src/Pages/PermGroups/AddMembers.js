@@ -51,11 +51,11 @@ export default function AddMembers({ navigation }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon='magnify'
-        placeholder='Search For Users'
-        autoCapitalize='none'
-        keyboardType='email-address'
-        textContentType='emailAddress'
+        leftIcon="magnify"
+        placeholder="Search For Users"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
       />
       <View style={styles.searchArea}>
         <UserList
@@ -66,7 +66,7 @@ export default function AddMembers({ navigation }) {
         />
       </View>
       <View style={styles.buttonArea}>
-        <AppButton title='Save Changes' onPress={saveChanges} />
+        <AppButton title="Save Changes" onPress={saveChanges} />
       </View>
     </ScrollView>
   )

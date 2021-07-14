@@ -37,7 +37,6 @@ export default function CreatePermGroup({ navigation }) {
   ])
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
-  
 
   const createGroup = async () => {
     const newGroup = {
@@ -50,7 +49,7 @@ export default function CreatePermGroup({ navigation }) {
       genderPref: genderPref,
       groupId: uuid.v4(),
     }
-    createPermGroup(newGroup);
+    createPermGroup(newGroup)
     navigation.navigate("View Perm Groups")
   }
   const updateSearch = async (term) => {
@@ -76,16 +75,16 @@ export default function CreatePermGroup({ navigation }) {
       <AppTextInput
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Group Name'
-        autoCapitalize='none'
+        leftIcon="form-textbox"
+        placeholder="Enter Group Name"
+        autoCapitalize="none"
       />
       <AppTextInput
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon='card-text'
-        placeholder='Enter a short Bio'
-        autoCapitalize='none'
+        leftIcon="card-text"
+        placeholder="Enter a short Bio"
+        autoCapitalize="none"
       />
       <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
@@ -95,11 +94,11 @@ export default function CreatePermGroup({ navigation }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon='magnify'
-        placeholder='Search For Users'
-        autoCapitalize='none'
-        keyboardType='email-address'
-        textContentType='emailAddress'
+        leftIcon="magnify"
+        placeholder="Search For Users"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
       />
       <View style={styles.searchArea}>
         <UserList
@@ -109,7 +108,7 @@ export default function CreatePermGroup({ navigation }) {
           )}
         />
         <View style={{ alignItems: "center" }}>
-          <AppButton title='Create Group' onPress={createGroup} />
+          <AppButton title="Create Group" onPress={createGroup} />
         </View>
       </View>
     </ScrollView>

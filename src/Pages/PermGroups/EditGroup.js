@@ -40,7 +40,10 @@ export default function EditGroup({ navigation }) {
   const [locRange, setLocRange] = useState(group.locRange)
   const [groupName, setGroupName] = useState(group.name)
   const [groupBio, setGroupBio] = useState(group.bio)
-  const [ageRange, setAgeRange] = useState([group.ageRange.minAge, group.ageRange.maxAge])
+  const [ageRange, setAgeRange] = useState([
+    group.ageRange.minAge,
+    group.ageRange.maxAge,
+  ])
   const [loc, setLoc] = useState(group.loc)
   const [genderPref, setPref] = useState(group.genderPref)
 
@@ -58,8 +61,8 @@ export default function EditGroup({ navigation }) {
         ? { ageRange: { minAge: ageRange[0], maxAge: ageRange[1] } }
         : {}),
       ...(genderPref !== group.genderPref ? { genderPref } : {}),
-    };
-    editPermGroup(newGroup);
+    }
+    editPermGroup(newGroup)
     //const payload = await updateGroup(newGroup)
     //dispatch({ type: EDIT_PERM_GROUP, payload })
     navigation.navigate("View Single Group")
@@ -70,22 +73,22 @@ export default function EditGroup({ navigation }) {
       <AppTextInput
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Group Name'
-        autoCapitalize='none'
+        leftIcon="form-textbox"
+        placeholder="Enter Group Name"
+        autoCapitalize="none"
       />
       <AppTextInput
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon='card-text'
-        placeholder='Enter a short Bio'
-        autoCapitalize='none'
+        leftIcon="card-text"
+        placeholder="Enter a short Bio"
+        autoCapitalize="none"
       />
       <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <View style={{ alignItems: "center" }}>
-        <AppButton title='Save Changes' onPress={editGroup} />
+        <AppButton title="Save Changes" onPress={editGroup} />
       </View>
     </ScrollView>
   )

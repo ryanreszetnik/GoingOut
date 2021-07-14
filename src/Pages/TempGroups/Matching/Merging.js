@@ -1,16 +1,7 @@
-import React, { useRef, useState } from "react"
-import { View, Text, ScrollView } from "react-native"
-import { useSelector, useDispatch } from "react-redux"
+import React, { useState } from "react"
+import { View, Text, Button } from "react-native"
+import { useSelector } from "react-redux"
 import AppButton from "../../../../Components/AppButton"
-import MonthPicker from "../../../../Components/MonthPicker"
-import { ADD_TEMP_GROUP } from "../../../Actions/groupActions"
-import GroupPreview from "../../../../Components/GroupPreview"
-//import DateTimePicker from "@react-native-community/datetimepicker"
-import moment from "moment"
-import { showMessage, hideMessage } from "react-native-flash-message"
-import FlashMessage from "react-native-flash-message"
-import { addTempGroup } from "../../../Endpoints/tempGroupsEndpoints"
-import uuid from "react-native-uuid"
 import AppTextInput from "../../../../Components/AppTextInput"
 import { sendMergeRequest } from "../../../Socket/SocketMethods"
 
@@ -20,46 +11,45 @@ export default function Merging({ navigation }) {
     (group) => group.groupId === baseGroupId
   )
   const curMatchId = useSelector((state) => state.current.match)
-  const curMatch = useSelector((state) => state.foundMatches).find(
-    (group) => group.groupId === curMatchId
+  const curMatch = useSelector((state) =>
+    state.matches.find(
+      (group) => group.matchId === curMatchId && group.groupId === baseGroupId
+    )
   )
-  const [time, setTime] = useState("11:23 pm")
-  const [bio, setBio] = useState("test")
-  const [name, setName] = useState("testd")
-  const members = [...baseGroup.members, ...curMatch.members]
-  const [ageRange, setAgeRange] = baseGroup.ageRange
-  const [loc, setLoc] = useState({ lat: 27, lon: 27 })
-  const [locRange, setLocRange] = useState(25)
-  const [genderPref, setGenderPref] = useState("Female")
-  const date = baseGroup.date
-  const baseGroups = [...baseGroup.baseGroups, curMatchId]
-  const isVisible = true
-  const matchId = useSelector((state) => state.matches).find(
-    (match) =>
-      match.groupId === baseGroupId && match.otherGroupId === curMatchId
-  ).matchId
-
+  const [name, setName] = useState("")
+  const [bio, setBio] = useState("")
   const onMerge = () => {
-    const group = {
-      groupId: uuid.v4(),
+    console.log(curMatch)
+    const data = {
+      matchId: curMatch.matchId,
+      baseGroupId,
+      otherGroupId: curMatch.otherGroup.groupId,
       name,
-      members,
       bio,
-      loc,
-      locRange,
-      ageRange,
-      genderPref,
-      date,
-      baseGroups,
-      time,
-      isVisible,
     }
-    const match = { matchId }
-    sendMergeRequest(group, match)
+    // console.log(data)
+    navigation.navigate("View Temp Groups")
+    sendMergeRequest(data)
   }
+
   return (
     <View>
-      <AppButton title='Merge!' onPress={onMerge} />
+      <AppTextInput
+        value={name}
+        onChangeText={(text) => setName(text)}
+        placeholder="Enter name"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <AppTextInput
+        value={bio}
+        onChangeText={(text) => setBio(text)}
+        placeholder="Enter bio"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <AppButton onPress={onMerge} title="Merge" />
+      <Text></Text>
     </View>
   )
 }

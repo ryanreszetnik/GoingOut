@@ -1,85 +1,85 @@
-import React, { useRef, useState } from "react";
-import { View, Text, ScrollView,Switch } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import AppButton from "../../../Components/AppButton";
-import MonthPicker from "../../../Components/MonthPicker";
-import { ADD_TEMP_GROUP } from "../../Actions/groupActions";
+import React, { useRef, useState } from "react"
+import { View, Text, ScrollView, Switch } from "react-native"
+import { useSelector, useDispatch } from "react-redux"
+import AppButton from "../../../Components/AppButton"
+import MonthPicker from "../../../Components/MonthPicker"
+import { ADD_TEMP_GROUP } from "../../Actions/groupActions"
 //import DateTimePicker from "@react-native-community/datetimepicker"
-import moment from "moment";
-import { showMessage, hideMessage } from "react-native-flash-message";
-import FlashMessage from "react-native-flash-message";
-import { addTempGroup } from "../../Endpoints/tempGroupsEndpoints";
-import Slider from "../../../Components/Slider";
-import uuid from "react-native-uuid";
-import AppTextInput from "../../../Components/AppTextInput";
-import GenderPreference from "../../../Components/GenderPreference";
-import { createTempGroup } from "../../Socket/SocketMethods";
-
-
+import moment from "moment"
+import { showMessage, hideMessage } from "react-native-flash-message"
+import FlashMessage from "react-native-flash-message"
+import { addTempGroup } from "../../Endpoints/tempGroupsEndpoints"
+import Slider from "../../../Components/Slider"
+import uuid from "react-native-uuid"
+import AppTextInput from "../../../Components/AppTextInput"
+import GenderPreference from "../../../Components/GenderPreference"
+import { createTempGroup } from "../../Socket/SocketMethods"
 
 export default function CreateTempFromPerm({ navigation }) {
-const permGroupId = useSelector(state=>state.current.permGroup);
-const baseGroup = useSelector((state) => state.permGroups.find(gr=>gr.groupId===permGroupId));
-  const dispatch = useDispatch();
-  const [name, setName] = useState(baseGroup?baseGroup.name:"");
-  const [bio, setBio] = useState(baseGroup?baseGroup.bio:"");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState(new Date());
+  const permGroupId = useSelector((state) => state.current.permGroup)
+  const baseGroup = useSelector((state) =>
+    state.permGroups.find((gr) => gr.groupId === permGroupId)
+  )
+  const dispatch = useDispatch()
+  const [name, setName] = useState(baseGroup ? baseGroup.name : "")
+  const [bio, setBio] = useState(baseGroup ? baseGroup.bio : "")
+  const [date, setDate] = useState("")
+  const [time, setTime] = useState(new Date())
   const [ageRange, setAgeRange] = useState(
-    baseGroup ? [Math.max(baseGroup.ageRange.minAge,13), baseGroup.ageRange.maxAge] : [(0, 100)]
-  );
+    baseGroup
+      ? [Math.max(baseGroup.ageRange.minAge, 13), baseGroup.ageRange.maxAge]
+      : [(0, 100)]
+  )
   const [genderPref, setGenderPref] = useState(
     (baseGroup && baseGroup.genderPref == "Male") ||
       baseGroup.genderPref == "Female"
       ? baseGroup.genderPref
       : "None"
-  );
-  const [formattedTime, setFormattedTime] = useState("7:00 pm");
-  const [selected, setSelected] = useState(false);
-    const [useDefault,setUseDefault]=useState(true);
+  )
+  const [formattedTime, setFormattedTime] = useState("7:00 pm")
+  const [selected, setSelected] = useState(false)
+  const [useDefault, setUseDefault] = useState(true)
 
-
-    const changeSwitch = ()=>{
-        setUseDefault(s=>!s);
-    }
-  const scrollRef = useRef();
+  const changeSwitch = () => {
+    setUseDefault((s) => !s)
+  }
+  const scrollRef = useRef()
   const setTimePicker = (event, date) => {
     if (event.type === "dismissed") {
-      setSelected(false);
-      setTime(new Date());
+      setSelected(false)
+      setTime(new Date())
     } else {
-      setSelected(false);
-      setTime(date);
-      setFormattedTime(moment(date).format("h:mm a"));
+      setSelected(false)
+      setTime(date)
+      setFormattedTime(moment(date).format("h:mm a"))
     }
-  };
+  }
   const createEvent = async () => {
-    if (formattedTime === "" || date === "" ) {
+    if (formattedTime === "" || date === "") {
       scrollRef.current?.scrollTo({
         y: 0,
         animated: true,
-      });
-      const message =
-         {
-              message: "Please select a date and time",
-              type: "danger",
-              hideonPress: true,
-              animated: true,
-              animationDuration: 225,
-              autohide: true,
-              duration: 2000,
-              position: "top",
-              icon: "auto",
-            };
-      showMessage(message);
+      })
+      const message = {
+        message: "Please select a date and time",
+        type: "danger",
+        hideonPress: true,
+        animated: true,
+        animationDuration: 225,
+        autohide: true,
+        duration: 2000,
+        position: "top",
+        icon: "auto",
+      }
+      showMessage(message)
     } else {
       const payload = {
         groupId: uuid.v4(),
         members: baseGroup.members.map((member) => member.sub),
-        averageGender:baseGroup.averageGender,
-        averageAge:baseGroup.averageAge,
-        loc:baseGroup.loc,
-        locRange:baseGroup.locRange,
+        averageGender: baseGroup.averageGender,
+        averageAge: baseGroup.averageAge,
+        loc: baseGroup.loc,
+        locRange: baseGroup.locRange,
         date,
         time: formattedTime,
         baseGroups: [baseGroup.groupId],
@@ -87,29 +87,29 @@ const baseGroup = useSelector((state) => state.permGroups.find(gr=>gr.groupId===
         ageRange: useDefault
           ? baseGroup.ageRange
           : { minAge: ageRange[0], maxAge: ageRange[1] },
-        genderPref:useDefault?baseGroup.genderPref:genderPref,
-        name:useDefault?baseGroup.name:name,
-        bio:useDefault?baseGroup.bio:bio,
-      };
+        genderPref: useDefault ? baseGroup.genderPref : genderPref,
+        name: useDefault ? baseGroup.name : name,
+        bio: useDefault ? baseGroup.bio : bio,
+      }
       // dispatch({ type: ADD_TEMP_GROUP, payload });
       // await addTempGroup(payload);
       createTempGroup(payload)
-      navigation.navigate("View Single Group");
+      navigation.navigate("View Single Group")
     }
-  };
-//   groupId:string;
-//     ageRange:AgeRange;
-//     baseGroup:string;
-//     bio:string;
-//     date:string;
-//     genderPref:string;
-//     isVisible:boolean;
-//     loc:Location;
-//     locRange:number;
-//     members:string[];
-//     name:string;
-//     time:string;
-`   `
+  }
+  //   groupId:string;
+  //     ageRange:AgeRange;
+  //     baseGroup:string;
+  //     bio:string;
+  //     date:string;
+  //     genderPref:string;
+  //     isVisible:boolean;
+  //     loc:Location;
+  //     locRange:number;
+  //     members:string[];
+  //     name:string;
+  //     time:string;
+  ;`   `
   return (
     <ScrollView ref={scrollRef}>
       {baseGroup ? (
@@ -118,8 +118,8 @@ const baseGroup = useSelector((state) => state.permGroups.find(gr=>gr.groupId===
           <Text>Select Date</Text>
           <MonthPicker
             updateDate={(date) => {
-              setDate(date);
-              setSelected(true);
+              setDate(date)
+              setSelected(true)
             }}
           />
 
@@ -178,5 +178,5 @@ const baseGroup = useSelector((state) => state.permGroups.find(gr=>gr.groupId===
         <View />
       )}
     </ScrollView>
-  );
+  )
 }
