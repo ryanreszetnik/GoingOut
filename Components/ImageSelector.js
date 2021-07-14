@@ -2,7 +2,6 @@ import React from "react"
 import { View, Text, Image, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { launchCamera, launchImageLibrary } from "react-native-image-picker"
-import AppButton from "./AppButton"
 
 export default function ImageSelector({ source, setSource }) {
   const chooseImg = () => {

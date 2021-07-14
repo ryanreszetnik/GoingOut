@@ -66,7 +66,7 @@ export default function EditProfile({ navigation }) {
     <ScrollView>
       <SafeAreaView style={styles.container}>
         <Text style={styles.imgTitle}>Change your profile picture</Text>
-        <ImageSelector />
+        <ImageSelector source={image} setSource={setImage} />
 
         <View style={styles.editHeading}>
           <FontAwesome5
