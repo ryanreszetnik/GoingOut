@@ -25,10 +25,6 @@ export default function ViewProfile({ navigation }) {
     }
   }
 
-  // if (!profile) {
-  //   getProfile()
-  // }
-
   return (
     <SafeAreaView style={{ backgroundColor: "#e0e0e0" }}>
       {profile ? (
@@ -36,21 +32,23 @@ export default function ViewProfile({ navigation }) {
           <Text style={styles.imgTitle}>{profile.name}</Text>
           <View style={styles.imageFriends}>
             <Image style={styles.img} />
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Friends")
-              }}
-            >
-              <Text style={styles.imgText}>
-                <MaterialCommunityIcons
-                  name='account-multiple'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                {`   Friends`}
-              </Text>
-            </TouchableOpacity>
+            <View style={{ alignItems: "center" }}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Friends")
+                }}
+              >
+                <Text style={styles.imgText}>
+                  <MaterialCommunityIcons
+                    name='account-multiple'
+                    size={20}
+                    color='#6e6869'
+                    style={styles.icon}
+                  />
+                  {`   Friends`}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.attributeContainer}>

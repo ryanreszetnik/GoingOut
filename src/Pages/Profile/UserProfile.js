@@ -9,10 +9,7 @@ import AppButton from "../../../Components/AppButton"
 // } from "../../Endpoints/friendsEndpoints"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import {
-  SET_CUR_PROFILE,
-  SET_OTHER_FRIENDS,
-} from "../../Actions/friendActions"
+import { SET_CUR_PROFILE, SET_OTHER_FRIENDS } from "../../Actions/friendActions"
 import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
 import { updateFriendRequest } from "../../Socket/SocketMethods"
 
@@ -24,7 +21,7 @@ export default function UserProfile({ navigation }) {
     try {
       // console.log(await requestFriend(profile.sub))
       // dispatch({ type: ADD_FRIEND, payload: profile })
-      updateFriendRequest(profile.sub,true)
+      updateFriendRequest(profile.sub, true)
     } catch (error) {
       console.log(error)
     }
@@ -34,7 +31,7 @@ export default function UserProfile({ navigation }) {
     try {
       //const ret = await acceptRequest(profile.sub)
       // dispatch({ type: ACCEPT_REQUEST, payload: profile })
-      updateFriendRequest(profile.sub, true);
+      updateFriendRequest(profile.sub, true)
     } catch (error) {
       console.log(error)
     }
@@ -47,7 +44,7 @@ export default function UserProfile({ navigation }) {
       // dispatch({ type: REMOVE_FRIEND, payload: profile })
       // console.log(profile.sub)
       // console.log("new List", friendsList)
-      updateFriendRequest(profile.sub, false);
+      updateFriendRequest(profile.sub, false)
     } catch (error) {
       console.log(error)
     }
