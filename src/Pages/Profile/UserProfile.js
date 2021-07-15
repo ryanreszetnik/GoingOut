@@ -12,6 +12,8 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { SET_CUR_PROFILE, SET_OTHER_FRIENDS } from "../../Actions/friendActions"
 import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
 import { updateFriendRequest } from "../../Socket/SocketMethods"
+import Profile from "./Profile"
+import { getImageURIBySub } from "../../aws-exports"
 
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
@@ -90,7 +92,7 @@ export default function UserProfile({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.imgTitle}>{profile.name}</Text>
         <View style={styles.imageFriends}>
-          <Image style={styles.img} />
+          <Image style={styles.img} source={getImageURIBySub(profile.sub)} />
           <View style={styles.col}>
             <TouchableOpacity
               onPress={() => {

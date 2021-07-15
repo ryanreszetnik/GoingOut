@@ -9,6 +9,7 @@ export default function ImageSelector({ source, setSource }) {
       maxWidth: 256,
       maxHeight: 256,
       mediaType: "photo",
+      includeBase64: true,
     }
 
     launchImageLibrary(options, (response) => {
@@ -17,7 +18,12 @@ export default function ImageSelector({ source, setSource }) {
       } else if (response.error) {
         console.log("ImagePicker Error: ", response.error)
       } else {
-        setSource({ uri: response.assets.uri })
+        setSource({
+          name: response.assets["0"].fileName,
+          uri: response.assets["0"].uri,
+          base64: response.assets["0"].base64,
+          type: "image/jpeg",
+        })
       }
     })
   }
@@ -26,6 +32,8 @@ export default function ImageSelector({ source, setSource }) {
     const options = {
       mediaType: "photo",
       savetoPhotos: "true",
+      includeBase64: true,
+      type: "image/jpeg",
     }
 
     launchCamera(options, (response) => {
@@ -34,7 +42,11 @@ export default function ImageSelector({ source, setSource }) {
       } else if (response.error) {
         console.log("ImagePicker Error: ", response.error)
       } else {
-        setSource({ uri: response.assets.uri })
+        setSource({
+          name: response.assets["0"].fileName,
+          uri: response.assets["0"].uri,
+          base64: response.assets["0"].base64,
+        })
       }
     })
   }

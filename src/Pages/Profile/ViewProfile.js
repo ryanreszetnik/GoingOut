@@ -8,12 +8,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { getUser } from "../../Endpoints/profileEndpoints"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { getImageURIBySub } from "../../aws-exports"
 
 export default function ViewProfile({ navigation }) {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile)
   const userData = useSelector((state) => state.userSession.userData)
-
   async function getProfile() {
     try {
       dispatch({
@@ -31,7 +31,10 @@ export default function ViewProfile({ navigation }) {
         <View style={styles.container}>
           <Text style={styles.imgTitle}>{profile.name}</Text>
           <View style={styles.imageFriends}>
-            <Image style={styles.img} />
+            <Image
+              style={styles.img}
+              source={getImageURIBySub(userData.attributes.sub)}
+            />
             <View style={{ alignItems: "center" }}>
               <TouchableOpacity
                 onPress={() => {
