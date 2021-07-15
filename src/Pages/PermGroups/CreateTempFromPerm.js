@@ -90,6 +90,7 @@ export default function CreateTempFromPerm({ navigation }) {
         genderPref: useDefault ? baseGroup.genderPref : genderPref,
         name: useDefault ? baseGroup.name : name,
         bio: useDefault ? baseGroup.bio : bio,
+        tempGroups: [],
       }
       // dispatch({ type: ADD_TEMP_GROUP, payload });
       // await addTempGroup(payload);
