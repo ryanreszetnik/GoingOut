@@ -1,5 +1,6 @@
 import React from "react"
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
+import { getImageURIBySub } from "../src/aws-exports"
 import { REQUEST, REQUESTED, CONFIRMED } from "../src/Constants/friendConstants"
 import theme from "../src/Styles/theme.style"
 
@@ -24,7 +25,7 @@ export default function UserList({ users, onPress }) {
         key={user.sub}
         onPress={() => onPress(user)}
       >
-        <Image style={styles.photo} />
+        <Image style={styles.photo} source={getImageURIBySub(user.sub)} />
         <View style={styles.textContainer}>
           <Text style={styles.text}>{user.username}</Text>
           <Text style={styles.subtext}>{`${user.name}${statusPreview(

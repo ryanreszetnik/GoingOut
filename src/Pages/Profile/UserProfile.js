@@ -14,11 +14,12 @@ import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
 import { updateFriendRequest } from "../../Socket/SocketMethods"
 import theme from "../../Styles/theme.style"
 import Profile from "./Profile"
-import { getImageURIBySub } from "../../aws-exports"
+import { defaultImg, getImageURIBySub } from "../../aws-exports"
 
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
   const friendsList = useSelector((state) => state.friends.friends)
+
   const dispatch = useDispatch()
   const sendRequest = async () => {
     try {
@@ -102,10 +103,7 @@ export default function UserProfile({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.imgTitle}>{profile.name}</Text>
         <View style={styles.imageFriends}>
-          <Image
-            style={styles.img}
-            source={`${getImageURIBySub(profile.sub)}?${new Date().getTime()}`}
-          />
+          <Image style={styles.img} />
           <View style={styles.col}>
             <TouchableOpacity
               onPress={() => {
