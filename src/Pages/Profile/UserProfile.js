@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, StyleSheet, Image } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import AppButton from "../../../Components/AppButton"
@@ -19,7 +19,13 @@ import { defaultImg, getImageURIBySub } from "../../aws-exports"
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
   const friendsList = useSelector((state) => state.friends.friends)
-
+  const [imgSource, setImgSource] = useState()
+  useEffect(() => {
+    getImg()
+  }, [])
+  const getImg = async () => {
+    setImgSource(await getImageURIBySub(profile.sub))
+  }
   const dispatch = useDispatch()
   const sendRequest = async () => {
     try {
@@ -103,7 +109,7 @@ export default function UserProfile({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.imgTitle}>{profile.name}</Text>
         <View style={styles.imageFriends}>
-          <Image style={styles.img} />
+          <Image style={styles.img} source={imgSource} />
           <View style={styles.col}>
             <TouchableOpacity
               onPress={() => {
@@ -112,9 +118,9 @@ export default function UserProfile({ navigation }) {
             >
               <Text style={styles.imgText}>
                 <MaterialCommunityIcons
-                  name="account-group"
+                  name='account-group'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`   Friends`}
@@ -128,9 +134,9 @@ export default function UserProfile({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="account"
+                name='account'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               Username
@@ -141,9 +147,9 @@ export default function UserProfile({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="emoticon-happy-outline"
+                name='emoticon-happy-outline'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               Gender
@@ -153,9 +159,9 @@ export default function UserProfile({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="cake"
+                name='cake'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               Birth Date

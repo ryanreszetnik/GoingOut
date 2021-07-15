@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
-import { getImageURIBySub } from "../src/aws-exports"
+import { defaultImg, getImageURIBySub } from "../src/aws-exports"
 import { REQUEST, REQUESTED, CONFIRMED } from "../src/Constants/friendConstants"
 import theme from "../src/Styles/theme.style"
 
-export default function UserList({ users, onPress }) {
+export default function UserList({ users, onPress, imgSources }) {
   const statusPreview = (status) => {
     switch (status) {
       case REQUEST:
@@ -25,7 +25,14 @@ export default function UserList({ users, onPress }) {
         key={user.sub}
         onPress={() => onPress(user)}
       >
-        <Image style={styles.photo} source={getImageURIBySub(user.sub)} />
+        <Image
+          style={styles.photo}
+          source={
+            imgSources !== undefined
+              ? imgSources[users.indexOf(user)]
+              : defaultImg
+          }
+        />
         <View style={styles.textContainer}>
           <Text style={styles.text}>{user.username}</Text>
           <Text style={styles.subtext}>{`${user.name}${statusPreview(

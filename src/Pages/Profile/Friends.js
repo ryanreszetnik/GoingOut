@@ -6,18 +6,21 @@ import AppTextInput from "../../../Components/AppTextInput"
 import UserList from "../../../Components/UserList"
 import { SET_CUR_PROFILE, SET_FRIENDS } from "../../Actions/friendActions"
 import { getFriends } from "../../Endpoints/friendsEndpoints"
+import { getImageURIBySub } from "../../aws-exports"
+import { getUser } from "../../Endpoints/profileEndpoints"
 
 export default function Friends({ navigation }) {
   const dispatch = useDispatch()
   const sub = useSelector((state) => state.userSession.userData.attributes.sub)
   const [searchTerm, setSearch] = useState("")
   const friendList = useSelector((state) => state.friends.friends)
-  
+  const [imgSources, setImgSources] = useState([])
 
   useEffect(() => {
     if (friendList.length === 0) {
       updateList()
     }
+    getImgSources()
   }, [])
   const updateList = async () => {
     dispatch({ type: SET_FRIENDS, payload: await getFriends(sub) })
@@ -30,6 +33,17 @@ export default function Friends({ navigation }) {
 
   const updateSearch = (text) => {
     setSearch(text)
+  }
+
+  const getImgSources = async () => {
+    const users = friendList.filter((friend) =>
+      friend.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
+    const promises = users.map(async (user) => {
+      return await getImageURIBySub(user.sub)
+    })
+    setImgSources(await Promise.all(promises))
   }
 
   return (
@@ -48,6 +62,7 @@ export default function Friends({ navigation }) {
         users={friendList.filter((friend) =>
           friend.name.toLowerCase().includes(searchTerm.toLowerCase())
         )}
+        imgSources={imgSources}
       />
     </ScrollView>
   )

@@ -16,27 +16,27 @@ export const s3config = {
 export const defaultImg = {
   uri: "https://going-out-profiles.s3.ca-central-1.amazonaws.com/default-profile-pic.jpg",
 }
-export const getImageURIBySub = async (sub) => {
-  return fetch(
-    `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`
-  )
-    .then((res) => {
-      console.log("res", res.status)
-      if (res.status === 404) {
-        return false
-      } else {
-        const ret = {
-          uri: `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`,
-        }
-        console.log("good", ret)
-        return ret
-      }
-    })
-    .catch((e) => {
-      console.log("err", e)
-      return false
-    })
+export const urlExists = async (url) => {
+  var status
+  await fetch(url).then((res) => {
+    if (res.status === 404) {
+      status = false
+    } else {
+      status = true
+    }
+  })
+  return status
 }
+export const getImageURIBySub = async (sub) => {
+  return (await urlExists(
+    `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`
+  ))
+    ? {
+        uri: `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`,
+      }
+    : defaultImg
+}
+
 export const endpoints = [
   {
     name: "GeneralEndpoint",
