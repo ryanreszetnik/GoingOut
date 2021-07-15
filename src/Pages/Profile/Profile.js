@@ -5,7 +5,6 @@ import ViewProfile from "./ViewProfile"
 import EditProfile from "./EditProfile"
 const ProfileStack = createStackNavigator()
 import { useSelector } from "react-redux"
-import API from "@aws-amplify/api"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import ConfirmNewEmail from "./ConfirmNewEmail"
 import Friends from "./Friends"
@@ -24,7 +23,10 @@ export default function Profile({ navigation }) {
         options={{
           headerTitle: user.username,
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView}  onPress={() => navigation.navigate("Edit Profile")}>
+            <TouchableOpacity
+              style={styles.headerView}
+              onPress={() => navigation.navigate("Edit Profile")}
+            >
               <Text
                 onPress={() => navigation.navigate("Edit Profile")}
                 style={styles.headerText}
@@ -36,7 +38,6 @@ export default function Profile({ navigation }) {
                 size={20}
                 name='user-edit'
                 color='tomato'
-               
               />
             </TouchableOpacity>
           ),
@@ -50,19 +51,16 @@ export default function Profile({ navigation }) {
         options={{
           headerTitle: "Friends",
           headerRight: () => (
-            <TouchableOpacity style={styles.headerView} onPress={() => navigation.navigate("Search Friends")}>
-              <Text
-                
-                style={styles.headerText}
-              >
-                Add Friends
-              </Text>
+            <TouchableOpacity
+              style={styles.headerView}
+              onPress={() => navigation.navigate("Search Friends")}
+            >
+              <Text style={styles.headerText}>Add Friends</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
                 name='plus'
                 color='tomato'
-                
               />
             </TouchableOpacity>
           ),

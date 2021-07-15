@@ -1,7 +1,7 @@
 import React from "react"
 import { View, Text, Image, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import { launchCamera, launchImageLibrary } from "react-native-image-picker"
+import ImagePicker from "react-native-image-crop-picker"
 
 export default function ImageSelector({ source, setSource }) {
   const chooseImg = () => {
@@ -9,16 +9,21 @@ export default function ImageSelector({ source, setSource }) {
       maxWidth: 256,
       maxHeight: 256,
       mediaType: "photo",
+      includeBase64: true,
     }
-
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log("cancel")
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error)
-      } else {
-        setSource({ uri: response.assets.uri })
-      }
+    console.log("launching")
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      cropperCircleOverlay: true,
+      includeBase64: true,
+      mediaType: "photo",
+      forceJpg: true,
+    }).then((image) => {
+      console.log(image.sourceURL, image.data.length, Object.keys(image))
+      var base64Icon = `data:image/png;base64,${image.data}`
+      setSource({ uri: base64Icon, base64: image.data })
     })
   }
 
@@ -26,16 +31,21 @@ export default function ImageSelector({ source, setSource }) {
     const options = {
       mediaType: "photo",
       savetoPhotos: "true",
+      includeBase64: true,
+      type: "image/jpeg",
     }
-
-    launchCamera(options, (response) => {
-      if (response.didCancel) {
-        console.log("cancel")
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error)
-      } else {
-        setSource({ uri: response.assets.uri })
-      }
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+      cropperCircleOverlay: true,
+      includeBase64: true,
+      mediaType: "photo",
+      forceJpg: true,
+    }).then((image) => {
+      console.log(image.sourceURL, image.data.length, Object.keys(image))
+      var base64Icon = `data:image/png;base64,${image.data}`
+      setSource({ uri: base64Icon, base64: image.data })
     })
   }
   return (

@@ -48,7 +48,7 @@ import { SET_CHATS } from "./src/Actions/chatActions"
 import { SET_FRIENDS } from "./src/Actions/friendActions"
 import SocketClient from "./src/Socket/SocketClient"
 
-Amplify.configure({ Auth: awsConfig, endpoints: endpoints })
+Amplify.configure({ ...awsConfig, endpoints: endpoints })
 
 const AuthenticationStack = createStackNavigator()
 const Tab = createBottomTabNavigator()
