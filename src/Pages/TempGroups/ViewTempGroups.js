@@ -4,14 +4,18 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { ScrollView } from "react-native-gesture-handler"
 import { batch, useDispatch, useSelector } from "react-redux"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
-import {
-  SET_CUR_TEMP_GROUP,
-} from "../../Actions/groupActions"
+import { SET_CUR_TEMP_GROUP } from "../../Actions/groupActions"
 
 export default function ViewTempGroups({ navigation }) {
-  const groups = useSelector((state) => state.tempGroups.sort(function (a, b) {
-    return `${a.date}T${a.time}` < `${b.date}T${b.time}`;
-  }))
+  const groups = useSelector((state) =>
+    state.tempGroups.sort(function (a, b) {
+      return `${a.date}T${a.time}` > `${b.date}T${b.time}`
+    })
+  )
+  const baseGroups = groups.filter((gr) => {
+    return gr.tempGroups.length > 0
+  })
+  const masterGroups = groups.filter((gr) => !baseGroups.includes(gr))
 
   const dispatch = useDispatch()
   const moveToView = (id) => {
@@ -24,7 +28,19 @@ export default function ViewTempGroups({ navigation }) {
 
   return (
     <ScrollView>
-      {groups.map((group) => {
+      <Text>Master Groups</Text>
+      {masterGroups.map((group) => {
+        return (
+          <TempGroupPreview
+            group={group}
+            key={group.groupId}
+            onPress={() => moveToView(group.groupId)}
+            id={group.groupId}
+          />
+        )
+      })}
+      <Text>Sub Groups</Text>
+      {baseGroups.map((group) => {
         return (
           <TempGroupPreview
             group={group}

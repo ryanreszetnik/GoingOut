@@ -24,6 +24,7 @@ import {
   ADD_MATCH,
   ADD_PERM_GROUP,
   ADD_TEMP_GROUP,
+  ADD_TEMP_TO_PERM,
   EDIT_PERM_GROUP,
   REMOVE_MATCH,
   REMOVE_PERM_GROUP,
@@ -133,6 +134,7 @@ export default function SocketClient() {
           break
         case NEW_TEMP_GROUP:
           dispatch({ type: ADD_TEMP_GROUP, payload: body })
+
           break
         default:
           console.log("No Event Action Match", event)

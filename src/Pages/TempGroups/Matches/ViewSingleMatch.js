@@ -10,8 +10,10 @@ export default function ViewSingleMatch({ navigation }) {
   const dispatch = useDispatch()
   const groupId = useSelector((state) => state.current.tempGroup)
   const matchId = useSelector((state) => state.current.match)
-  
-  const match = useSelector((state) => state.matches.find(ma=>ma.matchId===matchId &&ma.groupId===groupId))
+
+  const match = useSelector((state) =>
+    state.matches.find((ma) => ma.matchId === matchId && ma.groupId === groupId)
+  )
 
   const onPress = () => {
     console.log("Going to existing match")
@@ -19,13 +21,16 @@ export default function ViewSingleMatch({ navigation }) {
   }
   return (
     <View style={styles.container}>
-      <View style={{ alignItems: "center" }}>
-        
-        <Text>{match.otherGroup.name}</Text>
-        <AppButton title={"Chat"} onPress={onPress} />
-      </View>
+      {match ? (
+        <View style={{ alignItems: "center" }}>
+          <Text>{match.otherGroup.name}</Text>
+          <AppButton title={"Chat"} onPress={onPress} />
+        </View>
+      ) : (
+        <Text>Loading</Text>
+      )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

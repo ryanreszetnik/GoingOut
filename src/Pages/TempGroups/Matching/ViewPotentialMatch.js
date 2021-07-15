@@ -3,7 +3,11 @@ import { View, Text, StyleSheet } from "react-native"
 import AppButton from "../../../../Components/AppButton"
 import { useDispatch, useSelector } from "react-redux"
 import uuid from "react-native-uuid"
-import { ADD_MATCH, SET_CUR_TEMP_GROUP } from "../../../Actions/groupActions"
+import {
+  ADD_MATCH,
+  SET_CUR_MATCH,
+  SET_CUR_TEMP_GROUP,
+} from "../../../Actions/groupActions"
 import { matchWithGroup } from "../../../Socket/SocketMethods"
 import UserList from "../../../../Components/UserList"
 
@@ -11,16 +15,23 @@ export default function ViewPotentialMatch({ navigation }) {
   const dispatch = useDispatch()
   const groupId = useSelector((state) => state.current.tempGroup)
   const matchId = useSelector((state) => state.current.foundMatch)
-  
-  const match =useSelector((state) => state.foundMatches.find(ma=>ma.groupId===matchId))
-  
-  console.log(match,matchId,useSelector((state) => state.foundMatches))
+
+  const match = useSelector((state) =>
+    state.foundMatches.find((ma) => ma.groupId === matchId)
+  )
+
+  console.log(
+    match,
+    matchId,
+    useSelector((state) => state.foundMatches)
+  )
   const onPress = () => {
-    
-    console.log("CREATE NEW MATCH")
-      matchWithGroup(groupId, uuid.v4(), match.groupId)
-   
-    navigation.navigate("Match Chat View")
+    console.log("CREATE NEW MATCH", navigation)
+    const newId = uuid.v4()
+    matchWithGroup(groupId, newId, match.groupId)
+    dispatch({ type: SET_CUR_MATCH, payload: newId })
+    navigation.pop(2)
+    navigation.navigate("View Single Match")
   }
   return (
     <View style={styles.container}>
@@ -28,11 +39,11 @@ export default function ViewPotentialMatch({ navigation }) {
         <Text>{`Group Name: ${match.name}`}</Text>
         <Text>{`Group Bio: ${match.bio}`}</Text>
         <Text>{`Time: ${match.time}`}</Text>
-        <UserList onPress={()=>{}} users={match.members}/>
+        <UserList onPress={() => {}} users={match.members} />
         <AppButton title={"Start Chatting"} onPress={onPress} />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

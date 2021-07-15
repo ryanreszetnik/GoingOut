@@ -1,6 +1,7 @@
 import React from "react"
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
 import { REQUEST, REQUESTED, CONFIRMED } from "../src/Constants/friendConstants"
+import theme from "../src/Styles/theme.style"
 
 export default function UserList({ users, onPress }) {
   const statusPreview = (status) => {
@@ -44,7 +45,10 @@ const styles = StyleSheet.create({
   componentContainer: {},
   container: {
     height: 60,
-    backgroundColor: "#DDD",
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: theme.LIST_ITEM_BORDER_COLOR,
+    backgroundColor: theme.LIST_ITEM_COLOR,
     flexDirection: "row",
   },
   text: {

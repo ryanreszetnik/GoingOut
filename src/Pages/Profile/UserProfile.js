@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { SET_CUR_PROFILE, SET_OTHER_FRIENDS } from "../../Actions/friendActions"
 import { CONFIRMED, REQUEST, REQUESTED } from "../../Constants/friendConstants"
 import { updateFriendRequest } from "../../Socket/SocketMethods"
+import theme from "../../Styles/theme.style"
 
 export default function UserProfile({ navigation }) {
   const profile = useSelector((state) => state.friends.curProfile)
@@ -62,23 +63,32 @@ export default function UserProfile({ navigation }) {
       case REQUEST:
         return (
           <View>
-            <TouchableOpacity onPress={requestAccept}>
+            <TouchableOpacity
+              onPress={requestAccept}
+              style={styles.primaryButton}
+            >
               <Text>Accept Request</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={removeFriend}>
+            <TouchableOpacity
+              onPress={removeFriend}
+              style={styles.secondaryButton}
+            >
               <Text>Deny Request</Text>
             </TouchableOpacity>
           </View>
         )
       case CONFIRMED:
         return (
-          <TouchableOpacity onPress={removeFriend}>
+          <TouchableOpacity
+            onPress={removeFriend}
+            style={styles.secondaryButton}
+          >
             <Text>Remove Friend</Text>
           </TouchableOpacity>
         )
       default:
         return (
-          <TouchableOpacity onPress={sendRequest}>
+          <TouchableOpacity onPress={sendRequest} style={styles.primaryButton}>
             <Text>Friend Request</Text>
           </TouchableOpacity>
         )
@@ -99,9 +109,9 @@ export default function UserProfile({ navigation }) {
             >
               <Text style={styles.imgText}>
                 <MaterialCommunityIcons
-                  name='account-group'
+                  name="account-group"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`   Friends`}
@@ -115,9 +125,9 @@ export default function UserProfile({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name='account'
+                name="account"
                 size={20}
-                color='#6e6869'
+                color="#6e6869"
                 style={styles.icon}
               />
               Username
@@ -128,9 +138,9 @@ export default function UserProfile({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name='emoticon-happy-outline'
+                name="emoticon-happy-outline"
                 size={20}
-                color='#6e6869'
+                color="#6e6869"
                 style={styles.icon}
               />
               Gender
@@ -140,9 +150,9 @@ export default function UserProfile({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name='cake'
+                name="cake"
                 size={20}
-                color='#6e6869'
+                color="#6e6869"
                 style={styles.icon}
               />
               Birth Date
@@ -199,5 +209,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 2,
     marginVertical: 2,
+  },
+  primaryButton: {
+    backgroundColor: theme.PRIMARY_COLOR,
+    borderRadius: 6,
+    width: 100,
+    height: 30,
+  },
+  secondaryButton: {
+    backgroundColor: theme.SECONDARY_COLOR,
+    borderRadius: 6,
+    padding: 5,
+    width: 120,
+    height: 30,
   },
 })

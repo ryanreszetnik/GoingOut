@@ -16,7 +16,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
 
-export default function ViewSingleGroup({ navigation,tabNavigator }) {
+export default function ViewSingleGroup({ navigation, tabNavigator }) {
   const dispatch = useDispatch()
   const curID = useSelector((state) => state.current.permGroup)
   const group = useSelector((state) =>
@@ -24,16 +24,15 @@ export default function ViewSingleGroup({ navigation,tabNavigator }) {
   )
   const groups = useSelector((state) => state.permGroups)
   const sub = useSelector((state) => state.userSession.userData.attributes.sub)
+  const tempGroups = useSelector((state) => state.tempGroups)
 
   const editGroup = () => {
     navigation.navigate("Edit Group")
   }
-  const createEvent=()=>{
-      navigation.navigate("Create Temp From Perm")
+  const createEvent = () => {
+    navigation.navigate("Create Temp From Perm")
   }
-  const goToEvent=(gr)=>{
-
-  }
+  const goToEvent = (gr) => {}
 
   const leaveGroup = async () => {
     batch(() => {
@@ -42,7 +41,7 @@ export default function ViewSingleGroup({ navigation,tabNavigator }) {
         type: REMOVE_MEMBERS,
         payload: group.members.filter((member) => member.sub !== sub),
       })
-      dispatch({                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+      dispatch({
         type: SET_USER_GROUPS,
         payload: groups.map((group) => group.groupId),
       })
@@ -104,10 +103,15 @@ export default function ViewSingleGroup({ navigation,tabNavigator }) {
             <View style={styles.txtField}>
               <Text>{`Events`}</Text>
               {group.tempGroups.map((gr) => {
-                const grData = useSelector((state) =>
-                  state.tempGroups.find((gro) => gro.groupId === gr)
-                );
-                return <TempGroupPreview group={grData} onPress={goToEvent} />;
+                const grData = tempGroups.find((gro) => gro.groupId === gr)
+
+                return (
+                  <TempGroupPreview
+                    group={grData}
+                    onPress={goToEvent}
+                    key={grData.groupId}
+                  />
+                )
               })}
             </View>
           </View>
@@ -120,7 +124,7 @@ export default function ViewSingleGroup({ navigation,tabNavigator }) {
         </View>
       )}
     </ScrollView>
-  );
+  )
 }
 const styles = StyleSheet.create({
   container: {

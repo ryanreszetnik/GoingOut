@@ -12,7 +12,12 @@ export default function tempGroupsReducer(state = INITIAL_STATE, action) {
     case SET_TEMP_GROUPS://[TempGroup]
         return action.payload;
     case ADD_TEMP_GROUP://TempGroup
-        return[...state,action.payload];
+        return[...state.map(gr=>{
+            if(action.payload.baseGroups.includes(gr.groupId)){
+                return {...gr,tempGroups:[...gr.tempGroups,action.payload.groupId]}
+            }
+            return gr;
+        }),action.payload];
     case REMOVE_TEMP_GROUP://groupId
         return state.filter(gr=>gr.groupId!==action.payload);
     case EDIT_TEMP_GROUP://TempGroup

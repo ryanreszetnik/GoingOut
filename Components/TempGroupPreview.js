@@ -2,6 +2,7 @@ import React from "react"
 import { Text, StyleSheet, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
+import theme from "../src/Styles/theme.style"
 
 export default function TempGroupPreview({ group, onPress }) {
   const baseGroups = !group
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
   container: {
     borderStyle: "solid",
     borderWidth: 1,
-    backgroundColor: "#DDD",
+    borderColor: theme.LIST_ITEM_BORDER_COLOR,
+    backgroundColor: theme.LIST_ITEM_COLOR,
   },
 })
