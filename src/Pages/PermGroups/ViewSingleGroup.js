@@ -100,20 +100,22 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
                 {/*group.location*/ "placeholder"}
               </Text>
             </View>
-            <View style={styles.txtField}>
-              <Text>{`Events`}</Text>
-              {group.tempGroups.map((gr) => {
-                const grData = tempGroups.find((gro) => gro.groupId === gr)
+            {group.tempGroups && group.tempGroups.length > 0 && (
+              <View style={styles.txtField}>
+                <Text>{`Events`}</Text>
+                {group.tempGroups.map((gr) => {
+                  const grData = tempGroups.find((gro) => gro.groupId === gr)
 
-                return (
-                  <TempGroupPreview
-                    group={grData}
-                    onPress={goToEvent}
-                    key={grData.groupId}
-                  />
-                )
-              })}
-            </View>
+                  return (
+                    <TempGroupPreview
+                      group={grData}
+                      onPress={goToEvent}
+                      key={grData.groupId}
+                    />
+                  )
+                })}
+              </View>
+            )}
           </View>
 
           <View style={{ alignItems: "center" }}>

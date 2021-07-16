@@ -25,23 +25,15 @@ export default function CreatePermGroup({ navigation }) {
   const [ageRange, setAgeRange] = useState([0, 100])
   const [loc, setLoc] = useState({ lat: 27.1234, lon: -27.342 })
   const [genderPref, setPref] = useState("")
-  const curUser = useSelector((state) => state.userSession.userData.attributes)
-  const [members, setMembers] = useState([
-    {
-      name: curUser.name,
-      sub: curUser.sub,
-      birthdate: curUser.birthdate,
-      gender: curUser.gender,
-      username: useSelector((state) => state.userSession.user.username),
-    },
-  ])
+  const curUser = useSelector((state) => state.profile)
+  const [members, setMembers] = useState([curUser.sub])
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
 
   const createGroup = async () => {
     const newGroup = {
       name: groupName,
-      members: members.map((member) => member.sub),
+      members: members,
       bio: groupBio,
       loc: loc,
       locRange: locRange,
@@ -63,8 +55,8 @@ export default function CreatePermGroup({ navigation }) {
   }
 
   const removeMember = (user) => {
-    user.sub !== curUser.sub &&
-      setMembers(members.filter((member) => user.sub !== member.sub))
+    user !== curUser.sub &&
+      setMembers(members.filter((member) => user !== member))
   }
   const onPress = (user) => {
     setMembers([...members, user])
@@ -90,7 +82,7 @@ export default function CreatePermGroup({ navigation }) {
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <Text style={styles.searchTitle}>Add members to group</Text>
-      <UserList users={members} onPress={removeMember} />
+      <UserList subs={members} onPress={removeMember} />
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
@@ -102,10 +94,9 @@ export default function CreatePermGroup({ navigation }) {
       />
       <View style={styles.searchArea}>
         <UserList
+          priority={2}
           onPress={onPress}
-          users={friends.filter(
-            (user) => !members.map((member) => member.sub).includes(user.sub)
-          )}
+          subs={friends.filter((f) => !members.some((m) => m === f))}
         />
         <View style={{ alignItems: "center" }}>
           <AppButton title="Create Group" onPress={createGroup} />

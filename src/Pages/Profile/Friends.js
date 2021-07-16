@@ -8,20 +8,23 @@ import { SET_CUR_PROFILE, SET_FRIENDS } from "../../Actions/friendActions"
 import { getFriends } from "../../Endpoints/friendsEndpoints"
 import { getImageURIBySub } from "../../aws-exports"
 import { getUser } from "../../Endpoints/profileEndpoints"
+import { ensureProfilesLoaded } from "../../Utils/profiles.utils"
 
 export default function Friends({ navigation }) {
   const dispatch = useDispatch()
   const sub = useSelector((state) => state.userSession.userData.attributes.sub)
   const [searchTerm, setSearch] = useState("")
   const friendList = useSelector((state) => state.friends.friends)
-
+  const loaded = useSelector((state) => state.loadedProfiles)
   useEffect(() => {
     if (friendList.length === 0) {
       updateList()
     }
   }, [])
+
   const updateList = async () => {
-    dispatch({ type: SET_FRIENDS, payload: await getFriends(sub) })
+    const friends = await getFriends(sub)
+    dispatch({ type: SET_FRIENDS, payload: friends })
   }
 
   const selectUser = (profile) => {
@@ -46,9 +49,10 @@ export default function Friends({ navigation }) {
       />
       <UserList
         onPress={selectUser}
-        users={friendList.filter((friend) =>
-          friend.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )}
+        subs={friendList.map((f) => f.sub)}
+        priority={3}
+        showFriendships={true}
+        filterTerm={searchTerm}
       />
     </ScrollView>
   )

@@ -10,7 +10,7 @@ import GroupImage from "./GroupImage"
 export default function GroupPreview({ group, onPress, id }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
-      <GroupImage photoIds={group.members.map((m) => m.sub)} size={70} />
+      <GroupImage photoIds={group.members} size={70} />
       <Text style={styles.header}>{group.name}</Text>
     </TouchableOpacity>
   )

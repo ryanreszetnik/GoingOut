@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, Fragment } from "react"
 import {
   View,
   Text,
@@ -11,21 +11,39 @@ import { useSelector } from "react-redux"
 import { defaultImg, getImageURIBySub } from "../src/aws-exports"
 import { REQUEST, REQUESTED, CONFIRMED } from "../src/Constants/friendConstants"
 import theme from "../src/Styles/theme.style"
+import { ensureProfilesLoaded } from "../src/Utils/profiles.utils"
 
-export default function UserList({ users, onPress }) {
+export default function UserList({
+  subs,
+  onPress,
+  priority,
+  showFriendships = false,
+  filterTerm = "",
+}) {
   const [imgSources, setImgSources] = useState([])
+  const signedInProfile = useSelector((state) => state.profile)
+  const friends = useSelector((state) => state.friends.friends)
   const profilePhoto = useSelector((state) => state.profile.photo)
+  const loadedProfiles = useSelector((state) => state.loadedProfiles)
+  useEffect(() => {
+    ensureProfilesLoaded(subs, priority)
+  }, [subs])
   const getImgSources = async () => {
-    const promises = users.map(async (user) => {
-      return await getImageURIBySub(user.sub)
+    const promises = subs.map(async (sub) => {
+      return { ...(await getImageURIBySub(sub)), sub }
     })
     setImgSources(await Promise.all(promises))
   }
   useEffect(() => {
     getImgSources()
-  }, [users, profilePhoto])
+  }, [subs, profilePhoto])
 
-  const statusPreview = (status) => {
+  const statusPreview = (sub) => {
+    const friend = friends.find((f) => f.sub === sub)
+    if (!friend || !showFriendships) {
+      return ""
+    }
+    const status = friend.status
     switch (status) {
       case REQUEST:
         return "- Incoming Request"
@@ -37,27 +55,31 @@ export default function UserList({ users, onPress }) {
         return ""
     }
   }
+  const filter = (user, term) => {
+    return !(user.username.includes(term) || user.name.includes(term))
+  }
 
-  const userPreview = (user) => {
+  const userPreview = (sub) => {
+    let user = loadedProfiles.find((l) => l.sub === sub)
+    if (sub === signedInProfile.sub) {
+      user = signedInProfile
+    }
+    if (filterTerm.length > 0 && filter(user, filterTerm)) {
+      return <Fragment />
+    }
+    const imgSource = imgSources.find((s) => s.sub === sub)
     return (
       <TouchableOpacity
         style={styles.container}
-        key={user.sub}
-        onPress={() => onPress(user)}
+        key={sub}
+        onPress={() => onPress(sub)}
       >
-        <Image
-          style={styles.photo}
-          source={
-            imgSources !== undefined
-              ? imgSources[users.indexOf(user)]
-              : defaultImg
-          }
-        />
+        <Image style={styles.photo} source={imgSource} />
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{user.username}</Text>
-          <Text style={styles.subtext}>{`${user.name}${statusPreview(
-            user.status
-          )}`}</Text>
+          <Text style={styles.text}>{user ? user.username : ""}</Text>
+          <Text style={styles.subtext}>
+            {user ? `${user.name} ${statusPreview(sub)}` : ""}
+          </Text>
         </View>
       </TouchableOpacity>
     )
@@ -65,7 +87,9 @@ export default function UserList({ users, onPress }) {
 
   return (
     <ScrollView style={styles.componentContainer}>
-      {users.map((user) => userPreview(user))}
+      {subs.map((sub) => {
+        return userPreview(sub)
+      })}
     </ScrollView>
   )
 }

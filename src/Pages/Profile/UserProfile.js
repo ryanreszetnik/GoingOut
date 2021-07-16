@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import { View, Text, StyleSheet, Image } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import AppButton from "../../../Components/AppButton"
@@ -16,8 +16,11 @@ import theme from "../../Styles/theme.style"
 import { defaultImg, getImageURIBySub } from "../../aws-exports"
 
 export default function UserProfile({ navigation }) {
-  const profile = useSelector((state) => state.friends.curProfile)
-  const friendsList = useSelector((state) => state.friends.friends)
+  const profileId = useSelector((state) => state.friends.curProfile)
+  const signedInProfile = useSelector((state) => state.profile)
+  const profile = useSelector((state) =>
+    state.loadedProfiles.find((p) => p.sub === profileId)
+  )
   const photo = useSelector((state) => state.profile.photo)
   const [imgSource, setImgSource] = useState()
   useEffect(() => {
@@ -61,7 +64,12 @@ export default function UserProfile({ navigation }) {
     // navigation.navigate("Friends")
   }
 
-  const getButtons = () => {
+  const getButtons = (sub) => {
+    console.log(signedInProfile, sub)
+    if (signedInProfile.sub === sub) {
+      console.log("getting buttons")
+      return <Fragment />
+    }
     switch (profile.status) {
       case REQUESTED:
         return (
@@ -126,7 +134,7 @@ export default function UserProfile({ navigation }) {
                 {`   Friends`}
               </Text>
             </TouchableOpacity>
-            {getButtons()}
+            {getButtons(profileId)}
           </View>
         </View>
 

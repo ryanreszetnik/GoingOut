@@ -8,14 +8,17 @@ import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 
 export default function UserFriends({ navigation }) {
   const [friends, setFriends] = useState([])
-  const sub = useSelector((state) => state.friends.curProfile.sub)
+  const sub = useSelector((state) => state.friends.curProfile)
   const dispatch = useDispatch()
   useEffect(() => {
     makeFriends()
   }, [])
 
   const makeFriends = async () => {
-    setFriends(await getFriends(sub))
+    console.log("sub thing", sub)
+    const f = (await getFriends(sub)).filter((fr) => fr.status === "CONFIRMED")
+
+    setFriends(f.map((fr) => fr.sub))
   }
 
   const selectUser = (profile) => {
@@ -25,7 +28,7 @@ export default function UserFriends({ navigation }) {
 
   return (
     <ScrollView>
-      <UserList users={friends} onPress={selectUser} />
+      <UserList subs={friends} onPress={selectUser} showFriendships={false} />
     </ScrollView>
   )
 }

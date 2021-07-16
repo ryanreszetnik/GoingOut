@@ -7,7 +7,7 @@ import TempGroupPreview from "../../../Components/TempGroupPreview"
 import UserList from "../../../Components/UserList"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 import { REQUEST } from "../../Constants/friendConstants"
-import { appLoad } from "../../Endpoints/generalEndpoints"
+import { appLoad, loadUsers } from "../../Endpoints/generalEndpoints"
 import Notification from "./Notification"
 
 const sampleNotifications = [

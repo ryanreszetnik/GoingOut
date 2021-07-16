@@ -8,7 +8,7 @@ export default function friendReducer(state=INITIAL_STATE, action){
         case SET_FRIENDS:
             return {...state, friends:action.payload}
         case ADD_FRIEND:
-            return {...state,friends: [...state.friends, {...action.payload}],
+            return {...state,friends: [...state.friends, action.payload],
                 curProfile:{...(state.curProfile.sub===action.payload.sub?{...action.payload,status:REQUESTED}:state.curProfile)}}
         case REMOVE_FRIEND:
             return {...state,
@@ -16,7 +16,7 @@ export default function friendReducer(state=INITIAL_STATE, action){
                 curProfile:{...(state.curProfile.sub===action.payload.sub?{...state.curProfile,status:""}:state.curProfile)}}
             
         case SET_CUR_PROFILE:
-            return {...state, curProfile:{...action.payload}}
+            return {...state, curProfile:action.payload}
         case UPDATE_FRIEND:
             return{...state, friends:state.friends.map(fr=>{
                 if(fr.sub===action.payload.sub){

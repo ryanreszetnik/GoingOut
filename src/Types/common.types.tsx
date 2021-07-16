@@ -4,6 +4,30 @@ export interface AppData{
     groups:Group[];
     tempGroups:Group[];
     chats:Chat[];
+    loadedUsers:LoadedUser[];
+    friends:Friend[];
+}
+export interface LoadedUser{
+    priority:number;//lower priority will be removed first so we preserve memory
+    /*Always takes higher priority if in multiple categories
+    1. search users
+    2. potential match member
+    3. friend
+    4. match member
+    5. temp group members
+    6. perm group members
+
+    */
+    sub:string;
+    username:string;
+    name:string;
+    birthday:string;
+    gender:string;
+    numFriends:number;
+}
+export interface Friend{
+    sub:string;
+    status:string;
 }
 export interface UserSession{
     authStatus:string;
@@ -31,7 +55,7 @@ export interface Friend{
 export interface Group{
     id:string;
     name:string;
-    members:MemberPreview[];
+    members:string[];
     datetime:string;
     bio:string;
     averageAge:number;
@@ -46,7 +70,7 @@ export interface Group{
 }
 export interface CreateGroup{
     name:string;
-    members:MemberPreview[];
+    members:string[];
     datetime:string;
     bio:string;
     location:Location;
@@ -80,14 +104,7 @@ export interface AgeRange{
     minAge:number;
     maxAge:number;
 }
-export interface MemberPreview{
-    username:string;
-    name:string;
-    birthday:string;
-    gender:string;
-    photoUrl:string;
-    numFriends:number;
-}
+
 export interface Location{
     latitude:number;
     longitude:number;

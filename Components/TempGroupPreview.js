@@ -30,7 +30,7 @@ export default function TempGroupPreview({ group, onPress }) {
     <View>
       {baseGroups ? (
         <TouchableOpacity onPress={onPress} style={styles.container}>
-          <GroupImage photoIds={group.members.map((m) => m.sub)} size={70} />
+          <GroupImage photoIds={group.members} size={70} />
           <View>
             <Text style={styles.header}>{group.name}</Text>
             <View style={{ flexDirection: "row" }}>

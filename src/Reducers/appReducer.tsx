@@ -8,7 +8,7 @@ import tempGroupsReducer from "./tempGroupsReducer";
 import matchesReducer from "./matchesReducer";
 import foundMatchesReducer from "./foundMatchesReducer";
 import currentReducer from "./currentReducer";
-
+import loadedProfilesReducer from "./loadedProfilesReducer"
 
 
 const rootReducer = combineReducers({
@@ -21,5 +21,6 @@ const rootReducer = combineReducers({
     tempGroups:tempGroupsReducer,
     matches:matchesReducer,
     foundMatches:foundMatchesReducer,
+    loadedProfiles:loadedProfilesReducer
 });
 export default rootReducer;

@@ -19,9 +19,9 @@ export default function MemberList({ navigation }) {
   }
   return (
     <View>
-      <UserList users={members} onPress={onPress} />
+      <UserList priority={5} subs={members} onPress={onPress} />
       <AppButton
-        title='Add Members'
+        title="Add Members"
         onPress={() => navigation.navigate("Add Members")}
       />
     </View>

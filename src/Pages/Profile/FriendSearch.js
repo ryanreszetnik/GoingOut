@@ -16,7 +16,8 @@ export default function FriendSearch({ navigation }) {
     setSearchTerm(term)
     if (term.length > 0) {
       const newFriends = await searchUser(term)
-      setFriends(newFriends.filter((friend) => friend.sub !== sub))
+      console.log(newFriends)
+      setFriends(newFriends)
     } else {
       setFriends([])
     }
@@ -37,12 +38,17 @@ export default function FriendSearch({ navigation }) {
         <AppTextInput
           value={searchTerm}
           onChangeText={(text) => updateSearch(text)}
-          leftIcon='magnify'
-          placeholder='Search For Users'
-          autoCapitalize='none'
+          leftIcon="magnify"
+          placeholder="Search For Users"
+          autoCapitalize="none"
         />
       </View>
-      <UserList users={friends} onPress={onSelect} />
+      <UserList
+        onPress={onSelect}
+        subs={friends}
+        priority={1}
+        showFriendships={true}
+      />
     </View>
   )
 }
