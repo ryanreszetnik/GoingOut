@@ -5,6 +5,7 @@ import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppTextInput from "../../../Components/AppTextInput"
 import UserList from "../../../Components/UserList"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
+import { PROFILE_PAGE } from "../../Constants/pageConstants"
 
 export default function FriendSearch({ navigation }) {
   const [searchTerm, setSearchTerm] = useState("")
@@ -27,7 +28,7 @@ export default function FriendSearch({ navigation }) {
   //useEffect(() => {updateSearch(searchTerm);}, [actualFriends.friends]);
 
   const onSelect = (profile) => {
-    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    dispatch({ type: SET_CUR_PROFILE, payload: profile, page: PROFILE_PAGE })
     navigation.navigate("User Profile")
   }
 

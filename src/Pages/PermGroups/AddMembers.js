@@ -17,7 +17,7 @@ export default function AddMembers({ navigation }) {
     (group) => group.groupId === curId
   )
 
-  const [members, setMembers] = useState([])
+  const [newMembers, setNewMembers] = useState([])
   const curMembers = group.members
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
@@ -25,37 +25,29 @@ export default function AddMembers({ navigation }) {
     setSearchTerm(term)
     if (term.length > 0) {
       const newFriends = await searchUser(term)
-      setFriends(
-        newFriends.filter((fr) => !group.members.some((m) => m.sub === fr.sub))
-      )
+      setFriends(newFriends.filter((fr) => !group.members.includes(fr)))
     } else {
       setFriends([])
     }
   }
 
   const removeMember = (user) => {
-    !curMembers.map((member) => member.sub).includes(user.sub) &&
-      setMembers(members.filter((member) => member.sub !== user.sub))
+    setNewMembers((mem) => mem.filter((m) => m !== user))
+  }
+  const addMember = (user) => {
+    setNewMembers((mem) => [...mem, user])
   }
 
-  const onPress = (user) => {
-    setMembers([...members, user])
-  }
   const saveChanges = async () => {
-    dispatch({ type: ADD_PERM_MEMBERS, payload: members })
-    console.log(
-      await addPermGroupMembers(
-        curId,
-        members.map((mem) => mem.sub)
-      )
-    )
+    dispatch({ type: ADD_PERM_MEMBERS, payload: newMembers })
+    await addPermGroupMembers(curId, newMembers)
     navigation.navigate("Members")
   }
 
   return (
     <ScrollView>
       <Text style={styles.searchTitle}>Add members to group</Text>
-      <UserList users={members} onPress={removeMember} />
+      <UserList subs={newMembers} onPress={removeMember} priority={1} />
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
@@ -67,10 +59,9 @@ export default function AddMembers({ navigation }) {
       />
       <View style={styles.searchArea}>
         <UserList
-          onPress={onPress}
-          users={friends.filter(
-            (user) => !members.map((member) => member.sub).includes(user.sub)
-          )}
+          onPress={addMember}
+          priority={1}
+          subs={friends.filter((user) => !newMembers.includes(user))}
         />
       </View>
       <View style={styles.buttonArea}>

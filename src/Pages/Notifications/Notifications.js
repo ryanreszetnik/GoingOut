@@ -7,6 +7,7 @@ import TempGroupPreview from "../../../Components/TempGroupPreview"
 import UserList from "../../../Components/UserList"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
 import { REQUEST } from "../../Constants/friendConstants"
+import { NOTIFICATIONS_PAGE } from "../../Constants/pageConstants"
 import { appLoad, loadUsers } from "../../Endpoints/generalEndpoints"
 import Notification from "./Notification"
 
@@ -16,25 +17,31 @@ const sampleNotifications = [
 ]
 
 export default function Notifications({ navigation }) {
-  const friends = useSelector((state) => state.friends.friends)
-  const requests = friends.filter((friend) => friend.status === REQUEST)
+  const friends = useSelector((state) => state.friends)
+  const requests = friends
+    .filter((friend) => friend.status === REQUEST)
+    .map((f) => f.sub)
   const dispatch = useDispatch()
   const tempGroups = useSelector((state) => state.tempGroups)
   const nextEvent = tempGroups.sort(function (a, b) {
     return `${a.date}T${a.time}` > `${b.date}T${b.time}`
   })[0]
   const selectUser = (profile) => {
-    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    dispatch({
+      type: SET_CUR_PROFILE,
+      payload: profile,
+      page: NOTIFICATIONS_PAGE,
+    })
     navigation.navigate("User Profile")
   }
   const moveToView = (id) => {}
 
   return (
-    <SafeAreaView>
+    <View>
       <View style={styles.container}>
         <Text style={styles.header}>Requests From:</Text>
         {requests.length > 0 ? (
-          <UserList onPress={selectUser} users={requests} />
+          <UserList onPress={selectUser} subs={requests} />
         ) : (
           <Text>No Requests</Text>
         )}
@@ -58,7 +65,7 @@ export default function Notifications({ navigation }) {
           return <Notification key={JSON.stringify(not)} notification={not} />
         })}
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
 const styles = StyleSheet.create({

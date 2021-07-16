@@ -47,6 +47,7 @@ import {
 import { SET_CHATS } from "./src/Actions/chatActions"
 import { SET_FRIENDS } from "./src/Actions/friendActions"
 import SocketClient from "./src/Socket/SocketClient"
+import NotificationPage from "./src/Pages/Notifications/NotificationPage"
 
 Amplify.configure({ ...awsConfig, endpoints: endpoints })
 
@@ -55,15 +56,15 @@ const Tab = createBottomTabNavigator()
 
 const AuthenticationNavigator = (props) => {
   return (
-    <AuthenticationStack.Navigator headerMode='none'>
-      <AuthenticationStack.Screen name='SignIn' component={SignIn} />
-      <AuthenticationStack.Screen name='SignUp' component={SignUp} />
+    <AuthenticationStack.Navigator headerMode="none">
+      <AuthenticationStack.Screen name="SignIn" component={SignIn} />
+      <AuthenticationStack.Screen name="SignUp" component={SignUp} />
       <AuthenticationStack.Screen
-        name='ConfirmSignUp'
+        name="ConfirmSignUp"
         component={ConfirmSignUp}
       />
       <AuthenticationStack.Screen
-        name='ResetPassword'
+        name="ResetPassword"
         component={ForgotPassword}
       />
     </AuthenticationStack.Navigator>
@@ -71,6 +72,7 @@ const AuthenticationNavigator = (props) => {
 }
 
 const TabNavigator = () => {
+  useEffect(() => {})
   return (
     <Fragment>
       <SocketClient />
@@ -108,8 +110,8 @@ const TabNavigator = () => {
         }}
       >
         <Tab.Screen
-          name='Notifications'
-          component={Notifications}
+          name="Notifications"
+          component={NotificationPage}
           options={{
             tabBarBadge: 2,
             tabBarLabel: () => {
@@ -118,7 +120,7 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name='Temp Groups'
+          name="Temp Groups"
           component={TempGroups}
           options={{
             tabBarBadge: null,
@@ -128,7 +130,7 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name='Perm Groups'
+          name="Perm Groups"
           component={PermGroups}
           options={{
             tabBarBadge: null,
@@ -138,7 +140,7 @@ const TabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name='Profile'
+          name="Profile"
           component={Profile}
           options={{
             tabBarBadge: null,
@@ -154,13 +156,13 @@ const TabNavigator = () => {
 
 const LoadingData = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.userSession.user)
+  const authStatus = useSelector((state) => state.userSession.authStatus)
   useEffect(() => {
     initializeAppState()
-  }, [user])
-
+  }, [authStatus])
   const initializeAppState = async () => {
     const initialAppData = await appLoad()
+    console.log("loading app")
     if (!initialAppData) {
       dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
     } else {
@@ -178,8 +180,8 @@ const LoadingData = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size='large' color='tomato' />
-      <Button title='Loading App Data' color='tomato' />
+      <ActivityIndicator size="large" color="tomato" />
+      <Button title="Loading App Data" color="tomato" />
     </View>
   )
 }
@@ -187,10 +189,10 @@ const LoadingData = () => {
 const Initializing = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size='large' color='tomato' />
+      <ActivityIndicator size="large" color="tomato" />
       <Button
-        title='Reloading'
-        color='tomato'
+        title="Reloading"
+        color="tomato"
         onPress={() => checkAuthState()}
       />
     </View>

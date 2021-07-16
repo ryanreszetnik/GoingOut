@@ -1,34 +1,18 @@
-import React, { useEffect, useState } from "react"
-import { View, Text } from "react-native"
-import { ScrollView } from "react-native-gesture-handler"
-import UserList from "../../../Components/UserList"
+import React from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { getFriends } from "../../Endpoints/friendsEndpoints"
 import { SET_CUR_PROFILE } from "../../Actions/friendActions"
+import UserFriendsList from "../../../Components/UserFriendsList"
+import { PROFILE_PAGE } from "../../Constants/pageConstants"
 
 export default function UserFriends({ navigation }) {
-  const [friends, setFriends] = useState([])
-  const sub = useSelector((state) => state.friends.curProfile)
   const dispatch = useDispatch()
-  useEffect(() => {
-    makeFriends()
-  }, [])
 
-  const makeFriends = async () => {
-    console.log("sub thing", sub)
-    const f = (await getFriends(sub)).filter((fr) => fr.status === "CONFIRMED")
-
-    setFriends(f.map((fr) => fr.sub))
-  }
+  const sub = useSelector((state) => state.current.profile_profile)
 
   const selectUser = (profile) => {
-    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    dispatch({ type: SET_CUR_PROFILE, payload: profile, page: PROFILE_PAGE })
     navigation.navigate("User Profile")
   }
 
-  return (
-    <ScrollView>
-      <UserList subs={friends} onPress={selectUser} showFriendships={false} />
-    </ScrollView>
-  )
+  return <UserFriendsList sub={sub} selectUser={selectUser} />
 }

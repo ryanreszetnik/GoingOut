@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { useDispatch, useSelector, batch } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -105,6 +105,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
                 <Text>{`Events`}</Text>
                 {group.tempGroups.map((gr) => {
                   const grData = tempGroups.find((gro) => gro.groupId === gr)
+                  if (!grData) {
+                    return <Fragment key={Math.random()} />
+                  }
 
                   return (
                     <TempGroupPreview

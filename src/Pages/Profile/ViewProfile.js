@@ -31,7 +31,6 @@ export default function ViewProfile({ navigation }) {
       console.log(`ERROR MESSAGE: ${error.message}`)
     }
   }
-
   return (
     <View style={{ backgroundColor: "#e0e0e0" }}>
       {profile ? (

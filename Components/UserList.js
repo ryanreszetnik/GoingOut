@@ -22,7 +22,7 @@ export default function UserList({
 }) {
   const [imgSources, setImgSources] = useState([])
   const signedInProfile = useSelector((state) => state.profile)
-  const friends = useSelector((state) => state.friends.friends)
+  const friends = useSelector((state) => state.friends)
   const profilePhoto = useSelector((state) => state.profile.photo)
   const loadedProfiles = useSelector((state) => state.loadedProfiles)
   useEffect(() => {
@@ -86,11 +86,11 @@ export default function UserList({
   }
 
   return (
-    <ScrollView style={styles.componentContainer}>
+    <View style={styles.componentContainer}>
       {subs.map((sub) => {
         return userPreview(sub)
       })}
-    </ScrollView>
+    </View>
   )
 }
 const styles = StyleSheet.create({

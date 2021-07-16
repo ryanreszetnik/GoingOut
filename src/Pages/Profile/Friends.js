@@ -9,51 +9,18 @@ import { getFriends } from "../../Endpoints/friendsEndpoints"
 import { getImageURIBySub } from "../../aws-exports"
 import { getUser } from "../../Endpoints/profileEndpoints"
 import { ensureProfilesLoaded } from "../../Utils/profiles.utils"
+import UserFriendsList from "../../../Components/UserFriendsList"
+import { PROFILE_PAGE } from "../../Constants/pageConstants"
 
 export default function Friends({ navigation }) {
   const dispatch = useDispatch()
-  const sub = useSelector((state) => state.userSession.userData.attributes.sub)
-  const [searchTerm, setSearch] = useState("")
-  const friendList = useSelector((state) => state.friends.friends)
-  const loaded = useSelector((state) => state.loadedProfiles)
-  useEffect(() => {
-    if (friendList.length === 0) {
-      updateList()
-    }
-  }, [])
 
-  const updateList = async () => {
-    const friends = await getFriends(sub)
-    dispatch({ type: SET_FRIENDS, payload: friends })
-  }
+  const sub = useSelector((state) => state.profile.sub)
 
   const selectUser = (profile) => {
-    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    dispatch({ type: SET_CUR_PROFILE, payload: profile, page: PROFILE_PAGE })
     navigation.navigate("User Profile")
   }
 
-  const updateSearch = (text) => {
-    setSearch(text)
-  }
-
-  return (
-    <ScrollView>
-      <AppTextInput
-        value={searchTerm}
-        onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Friends by Name"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
-      />
-      <UserList
-        onPress={selectUser}
-        subs={friendList.map((f) => f.sub)}
-        priority={3}
-        showFriendships={true}
-        filterTerm={searchTerm}
-      />
-    </ScrollView>
-  )
+  return <UserFriendsList sub={sub} selectUser={selectUser} />
 }

@@ -4,24 +4,29 @@ import UserList from "../../../../Components/UserList"
 import { useSelector, useDispatch } from "react-redux"
 import { SET_CUR_PROFILE } from "../../../Actions/friendActions"
 import AppButton from "../../../../Components/AppButton"
+import { TEMP_GROUPS_PAGE } from "../../../Constants/pageConstants"
 
 export default function MemberList({ navigation }) {
   const curID = useSelector((state) => state.current.tempGroup)
   const members = useSelector(
     (state) => state.tempGroups.find((group) => group.groupId === curID).members
-  );
+  )
 
   const dispatch = useDispatch()
 
   const onPress = (profile) => {
-    dispatch({ type: SET_CUR_PROFILE, payload: profile })
+    dispatch({
+      type: SET_CUR_PROFILE,
+      payload: profile,
+      page: TEMP_GROUPS_PAGE,
+    })
     navigation.navigate("Member Profile")
   }
   return (
     <View>
-      <UserList users={members} onPress={onPress} />
+      <UserList priority={4} subs={members} onPress={onPress} />
       <AppButton
-        title='Add Members'
+        title="Add Members"
         onPress={() => navigation.navigate("Add Members")}
       />
     </View>

@@ -4,7 +4,7 @@ import { Auth } from "aws-amplify"
 import { SafeAreaView } from "react-native-safe-area-context"
 import AppTextInput from "../../../Components/AppTextInput"
 import AppButton from "../../../Components/AppButton"
-import { LOGGED_IN } from "../../Constants/authConstants"
+import { LOADING_DATA } from "../../Constants/authConstants"
 import { SET_AUTH_STATUS, SET_AUTH_USER } from "../../Actions/authActions"
 import { useDispatch, useSelector } from "react-redux"
 export default function SignIn({ navigation }) {
@@ -17,7 +17,7 @@ export default function SignIn({ navigation }) {
         type: SET_AUTH_USER,
         payload: await Auth.signIn(username, password),
       })
-      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_IN })
+      dispatch({ type: SET_AUTH_STATUS, payload: LOADING_DATA })
     } catch (error) {
       console.log(" Error signing in...", error)
     }
@@ -29,23 +29,23 @@ export default function SignIn({ navigation }) {
         <AppTextInput
           value={username}
           onChangeText={(text) => setUsername(text)}
-          leftIcon='account'
-          placeholder='Enter username'
-          autoCapitalize='none'
-          keyboardType='email-address'
-          textContentType='emailAddress'
+          leftIcon="account"
+          placeholder="Enter username"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="emailAddress"
         />
         <AppTextInput
           value={password}
           onChangeText={(text) => setPassword(text)}
-          leftIcon='lock'
-          placeholder='Enter password'
-          autoCapitalize='none'
+          leftIcon="lock"
+          placeholder="Enter password"
+          autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry
-          textContentType='password'
+          textContentType="password"
         />
-        <AppButton title='Login' onPress={signIn} />
+        <AppButton title="Login" onPress={signIn} />
 
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity

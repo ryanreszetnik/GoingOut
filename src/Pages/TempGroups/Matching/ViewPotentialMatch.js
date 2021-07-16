@@ -39,7 +39,12 @@ export default function ViewPotentialMatch({ navigation }) {
         <Text>{`Group Name: ${match.name}`}</Text>
         <Text>{`Group Bio: ${match.bio}`}</Text>
         <Text>{`Time: ${match.time}`}</Text>
-        <UserList onPress={() => {}} users={match.members} />
+        <UserList
+          onPress={() => {}}
+          subs={match.members}
+          priority={2}
+          showFriendships={false}
+        />
         <AppButton title={"Start Chatting"} onPress={onPress} />
       </View>
     </View>

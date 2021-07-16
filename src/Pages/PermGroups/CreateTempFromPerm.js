@@ -75,7 +75,7 @@ export default function CreateTempFromPerm({ navigation }) {
     } else {
       const payload = {
         groupId: uuid.v4(),
-        members: baseGroup.members.map((member) => member.sub),
+        members: baseGroup.members,
         averageGender: baseGroup.averageGender,
         averageAge: baseGroup.averageAge,
         loc: baseGroup.loc,
