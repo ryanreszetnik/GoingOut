@@ -14,10 +14,10 @@ export default function ViewProfile({ navigation }) {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile)
   const userData = useSelector((state) => state.userSession.userData)
-  const [imgSource, setImgSource] = useState()
+  const [imgSource, setImgSource] = useState(defaultImg)
   useEffect(() => {
     getImg()
-  }, [])
+  }, [profile])
   const getImg = async () => {
     setImgSource(await getImageURIBySub(userData.attributes.sub))
   }
@@ -47,9 +47,9 @@ export default function ViewProfile({ navigation }) {
               >
                 <Text style={styles.imgText}>
                   <MaterialCommunityIcons
-                    name='account-multiple'
+                    name="account-multiple"
                     size={20}
-                    color='#6e6869'
+                    color="#6e6869"
                     style={styles.icon}
                   />
                   {`   Friends`}
@@ -62,9 +62,9 @@ export default function ViewProfile({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='account'
+                  name="account"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 Username
@@ -74,9 +74,9 @@ export default function ViewProfile({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='email'
+                  name="email"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 Email
@@ -86,9 +86,9 @@ export default function ViewProfile({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='phone'
+                  name="phone"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 Phone Number
@@ -98,9 +98,9 @@ export default function ViewProfile({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='emoticon-happy-outline'
+                  name="emoticon-happy-outline"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 Gender
@@ -110,9 +110,9 @@ export default function ViewProfile({ navigation }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='cake'
+                  name="cake"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 Birth Date

@@ -32,7 +32,7 @@ export const getImageURIBySub = async (sub) => {
     `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`
   ))
     ? {
-        uri: `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`,
+        uri: `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}?${Math.random()}`,
       }
     : defaultImg
 }

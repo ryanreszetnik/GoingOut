@@ -48,7 +48,7 @@ export default function EditProfile({ navigation }) {
     const s3bucket = new AWS.S3(s3config)
     const contentType = "image/jpeg"
     const contentDeposition = `inline;filename="${user.attributes.sub}"`
-    const arrayBuffer = decode(photo.base64)
+    const arrayBuffer = decode(imgSource.base64)
 
     s3bucket.createBucket(() => {
       const params = {
@@ -58,15 +58,13 @@ export default function EditProfile({ navigation }) {
         ContentDisposition: contentDeposition,
         ContentType: contentType,
       }
-      console.log(
-        s3bucket.upload(params, (err, data) => {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log(data)
-          }
-        })
-      )
+      s3bucket.upload(params, (err, data) => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log("sent", data)
+        }
+      })
     })
   }
   async function updateProfile() {
@@ -87,7 +85,7 @@ export default function EditProfile({ navigation }) {
         })
         dispatch({
           type: UPLOAD_IMAGE,
-          payload: photo,
+          payload: imgSource,
         })
       })
     } catch (error) {
@@ -109,8 +107,8 @@ export default function EditProfile({ navigation }) {
 
         <View style={styles.editHeading}>
           <FontAwesome5
-            name='edit'
-            color='tomato'
+            name="edit"
+            color="tomato"
             onPress={() => navigation.navigate("Edit Profile")}
             style={styles.icon}
           />
@@ -120,51 +118,51 @@ export default function EditProfile({ navigation }) {
         <AppTextInput
           value={name}
           onChangeText={(text) => setName(text)}
-          leftIcon='emoticon-happy-outline'
-          placeholder='Enter full name'
-          autoCapitalize='none'
+          leftIcon="emoticon-happy-outline"
+          placeholder="Enter full name"
+          autoCapitalize="none"
         />
         <View style={styles.editHeading}>
-          <FontAwesome5 name='edit' color='tomato' style={styles.icon} />
+          <FontAwesome5 name="edit" color="tomato" style={styles.icon} />
           <Text>Email Address</Text>
         </View>
         <AppTextInput
           value={email}
           onChangeText={(text) => setEmail(text)}
-          leftIcon='email'
-          placeholder='Enter Email'
-          autoCapitalize='none'
-          keyboardType='email-address'
-          textContentType='emailAddress'
+          leftIcon="email"
+          placeholder="Enter Email"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="emailAddress"
         />
         <View style={styles.editHeading}>
-          <FontAwesome5 name='edit' color='tomato' style={styles.icon} />
+          <FontAwesome5 name="edit" color="tomato" style={styles.icon} />
           <Text>Date of Birth</Text>
         </View>
         <AppTextInput
           value={birthdate}
           onChangeText={(text) => setBirthday(text)}
-          placeholder='Enter Birthday'
-          autoCapitalize='none'
+          placeholder="Enter Birthday"
+          autoCapitalize="none"
         />
         <View style={styles.editHeading}>
-          <FontAwesome5 name='edit' color='tomato' style={styles.icon} />
+          <FontAwesome5 name="edit" color="tomato" style={styles.icon} />
           <Text>Phone Number</Text>
         </View>
         <AppTextInput
           value={phone_number}
           onChangeText={(text) => setPhone(text)}
-          leftIcon='phone'
-          placeholder='Enter Phone Number'
-          autoCapitalize='none'
+          leftIcon="phone"
+          placeholder="Enter Phone Number"
+          autoCapitalize="none"
           autoCorrect={false}
-          keyboardType='phone-pad'
-          textContentType='telephoneNumber'
+          keyboardType="phone-pad"
+          textContentType="telephoneNumber"
         />
         <GenderPicker checked={gender} setChecked={setGender}></GenderPicker>
 
-        <AppButton title='Save Changes' onPress={updateProfile} />
-        <AppButton title='Sign Out' onPress={signOut} />
+        <AppButton title="Save Changes" onPress={updateProfile} />
+        <AppButton title="Sign Out" onPress={signOut} />
       </SafeAreaView>
     </ScrollView>
   )
