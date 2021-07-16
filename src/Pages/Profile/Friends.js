@@ -14,13 +14,11 @@ export default function Friends({ navigation }) {
   const sub = useSelector((state) => state.userSession.userData.attributes.sub)
   const [searchTerm, setSearch] = useState("")
   const friendList = useSelector((state) => state.friends.friends)
-  const [imgSources, setImgSources] = useState([])
 
   useEffect(() => {
     if (friendList.length === 0) {
       updateList()
     }
-    getImgSources()
   }, [])
   const updateList = async () => {
     dispatch({ type: SET_FRIENDS, payload: await getFriends(sub) })
@@ -35,34 +33,22 @@ export default function Friends({ navigation }) {
     setSearch(text)
   }
 
-  const getImgSources = async () => {
-    const users = friendList.filter((friend) =>
-      friend.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-
-    const promises = users.map(async (user) => {
-      return await getImageURIBySub(user.sub)
-    })
-    setImgSources(await Promise.all(promises))
-  }
-
   return (
     <ScrollView>
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon='magnify'
-        placeholder='Search For Friends by Name'
-        autoCapitalize='none'
-        keyboardType='email-address'
-        textContentType='emailAddress'
+        leftIcon="magnify"
+        placeholder="Search For Friends by Name"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
       />
       <UserList
         onPress={selectUser}
         users={friendList.filter((friend) =>
           friend.name.toLowerCase().includes(searchTerm.toLowerCase())
         )}
-        imgSources={imgSources}
       />
     </ScrollView>
   )

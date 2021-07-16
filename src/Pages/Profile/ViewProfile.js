@@ -33,29 +33,35 @@ export default function ViewProfile({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#e0e0e0" }}>
+    <View style={{ backgroundColor: "#e0e0e0" }}>
       {profile ? (
         <View style={styles.container}>
-          <Text style={styles.imgTitle}>{profile.name}</Text>
-          <View style={styles.imageFriends}>
-            <Image style={styles.img} source={imgSource} />
-            <View style={{ alignItems: "center" }}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Friends")
-                }}
-              >
-                <Text style={styles.imgText}>
-                  <MaterialCommunityIcons
-                    name="account-multiple"
-                    size={20}
-                    color="#6e6869"
-                    style={styles.icon}
-                  />
-                  {`   Friends`}
-                </Text>
-              </TouchableOpacity>
+          <View style={styles.topOfPage}>
+            <View style={styles.imgFollowers}>
+              <Image style={styles.img} source={imgSource} />
+
+              <View style={styles.imageFriends}>
+                <View style={styles.friendsButton}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate("Friends")
+                    }}
+                    style={{ backgroundColor: "#c0c0c0" }}
+                  >
+                    <Text style={styles.imgText}>
+                      <MaterialCommunityIcons
+                        name="account-multiple"
+                        size={20}
+                        color="#6e6869"
+                        style={styles.icon}
+                      />
+                      {`Friends`}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
+            <Text style={styles.imgTitle}>{profile.name}</Text>
           </View>
 
           <View style={styles.attributeContainer}>
@@ -124,7 +130,7 @@ export default function ViewProfile({ navigation }) {
       ) : (
         <View />
       )}
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -133,21 +139,28 @@ const styles = StyleSheet.create({
     width: "95%",
     alignSelf: "center",
   },
+  imgFollowers: {
+    flexDirection: "row",
+  },
+  topOfPage: {
+    width: "100%",
+
+    alignItems: "baseline",
+  },
   img: {
     width: 100,
     height: 100,
-    borderWidth: 1,
-    borderColor: "gray",
+    borderRadius: 100,
     backgroundColor: "white",
-    marginLeft: "10%",
   },
   imageFriends: {
     flexDirection: "row",
+    padding: 30,
+    paddingLeft: 0,
   },
+
   imgText: {
-    backgroundColor: "#c0c0c0",
     padding: 5,
-    marginLeft: "30%",
     borderRadius: 5,
     alignSelf: "center",
   },
@@ -169,6 +182,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 2,
     marginVertical: 2,
+  },
+  friendsButton: {
+    paddingLeft: 40,
+
+    margin: 0,
   },
 })
 //await Auth.currentAuthenticatedUser()

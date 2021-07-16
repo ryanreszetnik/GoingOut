@@ -1,10 +1,30 @@
-import React, { useState } from "react"
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native"
+import React, { useState, useEffect } from "react"
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native"
+import { useSelector } from "react-redux"
 import { defaultImg, getImageURIBySub } from "../src/aws-exports"
 import { REQUEST, REQUESTED, CONFIRMED } from "../src/Constants/friendConstants"
 import theme from "../src/Styles/theme.style"
 
-export default function UserList({ users, onPress, imgSources }) {
+export default function UserList({ users, onPress }) {
+  const [imgSources, setImgSources] = useState([])
+  const profilePhoto = useSelector((state) => state.profile.photo)
+  const getImgSources = async () => {
+    const promises = users.map(async (user) => {
+      return await getImageURIBySub(user.sub)
+    })
+    setImgSources(await Promise.all(promises))
+  }
+  useEffect(() => {
+    getImgSources()
+  }, [users, profilePhoto])
+
   const statusPreview = (status) => {
     switch (status) {
       case REQUEST:
@@ -44,20 +64,19 @@ export default function UserList({ users, onPress, imgSources }) {
   }
 
   return (
-    <View style={styles.componentContainer}>
+    <ScrollView style={styles.componentContainer}>
       {users.map((user) => userPreview(user))}
-    </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
   componentContainer: {},
   container: {
-    height: 60,
-    borderStyle: "solid",
-    borderWidth: 1,
+    height: 70,
     borderColor: theme.LIST_ITEM_BORDER_COLOR,
     backgroundColor: theme.LIST_ITEM_COLOR,
     flexDirection: "row",
+    paddingTop: 5,
   },
   text: {
     fontWeight: "500",
@@ -67,6 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEE",
     width: 60,
     height: 60,
+    borderRadius: 60,
   },
   textContainer: {
     height: 60,

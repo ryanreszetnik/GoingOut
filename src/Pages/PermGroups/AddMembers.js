@@ -8,6 +8,7 @@ import { ScrollView } from "react-native-gesture-handler"
 import AppButton from "../../../Components/AppButton"
 import { ADD_PERM_MEMBERS } from "../../Actions/groupActions"
 import { addMembers } from "../../Endpoints/permGroupsEndpoints"
+import { addPermGroupMembers } from "../../Socket/SocketMethods"
 
 export default function AddMembers({ navigation }) {
   const dispatch = useDispatch()
@@ -16,7 +17,7 @@ export default function AddMembers({ navigation }) {
     (group) => group.groupId === curId
   )
 
-  const [members, setMembers] = useState(group.members)
+  const [members, setMembers] = useState([])
   const curMembers = group.members
   const [searchTerm, setSearchTerm] = useState("")
   const [friends, setFriends] = useState([])
@@ -24,7 +25,9 @@ export default function AddMembers({ navigation }) {
     setSearchTerm(term)
     if (term.length > 0) {
       const newFriends = await searchUser(term)
-      setFriends(newFriends)
+      setFriends(
+        newFriends.filter((fr) => !group.members.some((m) => m.sub === fr.sub))
+      )
     } else {
       setFriends([])
     }
@@ -40,7 +43,12 @@ export default function AddMembers({ navigation }) {
   }
   const saveChanges = async () => {
     dispatch({ type: ADD_PERM_MEMBERS, payload: members })
-    console.log(await addMembers(members, curId))
+    console.log(
+      await addPermGroupMembers(
+        curId,
+        members.map((mem) => mem.sub)
+      )
+    )
     navigation.navigate("Members")
   }
 

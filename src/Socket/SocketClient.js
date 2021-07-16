@@ -4,6 +4,7 @@ import { useDispatch, useSelector, batch } from "react-redux"
 import { SET_SOCKET, SET_USER_GROUPS } from "../Actions/authActions"
 import { ADD_CHAT } from "../Actions/chatActions"
 import {
+  ADD_PERM_GROUP_MEMBERS,
   FRIEND_UPDATE,
   GROUPS_MERGED,
   MATCH_ACCEPTED,
@@ -12,6 +13,7 @@ import {
   NEW_TEMP_GROUP,
   PERM_GROUP_DELETED,
   PERM_GROUP_LEFT,
+  PERM_GROUP_MEMBERS_ADDED,
   PERM_GROUP_UPDATED,
   RECEIVE_MESSAGE,
 } from "./socket.constants"
@@ -23,6 +25,7 @@ import {
 import {
   ADD_MATCH,
   ADD_PERM_GROUP,
+  ADD_PERM_MEMBERS,
   ADD_TEMP_GROUP,
   ADD_TEMP_TO_PERM,
   EDIT_PERM_GROUP,
@@ -134,6 +137,8 @@ export default function SocketClient() {
           break
         case NEW_TEMP_GROUP:
           dispatch({ type: ADD_TEMP_GROUP, payload: body })
+        case PERM_GROUP_MEMBERS_ADDED:
+          dispatch({ type: ADD_PERM_MEMBERS, payload: body })
 
           break
         default:
