@@ -31,12 +31,12 @@ export default function TempGroupPreview({ group, onPress }) {
       {baseGroups ? (
         <TouchableOpacity onPress={onPress} style={styles.container}>
           <GroupImage photoIds={group.members} size={70} />
-          <View>
+          <View style={styles.textContainer}>
             <Text style={styles.header}>{group.name}</Text>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", paddingTop: 3 }}>
               <Ionicon name="calendar-outline" size={15} />
 
-              <Text style={{ paddingLeft: 5 }}>
+              <Text style={{ paddingLeft: 5, paddingTop: 3 }}>
                 {`${moment(`${group.date}`).calendar().split(" at")[0]} ${
                   group.time === "Not Set" ? "" : `at ${group.time}`
                 }`}
@@ -68,7 +68,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.LIST_ITEM_COLOR,
   },
   header: {
-    fontSize: 21,
+    fontSize: 20,
     fontWeight: "600",
+  },
+  textContainer: {
+    paddingLeft: 10,
   },
 })
