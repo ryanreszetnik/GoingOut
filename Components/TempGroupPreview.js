@@ -36,7 +36,7 @@ export default function TempGroupPreview({ group, onPress }) {
             <View style={{ flexDirection: "row", paddingTop: 3 }}>
               <Ionicon name="calendar-outline" size={15} />
 
-              <Text style={{ paddingLeft: 5, paddingTop: 3 }}>
+              <Text style={{ paddingLeft: 5 }}>
                 {`${moment(`${group.date}`).calendar().split(" at")[0]} ${
                   group.time === "Not Set" ? "" : `at ${group.time}`
                 }`}
@@ -44,7 +44,7 @@ export default function TempGroupPreview({ group, onPress }) {
             </View>
 
             {baseGroups.length > 0 && (
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", paddingTop: 2 }}>
                 <Ionicon name="chatbubbles-outline" size={15} />
                 <Text style={{ paddingLeft: 5 }}>
                   {baseGroups.map((bg) => bg.name).join(", ")}
