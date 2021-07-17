@@ -13,28 +13,11 @@ export const s3config = {
   Bucket: "going-out-profiles",
   signatureVersion: "v4",
 }
-export const defaultImg = {
-  uri: "https://going-out-profiles.s3.ca-central-1.amazonaws.com/default-profile-pic.jpg",
-}
-export const urlExists = async (url) => {
-  var status
-  await fetch(url).then((res) => {
-    if (res.status === 404) {
-      status = false
-    } else {
-      status = true
-    }
-  })
-  return status
-}
+
 export const getImageURIBySub = async (sub) => {
-  return (await urlExists(
-    `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}`
-  ))
-    ? {
-        uri: `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}?${Math.random()}`,
-      }
-    : defaultImg
+  return {
+    uri: `https://going-out-profiles.s3.ca-central-1.amazonaws.com/${sub}?${Math.random()}}`,
+  }
 }
 
 export const endpoints = [

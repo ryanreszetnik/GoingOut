@@ -2,8 +2,11 @@ import { LOAD_USERS } from "../Actions/friendActions"
 import { loadUsers } from "../Endpoints/generalEndpoints"
 import store from "../Store/store"
 let profiles = []
+let profileSub = ""
 function updateProfiles() {
-  profiles = store.getState().loadedProfiles
+  const state = store.getState()
+  profiles = state.loadedProfiles
+  profileSub = state.profile ? state.profile.sub : null
 }
 store.subscribe(updateProfiles)
 

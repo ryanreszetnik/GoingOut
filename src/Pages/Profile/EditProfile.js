@@ -16,6 +16,7 @@ import { SET_PROFILE, UPLOAD_IMAGE } from "../../Actions/profileActions"
 import AWS from "aws-sdk"
 import { getImageURIBySub, s3config } from "../../aws-exports"
 import { decode } from "base64-arraybuffer"
+import defaultImg from "../../Assets/default-profile-pic.jpg"
 
 export default function EditProfile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
@@ -103,7 +104,11 @@ export default function EditProfile({ navigation }) {
     <ScrollView>
       <SafeAreaView style={styles.container}>
         <Text style={styles.imgTitle}>Change your profile picture</Text>
-        <ImageSelector source={imgSource} setSource={setImgSource} />
+        <ImageSelector
+          source={imgSource}
+          setSource={setImgSource}
+          defaultSource={defaultImg}
+        />
 
         <View style={styles.editHeading}>
           <FontAwesome5

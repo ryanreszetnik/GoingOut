@@ -8,7 +8,8 @@ import {
   ScrollView,
 } from "react-native"
 import { useSelector } from "react-redux"
-import { defaultImg, getImageURIBySub } from "../src/aws-exports"
+import defaultImg from "../src/Assets/default-profile-pic.jpg"
+import { getImageURIBySub } from "../src/aws-exports"
 import { REQUEST, REQUESTED, CONFIRMED } from "../src/Constants/friendConstants"
 import theme from "../src/Styles/theme.style"
 import { ensureProfilesLoaded } from "../src/Utils/profiles.utils"
@@ -74,7 +75,11 @@ export default function UserList({
         key={sub}
         onPress={() => onPress(sub)}
       >
-        <Image style={styles.photo} source={imgSource} />
+        <Image
+          style={styles.photo}
+          source={imgSource}
+          defaultSource={defaultImg}
+        />
         <View style={styles.textContainer}>
           <Text style={styles.text}>{user ? user.username : ""}</Text>
           <Text style={styles.subtext}>

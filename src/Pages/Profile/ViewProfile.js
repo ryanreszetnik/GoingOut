@@ -8,36 +8,32 @@ import { useDispatch, useSelector } from "react-redux"
 import { getUser } from "../../Endpoints/profileEndpoints"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
-import { defaultImg, getImageURIBySub } from "../../aws-exports"
+import { getImageURIBySub } from "../../aws-exports"
+import defaultImg from "../../Assets/default-profile-pic.jpg"
 
 export default function ViewProfile({ navigation }) {
   const dispatch = useDispatch()
   const profile = useSelector((state) => state.profile)
   const userData = useSelector((state) => state.userSession.userData)
-  const [imgSource, setImgSource] = useState(defaultImg)
+  const [imgSource, setImgSource] = useState(null)
   useEffect(() => {
     getImg()
   }, [profile])
   const getImg = async () => {
     setImgSource(await getImageURIBySub(userData.attributes.sub))
   }
-  async function getProfile() {
-    try {
-      dispatch({
-        type: SET_PROFILE,
-        payload: await getUser(userData.attributes.sub),
-      })
-    } catch (error) {
-      console.log(`ERROR MESSAGE: ${error.message}`)
-    }
-  }
+
   return (
     <View style={{ backgroundColor: "#e0e0e0" }}>
       {profile ? (
         <View style={styles.container}>
           <View style={styles.topOfPage}>
             <View style={styles.imgFollowers}>
-              <Image style={styles.img} source={imgSource} />
+              <Image
+                style={styles.img}
+                source={imgSource}
+                defaultSource={defaultImg}
+              />
 
               <View style={styles.imageFriends}>
                 <View style={styles.friendsButton}>

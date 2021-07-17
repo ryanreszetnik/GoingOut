@@ -7,7 +7,8 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 import { CONFIRMED, REQUEST, REQUESTED } from "../src/Constants/friendConstants"
 import { updateFriendRequest } from "../src/Socket/SocketMethods"
 import theme from "../src/Styles/theme.style"
-import { defaultImg, getImageURIBySub } from "../src/aws-exports"
+import { getImageURIBySub } from "../src/aws-exports"
+import defaultImg from "../src/Assets/default-profile-pic.jpg"
 
 export default function UserProfilePage({ goToFriends, showFriends, sub }) {
   const friendship = useSelector((state) =>
@@ -101,7 +102,11 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
         <View style={styles.container}>
           <Text style={styles.imgTitle}>{profile.name}</Text>
           <View style={styles.imageFriends}>
-            <Image style={styles.img} source={imgSource} />
+            <Image
+              style={styles.img}
+              source={imgSource}
+              defaultSource={defaultImg}
+            />
 
             <View style={styles.col}>
               {showFriends && (

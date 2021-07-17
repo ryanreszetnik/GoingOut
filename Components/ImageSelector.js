@@ -2,6 +2,7 @@ import React from "react"
 import { View, Text, Image, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import ImagePicker from "react-native-image-crop-picker"
+import defaultImg from "../src/Assets/default-profile-pic.jpg"
 
 export default function ImageSelector({ source, setSource }) {
   const chooseImg = () => {
@@ -11,7 +12,7 @@ export default function ImageSelector({ source, setSource }) {
       mediaType: "photo",
       includeBase64: true,
     }
-    console.log("launching")
+
     ImagePicker.openPicker({
       width: 300,
       height: 400,
@@ -50,7 +51,7 @@ export default function ImageSelector({ source, setSource }) {
   }
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={source} />
+      <Image style={styles.image} source={source} defaultSource={defaultImg} />
       <View style={styles.buttonList}>
         <TouchableOpacity style={styles.button} onPress={chooseImg}>
           <Text style={styles.buttonText}>Choose photo from camera roll</Text>
