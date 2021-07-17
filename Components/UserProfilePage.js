@@ -58,23 +58,23 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
       case REQUESTED:
         return (
           <TouchableOpacity onPress={removeFriend}>
-            <Text>Cancel Request</Text>
+            <Text style={styles.buttonText}>Cancel Request</Text>
           </TouchableOpacity>
         )
       case REQUEST:
         return (
-          <View>
+          <View style={styles.incoming}>
             <TouchableOpacity
               onPress={requestAccept}
               style={styles.primaryButton}
             >
-              <Text>Accept Request</Text>
+              <Text style={styles.buttonText}>Accept Request</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={removeFriend}
               style={styles.secondaryButton}
             >
-              <Text>Deny Request</Text>
+              <Text style={styles.buttonText}>Deny Request</Text>
             </TouchableOpacity>
           </View>
         )
@@ -84,13 +84,13 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
             onPress={removeFriend}
             style={styles.secondaryButton}
           >
-            <Text>Remove Friend</Text>
+            <Text style={styles.buttonText}>Remove Friend</Text>
           </TouchableOpacity>
         )
       default:
         return (
           <TouchableOpacity onPress={sendRequest} style={styles.primaryButton}>
-            <Text>Friend Request</Text>
+            <Text style={styles.buttonText}>Friend Request</Text>
           </TouchableOpacity>
         )
     }
@@ -220,8 +220,12 @@ const styles = StyleSheet.create({
   primaryButton: {
     backgroundColor: theme.PRIMARY_COLOR,
     borderRadius: 6,
-    width: 100,
+    padding: 5,
+    width: 120,
     height: 30,
+    borderWidth: 1,
+    borderColor: "#888",
+    margin: 5,
   },
   secondaryButton: {
     backgroundColor: theme.SECONDARY_COLOR,
@@ -229,5 +233,14 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 120,
     height: 30,
+    borderWidth: 1,
+    borderColor: "#888",
+    margin: 5,
+  },
+  incoming: {
+    padding: 10,
+  },
+  buttonText: {
+    textAlign: "center",
   },
 })

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, Button, TextInput, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useSelector, batch } from "react-redux"
@@ -44,14 +44,14 @@ export default function CreatePermGroup({ navigation }) {
     createPermGroup(newGroup)
     navigation.navigate("View Perm Groups")
   }
+  useEffect(() => {
+    updateSearch("")
+  }, [])
   const updateSearch = async (term) => {
     setSearchTerm(term)
-    if (term.length > 0) {
-      const newFriends = await searchUser(term)
-      setFriends(newFriends)
-    } else {
-      setFriends([])
-    }
+
+    const newFriends = await searchUser(term)
+    setFriends(newFriends)
   }
 
   const removeMember = (user) => {
