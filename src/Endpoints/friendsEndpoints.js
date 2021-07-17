@@ -16,7 +16,8 @@ export const searchUser = async (search) => {
     `/searchusers?search=${search}`,
     apiRequest
   )
-  return JSON.parse(data.body)
+
+  return data
 }
 
 export const requestFriend = async (sub) => {

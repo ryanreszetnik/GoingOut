@@ -37,9 +37,18 @@ export default function TempGroupPreview({ group, onPress }) {
               <Ionicon name="calendar-outline" size={15} />
 
               <Text style={{ paddingLeft: 5 }}>
-                {`${moment(`${group.date}`).calendar().split(" at")[0]} ${
-                  group.time === "Not Set" ? "" : `at ${group.time}`
-                }`}
+                {`${
+                  moment(`${group.date}`)
+                    .calendar(null, {
+                      sameDay: "[Today]",
+                      nextDay: "[Tomorrow]",
+                      nextWeek: "dddd",
+                      lastDay: "[Yesterday]",
+                      lastWeek: "[Last] dddd",
+                      sameElse: "DD/MM/YYYY",
+                    })
+                    .split(" at")[0]
+                } ${group.time === "Not Set" ? "" : `at ${group.time}`}`}
               </Text>
             </View>
 
