@@ -22,7 +22,7 @@ export default function CreatePermGroup({ navigation }) {
   const [locRange, setLocRange] = useState(25)
   const [groupName, setGroupName] = useState()
   const [groupBio, setGroupBio] = useState()
-  const [ageRange, setAgeRange] = useState([0, 100])
+  const [ageRange, setAgeRange] = useState([18, 100])
   const [loc, setLoc] = useState({ lat: 27.1234, lon: -27.342 })
   const [genderPref, setPref] = useState("")
   const curUser = useSelector((state) => state.profile)
@@ -82,7 +82,7 @@ export default function CreatePermGroup({ navigation }) {
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <Text style={styles.searchTitle}>Add members to group</Text>
-      <UserList subs={members} onPress={removeMember} />
+      <UserList subs={members} onPress={removeMember} horizontal={true} />
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
@@ -92,12 +92,11 @@ export default function CreatePermGroup({ navigation }) {
         keyboardType="email-address"
         textContentType="emailAddress"
       />
+      <UserList
+        onPress={onPress}
+        subs={friends.filter((f) => !members.some((m) => m === f))}
+      />
       <View style={styles.searchArea}>
-        <UserList
-          priority={2}
-          onPress={onPress}
-          subs={friends.filter((f) => !members.some((m) => m === f))}
-        />
         <View style={{ alignItems: "center" }}>
           <AppButton title="Create Group" onPress={createGroup} />
         </View>

@@ -2,7 +2,18 @@ import React, { useState } from "react"
 import MultiSlider from "@ptomasroos/react-native-multi-slider"
 import { Platform, View, Text, StyleSheet } from "react-native"
 
-const optionsArray =[...[...Array(30).keys()].map(k=>k+16),60,65,70,75,80,85,90,95,100]
+const optionsArray = [
+  ...[...Array(38).keys()].map((k) => k + 18),
+  60,
+  65,
+  70,
+  75,
+  80,
+  85,
+  90,
+  95,
+  100,
+]
 
 const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
   const multiSliderValuesChange = (values) => setMultiSliderValue(values)
@@ -67,14 +78,12 @@ const Slider = ({ multiSliderValue, setMultiSliderValue }) => {
           sliderLength={280}
           optionsArray={optionsArray}
           onValuesChange={multiSliderValuesChange}
-          // min={0}
-          // max={100}
           allowOverlap={false}
           minMarkerOverlapDistance={28}
         />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

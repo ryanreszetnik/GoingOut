@@ -58,7 +58,6 @@ export default function AddMembers({ navigation }) {
       <View style={styles.searchArea}>
         <UserList
           onPress={addMember}
-          priority={1}
           subs={friends.filter((user) => !newMembers.includes(user))}
         />
       </View>

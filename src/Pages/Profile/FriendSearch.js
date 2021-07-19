@@ -44,12 +44,7 @@ export default function FriendSearch({ navigation }) {
           autoCapitalize="none"
         />
       </View>
-      <UserList
-        onPress={onSelect}
-        subs={friends}
-        priority={1}
-        showFriendships={true}
-      />
+      <UserList onPress={onSelect} subs={friends} showFriendships={true} />
     </View>
   )
 }

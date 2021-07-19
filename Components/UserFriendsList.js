@@ -48,7 +48,6 @@ export default function UserFriendsList({ selectUser, sub }) {
       <UserList
         onPress={selectUser}
         subs={friends}
-        priority={1}
         showFriendships={false}
         filterTerm={searchTerm}
       />

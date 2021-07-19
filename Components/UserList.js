@@ -17,9 +17,10 @@ import { ensureProfilesLoaded } from "../src/Utils/profiles.utils"
 export default function UserList({
   subs,
   onPress,
-  priority,
+  priority = 0,
   showFriendships = false,
   filterTerm = "",
+  horizontal = false,
 }) {
   const [imgSources, setImgSources] = useState([])
   const signedInProfile = useSelector((state) => state.profile)
@@ -71,7 +72,7 @@ export default function UserList({
     const imgSource = imgSources.find((s) => s.sub === sub)
     return (
       <TouchableOpacity
-        style={styles.container}
+        style={horizontal ? styles.containerHorizontal : styles.container}
         key={sub}
         onPress={() => onPress(sub)}
       >
@@ -81,25 +82,40 @@ export default function UserList({
           defaultSource={defaultImg}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{user ? user.username : ""}</Text>
-          <Text style={styles.subtext}>
-            {user ? `${user.name} ${statusPreview(sub)}` : ""}
+          <Text style={horizontal ? styles.textHorizontal : styles.text}>
+            {user ? user.username : ""}
           </Text>
+          {!horizontal && (
+            <Text style={styles.subtext}>
+              {user ? `${user.name} ${statusPreview(sub)}` : ""}
+            </Text>
+          )}
         </View>
       </TouchableOpacity>
     )
   }
 
   return (
-    <View style={styles.componentContainer}>
+    <ScrollView
+      horizontal={horizontal}
+      style={
+        horizontal
+          ? styles.componentContainerHorizontal
+          : styles.componentContainer
+      }
+    >
       {subs.map((sub) => {
         return userPreview(sub)
       })}
-    </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
   componentContainer: {},
+  componentContainerHorizontal: {
+    height: 100,
+    flexDirection: "row",
+  },
   container: {
     height: 70,
     borderColor: theme.LIST_ITEM_BORDER_COLOR,
@@ -107,9 +123,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingTop: 5,
   },
+  containerHorizontal: {
+    height: 70,
+    width: 80,
+    alignItems: "center",
+    borderColor: theme.LIST_ITEM_BORDER_COLOR,
+    flexDirection: "column",
+    paddingTop: 5,
+  },
   text: {
     fontWeight: "500",
     fontSize: 20,
+  },
+  textHorizontal: {
+    fontWeight: "300",
+    fontSize: 14,
   },
   photo: {
     backgroundColor: "#EEE",
