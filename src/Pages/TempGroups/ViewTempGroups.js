@@ -5,6 +5,7 @@ import { ScrollView } from "react-native-gesture-handler"
 import { batch, useDispatch, useSelector } from "react-redux"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
 import { SET_CUR_TEMP_GROUP } from "../../Actions/groupActions"
+import { PAGE_BACKGROUND_COLOR } from "../../Styles/theme.style"
 
 export default function ViewTempGroups({ navigation }) {
   const groups = useSelector((state) =>
@@ -27,7 +28,7 @@ export default function ViewTempGroups({ navigation }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
       <Text>Master Groups</Text>
       {masterGroups.map((group) => {
         return (

@@ -13,15 +13,15 @@ export default function FriendSearch({ navigation }) {
   const [friends, setFriends] = useState([])
   const sub = useSelector((state) => state.userSession.userData).attributes.sub
 
+  useEffect(() => {
+    updateSearch("")
+  }, [])
   const updateSearch = async (term) => {
     setSearchTerm(term)
-    if (term.length > 0) {
-      const newFriends = await searchUser(term)
-      console.log(newFriends)
-      setFriends(newFriends)
-    } else {
-      setFriends([])
-    }
+
+    const newFriends = await searchUser(term)
+    console.log(newFriends)
+    setFriends(newFriends)
   }
   const dispatch = useDispatch()
 
