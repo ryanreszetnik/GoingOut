@@ -8,16 +8,15 @@ export const MATCH_ACCEPTED = "matchAccepted"
 
 export const NEW_PERM_GROUP = "newPermGroup"
 export const PERM_GROUP_LEFT = "permGroupLeft"
-export const PERM_GROUP_DELETED = "permGroupDeleted"
+export const PERM_GROUP_OTHER_LEFT = "permGroupOtherLeft"
 export const PERM_GROUP_UPDATED = "permGroupUpdated"
 export const PERM_GROUP_MEMBERS_ADDED = "permGroupMembersAdded"
 
+export const NEW_TEMP_GROUP = "newTempGroup"
 export const TEMP_GROUP_LEFT = "tempGroupLeft"
-export const TEMP_GROUP_DELETED = "tempGroupDeleted"
+export const TEMP_GROUP_OTHER_LEFT = "tempGroupOtherLeft"
 export const TEMP_GROUP_UPDATED = "tempGroupUpdated"
 export const TEMP_GROUP_MEMBERS_ADDED = "tempGroupMembersAdded"
-
-export const NEW_TEMP_GROUP = "newTempGroup"
 
 //outgoing events (api gateway endpoints)
 export const SEND_MESSAGE = "sendMessage"

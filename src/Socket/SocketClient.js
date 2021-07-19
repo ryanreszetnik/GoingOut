@@ -7,15 +7,18 @@ import {
   ADD_PERM_GROUP_MEMBERS,
   FRIEND_UPDATE,
   GROUPS_MERGED,
+  LEAVE_TEMP_GROUP,
   MATCH_ACCEPTED,
   MESSAGE_SENT,
   NEW_PERM_GROUP,
   NEW_TEMP_GROUP,
-  PERM_GROUP_DELETED,
   PERM_GROUP_LEFT,
   PERM_GROUP_MEMBERS_ADDED,
+  PERM_GROUP_OTHER_LEFT,
   PERM_GROUP_UPDATED,
   RECEIVE_MESSAGE,
+  TEMP_GROUP_LEFT,
+  TEMP_GROUP_OTHER_LEFT,
 } from "./socket.constants"
 import {
   UPDATE_FRIEND,
@@ -31,6 +34,9 @@ import {
   EDIT_PERM_GROUP,
   REMOVE_MATCH,
   REMOVE_PERM_GROUP,
+  REMOVE_PERM_MEMBERS,
+  REMOVE_TEMP_GROUP,
+  REMOVE_TEMP_MEMBERS,
 } from "../Actions/groupActions"
 
 export default function SocketClient() {
@@ -137,10 +143,27 @@ export default function SocketClient() {
           break
         case NEW_TEMP_GROUP:
           dispatch({ type: ADD_TEMP_GROUP, payload: body })
+          break
         case PERM_GROUP_MEMBERS_ADDED:
           dispatch({ type: ADD_PERM_MEMBERS, payload: body })
-
           break
+        case TEMP_GROUP_LEFT:
+          dispatch({ type: REMOVE_TEMP_GROUP, payload: body.groupId })
+          break
+        case TEMP_GROUP_OTHER_LEFT:
+          dispatch({
+            type: REMOVE_TEMP_MEMBERS,
+            payload: { groupId: body.groupId, members: body.members },
+          })
+          break
+        case PERM_GROUP_LEFT:
+          dispatch({ type: REMOVE_PERM_GROUP, payload: body.groupId })
+          break
+        case PERM_GROUP_OTHER_LEFT:
+          dispatch({
+            type: REMOVE_PERM_MEMBERS,
+            payload: { groupId: body.groupId, members: body.members },
+          })
         default:
           console.log("No Event Action Match", event)
       }
