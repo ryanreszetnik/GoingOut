@@ -15,6 +15,7 @@ import {
 } from "../../Endpoints/permGroupsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
+import { leavePermGroup } from "../../Socket/SocketMethods"
 
 export default function ViewSingleGroup({ navigation, tabNavigator }) {
   const dispatch = useDispatch()
@@ -35,25 +36,8 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
   const goToEvent = (gr) => {}
 
   const leaveGroup = async () => {
-    batch(() => {
-      dispatch({ type: REMOVE_PERM_GROUP, payload: curID })
-      dispatch({
-        type: REMOVE_MEMBERS,
-        payload: group.members.filter((member) => member.sub !== sub),
-      })
-      dispatch({
-        type: SET_USER_GROUPS,
-        payload: groups.map((group) => group.groupId),
-      })
-      dispatch({ type: SET_CUR_GROUP, payload: null })
-    })
-    group.members.length === 1
-      ? await removePermGroup(curID, sub)
-      : await removeMembers(
-          group.members.filter((member) => member.sub !== sub, sub),
-          curID,
-          [sub]
-        )
+    const leave = group.members.length !== 1 ? true : false
+    leavePermGroup(curID, leave)
     navigation.navigate("View Perm Groups")
   }
 
@@ -65,9 +49,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name="form-textbox"
+                  name='form-textbox'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`  Group Name`}
@@ -77,9 +61,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name="card-text"
+                  name='card-text'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`  Bio`}
@@ -89,9 +73,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name="google-maps"
+                  name='google-maps'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`  Location`}
@@ -122,9 +106,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <AppButton title="Edit Group" onPress={editGroup} />
-            <AppButton title="Create Event" onPress={createEvent} />
-            <AppButton title="Leave Group" onPress={leaveGroup} />
+            <AppButton title='Edit Group' onPress={editGroup} />
+            <AppButton title='Create Event' onPress={createEvent} />
+            <AppButton title='Leave Group' onPress={leaveGroup} />
           </View>
         </View>
       )}

@@ -53,17 +53,14 @@ export const leavePermGroup = (group:Group, leave:boolean)=>{
 export const createTempGroup = (group:CreateTempGroup) => {
   socketSend(CREATE_TEMP_GROUP, group)
 };
-export const deleteTempGroup = (groupId:string) => {
-  socketSend(DELETE_TEMP_GROUP, groupId)
-};
 export const editTempGroup = (group:EditTempGroup) => {
   socketSend(EDIT_TEMP_GROUP, group)
 };
 export const addTempGroupMembers = (groupId:string, subs:string[]) => {
   socketSend(ADD_TEMP_GROUP_MEMBERS, {groupId, subs})
 };
-export const leaveTempGroup = (groupId:string) => {
-  socketSend(LEAVE_TEMP_GROUP, groupId)
+export const leaveTempGroup = (groupId:string, leave:boolean) => {
+  socketSend(LEAVE_TEMP_GROUP, {groupId, leave})
 };
 
 //Matching Methods

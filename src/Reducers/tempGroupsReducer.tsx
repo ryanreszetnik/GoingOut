@@ -28,12 +28,12 @@ export default function tempGroupsReducer(state = INITIAL_STATE, action) {
             return gr;
         });
     case REMOVE_TEMP_MEMBERS://[subs]
-        return state.map(gr=>{
+        return state.forEach(gr=>{
             if(gr.groupId===action.payload.groupId){
                 return {
                     ...gr,
                     members:gr.members.filter(mem=>{
-                        return !action.payload.find(mem.sub)
+                        return !action.payload.members.find(mem.sub)
                     })
                 }
             }
