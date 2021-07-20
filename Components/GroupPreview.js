@@ -11,18 +11,13 @@ export default function GroupPreview({ group, onPress }) {
   const chats = useSelector((state) =>
     state.chats.find((c) => c.groupId === group.groupId)
   )
-  console.log(chats)
-  const lastMessage = chats.lastmessage
+  const lastMessage = chats ? chats.lastmessage : null
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <GroupImage photoIds={group.members} size={70} />
       <View style={styles.textContainer}>
         <Text style={styles.header}>{group.name}</Text>
-        {lastMessage && (
-          <Text style={styles.message}>
-            {lastMessage === undefined ? "" : lastMessage.message}
-          </Text>
-        )}
+        {lastMessage && <Text style={styles.message}>{lastMessage}</Text>}
       </View>
     </TouchableOpacity>
   )

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { View, Text, Image } from "react-native"
 import { useSelector } from "react-redux"
 import { getImageURIBySub } from "../src/aws-exports"
+import defaultImg from "../src/Assets/default-profile-pic.jpg"
 
 const imgSize = 0.7
 
@@ -34,6 +35,7 @@ export default function GroupImage({ photoIds, size }) {
         <Image
           source={photos[0]}
           style={{ width: size, height: size, borderRadius: size }}
+          defaultSource={defaultImg}
         />
       )}
       {photos.length === 2 && (
@@ -48,6 +50,7 @@ export default function GroupImage({ photoIds, size }) {
               height: size * imgSize,
               borderRadius: size * imgSize,
             }}
+            defaultSource={defaultImg}
           />
           <Image
             source={photos[1]}
@@ -60,6 +63,7 @@ export default function GroupImage({ photoIds, size }) {
               height: size * imgSize,
               borderRadius: size * imgSize,
             }}
+            defaultSource={defaultImg}
           />
         </View>
       )}

@@ -8,9 +8,10 @@ import { TEMP_GROUPS_PAGE } from "../../../Constants/pageConstants"
 
 export default function MemberList({ navigation }) {
   const curID = useSelector((state) => state.current.tempGroup)
-  const members = useSelector(
-    (state) => state.tempGroups.find((group) => group.groupId === curID).members
+  const tempGroup = useSelector((state) =>
+    state.tempGroups.find((group) => group.groupId === curID)
   )
+  const members = tempGroup ? tempGroup.members : []
 
   const dispatch = useDispatch()
 

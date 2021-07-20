@@ -29,7 +29,7 @@ export default function ViewTempGroups({ navigation }) {
 
   return (
     <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
-      <Text>Master Groups</Text>
+      {baseGroups.length > 0 && <Text>Master Groups</Text>}
       {masterGroups.map((group) => {
         return (
           <TempGroupPreview
@@ -40,7 +40,7 @@ export default function ViewTempGroups({ navigation }) {
           />
         )
       })}
-      <Text>Sub Groups</Text>
+      {baseGroups.length > 0 && <Text>Sub Groups</Text>}
       {baseGroups.map((group) => {
         return (
           <TempGroupPreview
