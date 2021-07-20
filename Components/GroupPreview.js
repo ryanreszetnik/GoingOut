@@ -11,7 +11,7 @@ export default function GroupPreview({ group, onPress, id }) {
   const chats = useSelector((state) =>
     state.chats.find((c) => c.groupId === group.groupId)
   )
-  const lastMessage = chats.lastmessage
+  const lastMessage = chats ? chats.lastmessage : null
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
       <GroupImage photoIds={group.members} size={70} />
