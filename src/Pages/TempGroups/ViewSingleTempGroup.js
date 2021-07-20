@@ -30,8 +30,8 @@ export default function ViewSingleTempGroup({ navigation }) {
 
   const leaveEvent = () => {
     const leave = event.members.length !== 1 ? true : false
-    leaveTempGroup(curGroup, leave)
     navigation.navigate("View Temp Groups")
+    leaveTempGroup(curGroup, leave)
   }
   return (
     <View style={styles.container}>
