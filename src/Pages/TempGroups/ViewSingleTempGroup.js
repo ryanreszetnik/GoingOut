@@ -29,64 +29,66 @@ export default function ViewSingleTempGroup({ navigation }) {
   }
 
   const leaveEvent = () => {
-    const leave = event.members.length !== 1 ? true : false
+    const leave = event.members.length !== 1
     navigation.navigate("View Temp Groups")
     leaveTempGroup(curGroup, leave)
   }
   return (
     <View style={styles.container}>
-      <View style={styles.attributeContainer}>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='form-textbox'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Group Name`}
-          </Text>
-          <Text style={styles.attributeTxt}>{event.name}</Text>
+      {event && (
+        <View style={styles.attributeContainer}>
+          <View style={styles.txtField}>
+            <Text>
+              <MaterialCommunityIcons
+                name="form-textbox"
+                size={20}
+                color="#6e6869"
+                style={styles.icon}
+              />
+              {`  Group Name`}
+            </Text>
+            <Text style={styles.attributeTxt}>{event.name}</Text>
+          </View>
+          <View style={styles.txtField}>
+            <Text>
+              <MaterialCommunityIcons
+                name="card-text"
+                size={20}
+                color="#6e6869"
+                style={styles.icon}
+              />
+              {`  Bio`}
+            </Text>
+            <Text style={styles.attributeTxt}>{event.bio}</Text>
+          </View>
+          <View style={styles.txtField}>
+            <Text>
+              <MaterialCommunityIcons
+                name="google-maps"
+                size={20}
+                color="#6e6869"
+                style={styles.icon}
+              />
+              {`  Location`}
+            </Text>
+            <Text style={styles.attributeTxt}>
+              {/*group.location*/ "placeholder"}
+            </Text>
+          </View>
+          <AppButton title="Find Matches" onPress={onPress}></AppButton>
+          <AppButton title="Members" onPress={goToMembers} />
+          <AppButton title="Leave Event" onPress={leaveEvent} />
+          {matches.map((match) => {
+            return (
+              <MatchPreview
+                key={match.matchId}
+                match={match}
+                onPress={goToMatch}
+              />
+            )
+          })}
         </View>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='card-text'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Bio`}
-          </Text>
-          <Text style={styles.attributeTxt}>{event.bio}</Text>
-        </View>
-        <View style={styles.txtField}>
-          <Text>
-            <MaterialCommunityIcons
-              name='google-maps'
-              size={20}
-              color='#6e6869'
-              style={styles.icon}
-            />
-            {`  Location`}
-          </Text>
-          <Text style={styles.attributeTxt}>
-            {/*group.location*/ "placeholder"}
-          </Text>
-        </View>
-        <AppButton title='Find Matches' onPress={onPress}></AppButton>
-        <AppButton title='Members' onPress={goToMembers} />
-        <AppButton title='Leave Event' onPress={leaveEvent} />
-        {matches.map((match) => {
-          return (
-            <MatchPreview
-              key={match.matchId}
-              match={match}
-              onPress={goToMatch}
-            />
-          )
-        })}
-      </View>
+      )}
     </View>
   )
 }
