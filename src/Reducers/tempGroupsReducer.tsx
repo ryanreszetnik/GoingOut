@@ -33,7 +33,7 @@ export default function tempGroupsReducer(state = INITIAL_STATE, action) {
                 return {
                     ...gr,
                     members:gr.members.filter(mem=>{
-                        return !action.payload.members.find(mem.sub)
+                        return !action.payload.members.includes(mem)
                     })
                 }
             }
