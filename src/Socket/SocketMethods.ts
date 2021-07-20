@@ -46,7 +46,7 @@ export const editPermGroup = (group:EditGroup)=>{
 export const addPermGroupMembers = (groupId:string, subs:string[])=>{
   socketSend(ADD_PERM_GROUP_MEMBERS, {groupId, subs})
 }
-export const leavePermGroup = (group:Group, leave:boolean)=>{
+export const leavePermGroup = (group:string, leave:boolean)=>{
   socketSend(LEAVE_PERM_GROUP, {group, leave})
 }
 //Temp group Methods

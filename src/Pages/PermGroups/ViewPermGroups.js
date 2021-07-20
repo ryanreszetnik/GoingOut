@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { View, Text, Button } from "react-native"
+import { View, Text, Button, ScrollView } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import AppButton from "../../../Components/AppButton"
 import GroupPreview from "../../../Components/GroupPreview"
@@ -13,7 +13,7 @@ export default function ViewPermGroups({ navigation }) {
     navigation.navigate("Chat View")
   }
   return (
-    <View>
+    <ScrollView>
       {groups.map((group) => {
         return (
           <GroupPreview
@@ -24,6 +24,6 @@ export default function ViewPermGroups({ navigation }) {
           />
         )
       })}
-    </View>
+    </ScrollView>
   )
 }

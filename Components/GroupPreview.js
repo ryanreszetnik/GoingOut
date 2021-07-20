@@ -7,10 +7,11 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import theme from "../src/Styles/theme.style"
 import GroupImage from "./GroupImage"
 
-export default function GroupPreview({ group, onPress, id }) {
+export default function GroupPreview({ group, onPress }) {
   const chats = useSelector((state) =>
     state.chats.find((c) => c.groupId === group.groupId)
   )
+  console.log(chats)
   const lastMessage = chats.lastmessage
   return (
     <TouchableOpacity onPress={onPress} style={styles.container}>
@@ -18,7 +19,9 @@ export default function GroupPreview({ group, onPress, id }) {
       <View style={styles.textContainer}>
         <Text style={styles.header}>{group.name}</Text>
         {lastMessage && (
-          <Text style={styles.message}>{lastMessage.message}</Text>
+          <Text style={styles.message}>
+            {lastMessage === undefined ? "" : lastMessage.message}
+          </Text>
         )}
       </View>
     </TouchableOpacity>

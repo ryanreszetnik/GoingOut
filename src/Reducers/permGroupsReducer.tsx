@@ -37,7 +37,7 @@ export default function permGroupsReducer(state = INITIAL_STATE, action) {
                 return {
                     ...gr,
                     members:gr.members.filter(mem=>{
-                        return !action.payload.find(mem)
+                        return !action.payload.members.includes(mem)
                     })
                 }
             }

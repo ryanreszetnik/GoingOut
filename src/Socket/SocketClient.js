@@ -160,6 +160,7 @@ export default function SocketClient() {
           dispatch({ type: REMOVE_PERM_GROUP, payload: body.groupId })
           break
         case PERM_GROUP_OTHER_LEFT:
+          console.log("body", body)
           dispatch({
             type: REMOVE_PERM_MEMBERS,
             payload: { groupId: body.groupId, members: body.members },
