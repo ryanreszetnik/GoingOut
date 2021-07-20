@@ -76,8 +76,6 @@ export default function CreateTempFromPerm({ navigation }) {
       const payload = {
         groupId: uuid.v4(),
         members: baseGroup.members,
-        averageGender: baseGroup.averageGender,
-        averageAge: baseGroup.averageAge,
         loc: baseGroup.loc,
         locRange: baseGroup.locRange,
         date,
