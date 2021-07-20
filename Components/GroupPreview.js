@@ -17,7 +17,9 @@ export default function GroupPreview({ group, onPress }) {
       <GroupImage photoIds={group.members} size={70} />
       <View style={styles.textContainer}>
         <Text style={styles.header}>{group.name}</Text>
-        {lastMessage && <Text style={styles.message}>{lastMessage}</Text>}
+        {lastMessage && (
+          <Text style={styles.message}>{lastMessage.message}</Text>
+        )}
       </View>
     </TouchableOpacity>
   )
