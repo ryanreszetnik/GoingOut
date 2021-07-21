@@ -50,7 +50,7 @@ export default function tempGroupsReducer(state = INITIAL_STATE, action) {
         if (gr.groupId === action.payload.groupId) {
           return {
             ...gr,
-            members: [...gr.members, ...action.payload],
+            members: [...gr.members, ...action.payload.members],
           }
         }
         return gr

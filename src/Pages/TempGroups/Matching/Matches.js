@@ -40,7 +40,7 @@ export default function Matches({ navigation }) {
     }
     loadMatches()
   }, [curBaseGroup])
-
+  console.log(matches)
   return (
     <ScrollView>
       {!matches ? (

@@ -19,6 +19,7 @@ import {
   RECEIVE_MESSAGE,
   TEMP_GROUP_LEFT,
   TEMP_GROUP_OTHER_LEFT,
+  TEMP_GROUP_MEMBERS_ADDED,
 } from "./socket.constants"
 import {
   UPDATE_FRIEND,
@@ -30,6 +31,7 @@ import {
   ADD_PERM_GROUP,
   ADD_PERM_MEMBERS,
   ADD_TEMP_GROUP,
+  ADD_TEMP_MEMBERS,
   ADD_TEMP_TO_PERM,
   EDIT_PERM_GROUP,
   REMOVE_MATCH,
@@ -83,9 +85,9 @@ export default function SocketClient() {
       )
       setTimeout(function () {
         try {
-          socket.connect()
-        } catch (e) {
           socket = new WebSocket(`${socketURL}?token=${token}`)
+        } catch (e) {
+          console.log(e)
         }
       }, 1000)
     }
@@ -148,6 +150,9 @@ export default function SocketClient() {
           break
         case PERM_GROUP_MEMBERS_ADDED:
           dispatch({ type: ADD_PERM_MEMBERS, payload: body })
+          break
+        case TEMP_GROUP_MEMBERS_ADDED:
+          dispatch({ type: ADD_TEMP_MEMBERS, payload: body })
           break
         case TEMP_GROUP_LEFT:
           dispatch({ type: REMOVE_TEMP_GROUP, payload: body.groupId })
