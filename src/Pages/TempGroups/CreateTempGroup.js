@@ -96,17 +96,17 @@ export default function CreateTempGroup({ navigation }) {
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        leftIcon="card-text"
-        placeholder="Enter Event Name"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter Event Name'
+        autoCapitalize='none'
       />
       <Text>Event Bio</Text>
       <AppTextInput
         value={bio}
         onChangeText={(text) => setBio(text)}
-        leftIcon="card-text"
-        placeholder="Enter a short Bio"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter a short Bio'
+        autoCapitalize='none'
       />
       <Text>Select Date</Text>
       <MonthPicker
@@ -117,9 +117,9 @@ export default function CreateTempGroup({ navigation }) {
       <Text>Select Time</Text>
       <DateTimePicker
         value={time}
-        mode="time"
+        mode='time'
         is24Hour={false}
-        display="default"
+        display='default'
         onChange={(e, newTime) => setTime(newTime)}
       />
       <GenderPicker setChecked={setGenderPref} checked={genderPref} />
@@ -128,17 +128,17 @@ export default function CreateTempGroup({ navigation }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Users"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
+        leftIcon='magnify'
+        placeholder='Search For Users'
+        autoCapitalize='none'
+        keyboardType='email-address'
+        textContentType='emailAddress'
       />
       <UserList
         onPress={addMember}
         subs={friends.filter((f) => !members.some((m) => m === f))}
       />
-      <AppButton title="Create Event" onPress={createEvent} />
+      <AppButton title='Create Event' onPress={createEvent} />
       <FlashMessage />
     </ScrollView>
   )

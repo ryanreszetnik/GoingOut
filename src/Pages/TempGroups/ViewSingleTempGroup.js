@@ -7,11 +7,11 @@ import MatchPreview from "./Matches/MatchPreview"
 import { SET_CUR_MATCH } from "../../Actions/groupActions"
 import { leaveTempGroup } from "../../Socket/SocketMethods"
 export default function ViewSingleTempGroup({ navigation }) {
-  const curGroup = useSelector((state) => state.current.tempGroup)
   const matches = useSelector((state) =>
     state.matches.filter((gr) => gr.groupId === curGroup)
   )
   const dispatch = useDispatch()
+  const curGroup = useSelector((state) => state.current.tempGroup)
   const event = useSelector((state) =>
     state.tempGroups.find((group) => group.groupId === curGroup)
   )
@@ -23,6 +23,9 @@ export default function ViewSingleTempGroup({ navigation }) {
     console.log(match.matchId, match.otherGroup.name)
     dispatch({ type: SET_CUR_MATCH, payload: match.matchId })
     navigation.navigate("View Single Match")
+  }
+  const editEvent = () => {
+    navigation.navigate("Edit Event")
   }
   const goToMembers = () => {
     navigation.navigate("Members")
@@ -40,9 +43,9 @@ export default function ViewSingleTempGroup({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="form-textbox"
+                name='form-textbox'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               {`  Group Name`}
@@ -52,9 +55,9 @@ export default function ViewSingleTempGroup({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="card-text"
+                name='card-text'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               {`  Bio`}
@@ -64,9 +67,9 @@ export default function ViewSingleTempGroup({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="google-maps"
+                name='google-maps'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               {`  Location`}
@@ -75,9 +78,10 @@ export default function ViewSingleTempGroup({ navigation }) {
               {/*group.location*/ "placeholder"}
             </Text>
           </View>
-          <AppButton title="Find Matches" onPress={onPress}></AppButton>
-          <AppButton title="Members" onPress={goToMembers} />
-          <AppButton title="Leave Event" onPress={leaveEvent} />
+          <AppButton title='Find Matches' onPress={onPress}></AppButton>
+          <AppButton title='Members' onPress={goToMembers} />
+          <AppButton title='Leave Event' onPress={leaveEvent} />
+          <AppButton title='Edit Event Details' onPress={editEvent} />
           {matches.map((match) => {
             return (
               <MatchPreview

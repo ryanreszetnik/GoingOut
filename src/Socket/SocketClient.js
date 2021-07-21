@@ -20,6 +20,7 @@ import {
   TEMP_GROUP_LEFT,
   TEMP_GROUP_OTHER_LEFT,
   TEMP_GROUP_MEMBERS_ADDED,
+  TEMP_GROUP_UPDATED,
 } from "./socket.constants"
 import {
   UPDATE_FRIEND,
@@ -34,6 +35,7 @@ import {
   ADD_TEMP_MEMBERS,
   ADD_TEMP_TO_PERM,
   EDIT_PERM_GROUP,
+  EDIT_TEMP_GROUP,
   REMOVE_MATCH,
   REMOVE_PERM_GROUP,
   REMOVE_PERM_MEMBERS,
@@ -145,6 +147,9 @@ export default function SocketClient() {
           break
         case PERM_GROUP_UPDATED:
           dispatch({ type: EDIT_PERM_GROUP, payload: body })
+          break
+        case TEMP_GROUP_UPDATED:
+          dispatch({ type: EDIT_TEMP_GROUP, payload: body })
           break
         case NEW_TEMP_GROUP:
           dispatch({ type: ADD_TEMP_GROUP, payload: body })

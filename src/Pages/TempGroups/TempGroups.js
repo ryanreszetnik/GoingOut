@@ -15,6 +15,7 @@ import Merging from "./Matching/Merging"
 import MemberList from "./Members/MemberList"
 import AddMembers from "./Members/AddMembers"
 import MemberProfile from "./Members/MemberProfile"
+import EditEvent from "./EditEvent"
 
 const TempGroupNavigator = createStackNavigator()
 
@@ -22,7 +23,7 @@ export default function TempGroups({ navigation }) {
   return (
     <TempGroupNavigator.Navigator>
       <TempGroupNavigator.Screen
-        name="View Temp Groups"
+        name='View Temp Groups'
         component={ViewTempGroups}
         options={{
           headerTitle: "View Temp Groups",
@@ -35,22 +36,22 @@ export default function TempGroups({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name="plus"
-                color="tomato"
+                name='plus'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
         }}
       />
       <TempGroupNavigator.Screen
-        name="Matches"
+        name='Matches'
         component={TempGroupChatView}
         options={{
           headerTitle: "Chat",
         }}
       />
       <TempGroupNavigator.Screen
-        name="View Single Temp Group"
+        name='View Single Temp Group'
         component={ViewSingleTempGroup}
         options={{
           headerTitle: "Event Details",
@@ -63,8 +64,8 @@ export default function TempGroups({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name="comments"
-                color="tomato"
+                name='comments'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
@@ -72,7 +73,7 @@ export default function TempGroups({ navigation }) {
       />
 
       <TempGroupNavigator.Screen
-        name="Match Chat View"
+        name='Match Chat View'
         component={MatchChatView}
         options={{
           headerTitle: "Match Chat",
@@ -85,8 +86,8 @@ export default function TempGroups({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name="link"
-                color="tomato"
+                name='link'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
@@ -94,32 +95,33 @@ export default function TempGroups({ navigation }) {
       />
 
       <TempGroupNavigator.Screen
-        name="Search For Matches"
+        name='Search For Matches'
         component={Matches}
       />
       <TempGroupNavigator.Screen
-        name="View Single Potential Match"
+        name='View Single Potential Match'
         component={ViewPotentialMatch}
         options={{ headerTitle: "Potential Match Info" }}
       />
       <TempGroupNavigator.Screen
-        name="View Single Match"
+        name='View Single Match'
         component={ViewSingleMatch}
         options={{ headerTitle: "Match Info" }}
       />
       <TempGroupNavigator.Screen
-        name="Create Temp Group"
+        name='Create Temp Group'
         component={CreateTempGroup}
       />
-      <TempGroupNavigator.Screen name="Merging" component={Merging} />
-      <TempGroupNavigator.Screen name="Members" component={MemberList} />
-      <TempGroupNavigator.Screen name="Add Members" component={AddMembers} />
+      <TempGroupNavigator.Screen name='Merging' component={Merging} />
+      <TempGroupNavigator.Screen name='Members' component={MemberList} />
+      <TempGroupNavigator.Screen name='Add Members' component={AddMembers} />
       <TempGroupNavigator.Screen
-        name="Member Profile"
+        name='Member Profile'
         component={MemberProfile}
       />
+      <TempGroupNavigator.Screen name='Edit Event' component={EditEvent} />
     </TempGroupNavigator.Navigator>
-  );
+  )
 }
 const styles = StyleSheet.create({
   headerView: {
