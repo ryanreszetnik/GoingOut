@@ -33,6 +33,7 @@ export default function CreateTempGroup({ navigation }) {
   const [ageRange, setAgeRange] = useState([18, 100])
   const [loc, setLoc] = useState({ lat: 27.1234, lon: -27.342 })
   const [locRange, setLocRange] = useState(25)
+  const [show, setShow] = useState(false)
 
   const addMember = (sub) => {
     setMembers((mem) => [...mem, sub])
@@ -44,7 +45,6 @@ export default function CreateTempGroup({ navigation }) {
     setSearchTerm(term)
     setFriends(await searchUser(term))
   }
-
   const scrollRef = useRef()
 
   const createEvent = async () => {
@@ -84,8 +84,6 @@ export default function CreateTempGroup({ navigation }) {
       }
       console.log(payload)
       createTempGroup(payload)
-      // dispatch({ type: ADD_TEMP_GROUP, payload })
-      // await addTempGroup(payload)
       navigation.navigate("View Temp Groups")
     }
   }
@@ -112,16 +110,28 @@ export default function CreateTempGroup({ navigation }) {
       <MonthPicker
         updateDate={(date) => {
           setDate(date)
+          setShow(true)
         }}
       />
       <Text>Select Time</Text>
-      <DateTimePicker
-        value={time}
-        mode='time'
-        is24Hour={false}
-        display='default'
-        onChange={(e, newTime) => setTime(newTime)}
-      />
+      {show && (
+        <DateTimePicker
+          value={time}
+          mode='time'
+          is24Hour={false}
+          display='default'
+          onChange={(e, newTime) => {
+            if (e.type === "dismissed") {
+              setShow(false)
+              setTime(time)
+            }
+            if (newTime) {
+              setShow(false)
+              setTime(newTime)
+            }
+          }}
+        />
+      )}
       <GenderPicker setChecked={setGenderPref} checked={genderPref} />
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <UserList subs={members} onPress={removeMember} horizontal={true} />

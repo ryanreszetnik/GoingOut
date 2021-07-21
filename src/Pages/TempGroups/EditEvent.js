@@ -60,6 +60,8 @@ export default function EditEvent({ navigation }) {
         placeholder='Enter Event Bio'
         autoCapitalize='none'
       />
+      <Text>Current Time: {moment(time).format("LT")}</Text>
+
       <AppButton
         title='Change Time '
         onPress={() => {
