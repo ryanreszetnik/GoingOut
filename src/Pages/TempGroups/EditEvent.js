@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { View, Text, StyleSheet } from "react-native"
+import React, { useState, useEffect, useRef } from "react"
+import { View, Text, StyleSheet, ScrollView } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../../Components/AppButton"
@@ -9,6 +9,7 @@ import { editTempGroup, leaveTempGroup } from "../../Socket/SocketMethods"
 import AppTextInput from "../../../Components/AppTextInput"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import moment from "moment"
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
 
 export default function EditEvent({ navigation }) {
   const curGroup = useSelector((state) => state.current.tempGroup)
@@ -17,7 +18,13 @@ export default function EditEvent({ navigation }) {
   )
   const [name, setName] = useState(event.name)
   const [bio, setBio] = useState(event.bio)
-  const [location, setLocation] = useState(event.location)
+  const [loc, setLoc] = useState({
+    latitude: parseFloat(event.loc.lat),
+    longitude: parseFloat(event.loc.lon),
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  })
+  const mapRef = useRef()
   const [time, setTime] = useState(
     new Date(
       new Date().setHours(
@@ -38,14 +45,14 @@ export default function EditEvent({ navigation }) {
       ...event,
       name,
       bio,
-      location,
+      loc: { lat: loc.latitude, lon: loc.longitude },
       time: moment(time).format("LT"),
     }
     editTempGroup(newEvent)
     navigation.navigate("View Single Temp Group")
   }
   return (
-    <View>
+    <ScrollView>
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
@@ -84,7 +91,31 @@ export default function EditEvent({ navigation }) {
           }}
         />
       )}
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        initialRegion={loc}
+        style={styles.map}
+        ref={mapRef}
+        onPoiClick={(e) => {
+          mapRef.current?.animateToRegion(
+            {
+              ...e.nativeEvent.coordinate,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+            },
+            1500
+          )
+          setLoc({
+            ...e.nativeEvent.coordinate,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          })
+        }}
+      />
       <AppButton title='Save Changes' onPress={onEdit} />
-    </View>
+    </ScrollView>
   )
 }
+const styles = StyleSheet.create({
+  map: { width: "100%", height: 250 },
+})

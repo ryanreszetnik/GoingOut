@@ -16,6 +16,7 @@ import MemberList from "./Members/MemberList"
 import AddMembers from "./Members/AddMembers"
 import MemberProfile from "./Members/MemberProfile"
 import EditEvent from "./EditEvent"
+import MapView from "react-native-maps"
 
 const TempGroupNavigator = createStackNavigator()
 

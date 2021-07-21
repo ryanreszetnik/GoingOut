@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, ScrollView } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../../Components/AppButton"
 import MatchPreview from "./Matches/MatchPreview"
 import { SET_CUR_MATCH } from "../../Actions/groupActions"
 import { leaveTempGroup } from "../../Socket/SocketMethods"
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
 export default function ViewSingleTempGroup({ navigation }) {
   const matches = useSelector((state) =>
     state.matches.filter((gr) => gr.groupId === curGroup)
@@ -37,7 +38,7 @@ export default function ViewSingleTempGroup({ navigation }) {
     leaveTempGroup(curGroup, leave)
   }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       {event && (
         <View style={styles.attributeContainer}>
           <View style={styles.txtField}>
@@ -74,9 +75,17 @@ export default function ViewSingleTempGroup({ navigation }) {
               />
               {`  Location`}
             </Text>
-            <Text style={styles.attributeTxt}>
-              {/*group.location*/ "placeholder"}
-            </Text>
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              region={{
+                latitude: parseFloat(event.loc.lat),
+                longitude: parseFloat(event.loc.lon),
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              }}
+              scrollEnabled={false}
+              style={styles.map}
+            />
           </View>
           <AppButton title='Find Matches' onPress={onPress}></AppButton>
           <AppButton title='Members' onPress={goToMembers} />
@@ -93,7 +102,7 @@ export default function ViewSingleTempGroup({ navigation }) {
           })}
         </View>
       )}
-    </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
@@ -138,4 +147,5 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     marginVertical: 2,
   },
+  map: { width: "100%", height: 250 },
 })

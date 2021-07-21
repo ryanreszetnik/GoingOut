@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { View, Text, ScrollView } from "react-native"
+import { View, Text, ScrollView, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import AppButton from "../../../Components/AppButton"
 import MonthPicker from "../../../Components/MonthPicker"
@@ -17,6 +17,7 @@ import GenderPicker from "../../../Components/GenderPreference"
 import UserList from "../../../Components/UserList"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import Slider from "../../../Components/Slider"
+import MapView, { PROVIDER_GOOGLE, animateToRegion } from "react-native-maps"
 
 export default function CreateTempGroup({ navigation }) {
   const groups = useSelector((state) => state.permGroups)
@@ -31,7 +32,12 @@ export default function CreateTempGroup({ navigation }) {
   const [friends, setFriends] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [ageRange, setAgeRange] = useState([18, 100])
-  const [loc, setLoc] = useState({ lat: 27.1234, lon: -27.342 })
+  const [loc, setLoc] = useState({
+    latitude: 43.6532,
+    longitude: -79.3832,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  })
   const [locRange, setLocRange] = useState(25)
   const [show, setShow] = useState(false)
 
@@ -46,7 +52,7 @@ export default function CreateTempGroup({ navigation }) {
     setFriends(await searchUser(term))
   }
   const scrollRef = useRef()
-
+  const mapRef = useRef()
   const createEvent = async () => {
     console.log(date)
     if (date === "" || (name === "") | (bio === "")) {
@@ -68,7 +74,7 @@ export default function CreateTempGroup({ navigation }) {
       showMessage(message)
     } else {
       const payload = {
-        loc,
+        loc: { lat: loc.latitude, lon: loc.longitude },
         locRange,
         ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
         genderPref,
@@ -133,6 +139,29 @@ export default function CreateTempGroup({ navigation }) {
         />
       )}
       <GenderPicker setChecked={setGenderPref} checked={genderPref} />
+      <Text>Choose Event Location</Text>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        initialRegion={loc}
+        style={styles.map}
+        ref={mapRef}
+        onPoiClick={(e) => {
+          mapRef.current?.animateToRegion(
+            {
+              ...e.nativeEvent.coordinate,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
+            },
+            1500
+          )
+          setLoc({
+            ...e.nativeEvent.coordinate,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          })
+        }}
+      />
+
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <UserList subs={members} onPress={removeMember} horizontal={true} />
       <AppTextInput
@@ -153,3 +182,6 @@ export default function CreateTempGroup({ navigation }) {
     </ScrollView>
   )
 }
+const styles = StyleSheet.create({
+  map: { width: "100%", height: 250 },
+})
