@@ -85,6 +85,7 @@ export default function SocketClient() {
       )
       setTimeout(function () {
         try {
+          socket.close()
           socket = new WebSocket(`${socketURL}?token=${token}`)
         } catch (e) {
           console.log(e)
