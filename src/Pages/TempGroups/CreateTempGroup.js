@@ -17,7 +17,12 @@ import GenderPicker from "../../../Components/GenderPreference"
 import UserList from "../../../Components/UserList"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import Slider from "../../../Components/Slider"
-import MapView, { PROVIDER_GOOGLE, animateToRegion } from "react-native-maps"
+import MapView, {
+  PROVIDER_GOOGLE,
+  animateToRegion,
+  Marker,
+  Circle,
+} from "react-native-maps"
 
 export default function CreateTempGroup({ navigation }) {
   const groups = useSelector((state) => state.permGroups)
@@ -100,17 +105,17 @@ export default function CreateTempGroup({ navigation }) {
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        leftIcon='card-text'
-        placeholder='Enter Event Name'
-        autoCapitalize='none'
+        leftIcon="card-text"
+        placeholder="Enter Event Name"
+        autoCapitalize="none"
       />
       <Text>Event Bio</Text>
       <AppTextInput
         value={bio}
         onChangeText={(text) => setBio(text)}
-        leftIcon='card-text'
-        placeholder='Enter a short Bio'
-        autoCapitalize='none'
+        leftIcon="card-text"
+        placeholder="Enter a short Bio"
+        autoCapitalize="none"
       />
       <Text>Select Date</Text>
       <MonthPicker
@@ -123,9 +128,9 @@ export default function CreateTempGroup({ navigation }) {
       {show && (
         <DateTimePicker
           value={time}
-          mode='time'
+          mode="time"
           is24Hour={false}
-          display='default'
+          display="default"
           onChange={(e, newTime) => {
             if (e.type === "dismissed") {
               setShow(false)
@@ -145,7 +150,7 @@ export default function CreateTempGroup({ navigation }) {
         initialRegion={loc}
         style={styles.map}
         ref={mapRef}
-        onPoiClick={(e) => {
+        onPress={(e) => {
           mapRef.current?.animateToRegion(
             {
               ...e.nativeEvent.coordinate,
@@ -160,24 +165,30 @@ export default function CreateTempGroup({ navigation }) {
             longitudeDelta: 0.005,
           })
         }}
-      />
-
+      >
+        <Marker coordinate={loc}></Marker>
+        <Circle
+          center={loc}
+          radius={locRange * 1000}
+          fillColor={"rgba(255, 0, 0, 0.07)"}
+        ></Circle>
+      </MapView>
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
       <UserList subs={members} onPress={removeMember} horizontal={true} />
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon='magnify'
-        placeholder='Search For Users'
-        autoCapitalize='none'
-        keyboardType='email-address'
-        textContentType='emailAddress'
+        leftIcon="magnify"
+        placeholder="Search For Users"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
       />
       <UserList
         onPress={addMember}
         subs={friends.filter((f) => !members.some((m) => m === f))}
       />
-      <AppButton title='Create Event' onPress={createEvent} />
+      <AppButton title="Create Event" onPress={createEvent} />
       <FlashMessage />
     </ScrollView>
   )
