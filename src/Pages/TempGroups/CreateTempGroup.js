@@ -43,7 +43,7 @@ export default function CreateTempGroup({ navigation }) {
     latitudeDelta: 0.005,
     longitudeDelta: 0.005,
   })
-  const [locRange, setLocRange] = useState(25)
+  const [locRange, setLocRange] = useState(1)
   const [show, setShow] = useState(false)
 
   const addMember = (sub) => {
@@ -154,15 +154,15 @@ export default function CreateTempGroup({ navigation }) {
           mapRef.current?.animateToRegion(
             {
               ...e.nativeEvent.coordinate,
-              latitudeDelta: 0.005,
-              longitudeDelta: 0.005,
+              latitudeDelta: 0.015 * locRange,
+              longitudeDelta: 0.015 * locRange,
             },
             1500
           )
           setLoc({
             ...e.nativeEvent.coordinate,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005,
+            latitudeDelta: 0.015 * locRange,
+            longitudeDelta: 0.015 * locRange,
           })
         }}
       >

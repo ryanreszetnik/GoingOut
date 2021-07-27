@@ -9,7 +9,7 @@ import { editTempGroup, leaveTempGroup } from "../../Socket/SocketMethods"
 import AppTextInput from "../../../Components/AppTextInput"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import moment from "moment"
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
+import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps"
 
 export default function EditEvent({ navigation }) {
   const curGroup = useSelector((state) => state.current.tempGroup)
@@ -56,21 +56,21 @@ export default function EditEvent({ navigation }) {
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Event Name'
-        autoCapitalize='none'
+        leftIcon="form-textbox"
+        placeholder="Enter Event Name"
+        autoCapitalize="none"
       />
       <AppTextInput
         value={bio}
         onChangeText={(text) => setBio(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Event Bio'
-        autoCapitalize='none'
+        leftIcon="form-textbox"
+        placeholder="Enter Event Bio"
+        autoCapitalize="none"
       />
       <Text>Current Time: {moment(time).format("LT")}</Text>
 
       <AppButton
-        title='Change Time '
+        title="Change Time "
         onPress={() => {
           setShow(true)
         }}
@@ -78,9 +78,9 @@ export default function EditEvent({ navigation }) {
       {show && (
         <DateTimePicker
           value={time}
-          mode='time'
+          mode="time"
           is24Hour={false}
-          display='default'
+          display="default"
           onChange={(e, newTime) => {
             if (e.type === "dismissed") {
               setShow(false)
@@ -96,7 +96,7 @@ export default function EditEvent({ navigation }) {
         initialRegion={loc}
         style={styles.map}
         ref={mapRef}
-        onPoiClick={(e) => {
+        onPress={(e) => {
           mapRef.current?.animateToRegion(
             {
               ...e.nativeEvent.coordinate,
@@ -111,8 +111,15 @@ export default function EditEvent({ navigation }) {
             longitudeDelta: 0.005,
           })
         }}
-      />
-      <AppButton title='Save Changes' onPress={onEdit} />
+      >
+        <Marker coordinate={loc}></Marker>
+        <Circle
+          center={loc}
+          radius={event.locRange * 1000}
+          fillColor={"rgba(255, 0, 0, 0.07)"}
+        ></Circle>
+      </MapView>
+      <AppButton title="Save Changes" onPress={onEdit} />
     </ScrollView>
   )
 }
