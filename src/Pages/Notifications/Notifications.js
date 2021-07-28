@@ -1,6 +1,7 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { ScrollView } from "react-native-gesture-handler"
 import { useDispatch, useSelector } from "react-redux"
 import AppButton from "../../../Components/AppButton"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
@@ -33,16 +34,8 @@ export default function Notifications({ navigation }) {
   const moveToView = (id) => {}
 
   return (
-    <View>
-      <View style={styles.container}>
-        <Text style={styles.header}>Requests From:</Text>
-        {requests.length > 0 ? (
-          <UserList onPress={selectUser} subs={requests} />
-        ) : (
-          <Text>No Requests</Text>
-        )}
-      </View>
-      <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.firstContainer}>
         <Text style={styles.header}>Next Event</Text>
         {nextEvent ? (
           <TempGroupPreview
@@ -56,18 +49,30 @@ export default function Notifications({ navigation }) {
         )}
       </View>
       <View style={styles.container}>
+        <Text style={styles.header}>Requests From:</Text>
+        {requests.length > 0 ? (
+          <UserList onPress={selectUser} subs={requests} />
+        ) : (
+          <Text>No Requests</Text>
+        )}
+      </View>
+
+      <View style={styles.container}>
         <Text style={styles.header}>Notifications</Text>
         {notifications.map((not) => {
           return <Notification key={JSON.stringify(not)} notification={not} />
         })}
       </View>
-    </View>
+    </ScrollView>
   )
 }
 const styles = StyleSheet.create({
+  firstContainer: {
+    paddingBottom: 10,
+  },
   container: {
-    borderBottomColor: "black",
-    borderBottomWidth: 0.5,
+    borderTopColor: "black",
+    borderTopWidth: 0.5,
     paddingBottom: 10,
   },
   header: {
