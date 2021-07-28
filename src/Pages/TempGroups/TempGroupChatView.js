@@ -9,8 +9,18 @@ import { sendMessage } from "../../Socket/SocketMethods"
 
 export default function TempGroupChatView() {
   const curID = useSelector((state) => state.current.tempGroup)
+
+  const baseGroups = useSelector(
+    (state) => state.tempGroups.find((gr) => gr.groupId === curID).baseGroups
+  )
+  const permGroups = useSelector((state) => state.permGroups)
+  const chatId =
+    baseGroups.length === 1 &&
+    permGroups.some((gr) => gr.groupId === baseGroups[0])
+      ? baseGroups[0]
+      : curID
   const chat = useSelector((state) =>
-    state.chats.find((chat) => chat.groupId === curID)
+    state.chats.find((chat) => chat.groupId === chatId)
   )
   const socket = useSelector((state) => state.userSession.socket)
   const messages = chat ? chat.messages : []
