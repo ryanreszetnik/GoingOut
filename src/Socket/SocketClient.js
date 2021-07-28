@@ -21,6 +21,7 @@ import {
   TEMP_GROUP_OTHER_LEFT,
   TEMP_GROUP_MEMBERS_ADDED,
   TEMP_GROUP_UPDATED,
+  NEW_NOTIFICATION,
 } from "./socket.constants"
 import {
   UPDATE_FRIEND,
@@ -43,6 +44,7 @@ import {
   REMOVE_TEMP_MEMBERS,
 } from "../Actions/groupActions"
 import { stat } from "react-native-fs"
+import { ADD_NOTIFICATION } from "../Actions/notifcationActions"
 
 export default function SocketClient() {
   const globalSocket = useSelector((state) => state.userSession.socket)
@@ -54,7 +56,7 @@ export default function SocketClient() {
   let socket = null
   var timerId = 0
   function keepAlive() {
-    var timeout = 570000 //299000
+    var timeout = 570000 //570000
     if (globalSocket && globalSocket.readyState === globalSocket.OPEN) {
       console.log("sending ping")
       globalSocket.send("")
@@ -118,7 +120,7 @@ export default function SocketClient() {
           return
         }
         if (!data.action) {
-          console.log("No event action: ", event)
+          console.log("No event action: ", event, data)
           return
         }
         console.log("Recieved", data)
@@ -186,6 +188,10 @@ export default function SocketClient() {
               type: REMOVE_PERM_MEMBERS,
               payload: { groupId: body.groupId, members: body.members },
             })
+            break
+          case NEW_NOTIFICATION:
+            dispatch({ type: ADD_NOTIFICATION, payload: body })
+            break
           default:
             console.log("No Event Action Match", event)
         }

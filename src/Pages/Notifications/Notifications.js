@@ -11,13 +11,9 @@ import { NOTIFICATIONS_PAGE } from "../../Constants/pageConstants"
 import { appLoad, loadUsers } from "../../Endpoints/generalEndpoints"
 import Notification from "./Notification"
 
-const sampleNotifications = [
-  { message: "Someone started following you" },
-  { message: "New Event Created" },
-]
-
 export default function Notifications({ navigation }) {
   const friends = useSelector((state) => state.friends)
+  const notifications = useSelector((state) => state.notifications)
   const requests = friends
     .filter((friend) => friend.status === REQUEST)
     .map((f) => f.sub)
@@ -61,7 +57,7 @@ export default function Notifications({ navigation }) {
       </View>
       <View style={styles.container}>
         <Text style={styles.header}>Notifications</Text>
-        {sampleNotifications.map((not) => {
+        {notifications.map((not) => {
           return <Notification key={JSON.stringify(not)} notification={not} />
         })}
       </View>

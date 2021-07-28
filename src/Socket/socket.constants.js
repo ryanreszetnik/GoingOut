@@ -18,6 +18,8 @@ export const TEMP_GROUP_OTHER_LEFT = "tempGroupOtherLeft"
 export const TEMP_GROUP_UPDATED = "tempGroupUpdated"
 export const TEMP_GROUP_MEMBERS_ADDED = "tempGroupMembersAdded"
 
+export const NEW_NOTIFICATION = "newNotification"
+
 //outgoing events (api gateway endpoints)
 export const SEND_MESSAGE = "sendMessage"
 export const SEND_FRIEND_REQUEST = "friendRequest"

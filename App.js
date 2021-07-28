@@ -48,6 +48,7 @@ import { SET_CHATS } from "./src/Actions/chatActions"
 import { SET_FRIENDS } from "./src/Actions/friendActions"
 import SocketClient from "./src/Socket/SocketClient"
 import NotificationPage from "./src/Pages/Notifications/NotificationPage"
+import { SET_NOTIFICATIONS } from "./src/Actions/notifcationActions"
 
 Amplify.configure({ ...awsConfig, endpoints: endpoints })
 
@@ -174,6 +175,10 @@ const LoadingData = () => {
         dispatch({ type: SET_CHATS, payload: initialAppData.messages })
         dispatch({ type: SET_FRIENDS, payload: initialAppData.friends })
         dispatch({ type: SET_MATCHES, payload: initialAppData.matches })
+        dispatch({
+          type: SET_NOTIFICATIONS,
+          payload: initialAppData.notifications,
+        })
       })
     }
   }
