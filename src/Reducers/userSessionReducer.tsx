@@ -13,13 +13,7 @@ const INITIAL_STATE = {
   authStatus: INITIALIZING,
   userData: null,
   userGroups: [],
-  socket: {
-    onopen: () => {},
-    onclose: () => {},
-    onerror: () => {},
-    onmessage: () => {},
-    send: () => {},
-  },
+  socket: null,
 }
 
 export default function userSessionReducer(state = INITIAL_STATE, action) {
