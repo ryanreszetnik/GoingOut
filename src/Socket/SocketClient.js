@@ -42,14 +42,38 @@ import {
   REMOVE_TEMP_GROUP,
   REMOVE_TEMP_MEMBERS,
 } from "../Actions/groupActions"
+import { stat } from "react-native-fs"
 
 export default function SocketClient() {
-  const [localSocket, setLocalSocket] = useState(null)
+  const globalSocket = useSelector((state) => state.userSession.socket)
   const token = useSelector(
     (state) => state.userSession.user.signInUserSession.accessToken.jwtToken
   )
   const groups = useSelector((state) => state.permGroups)
   const dispatch = useDispatch()
+
+  var timerId = 0
+  function keepAlive() {
+    var timeout = 20000
+    if (globalSocket && globalSocket.readyState === globalSocket.OPEN) {
+      console.log("sending ping")
+      globalSocket.send("")
+    } else if (globalSocket.readyState === globalSocket.CLOSED) {
+      cancelKeepAlive()
+      console.log("could not send ping... restarting")
+      restartConnection()
+    }
+    timerId = setTimeout(keepAlive, timeout)
+  }
+  function cancelKeepAlive() {
+    if (timerId) {
+      clearTimeout(timerId)
+    }
+  }
+  const restartConnection = () => {
+    let socket = new WebSocket(`${socketURL}?token=${token}`)
+    dispatch({ type: SET_SOCKET, payload: socket })
+  }
 
   const updateFriend = (body) => {
     console.log(body.status)
@@ -66,39 +90,25 @@ export default function SocketClient() {
   }
 
   useEffect(() => {
-    console.log(
-      "socket now",
-      localSocket ? localSocket.readyState : "No socket"
-    )
-  }, [localSocket])
+    if (globalSocket && globalSocket.readyState === globalSocket.OPEN) {
+      cancelKeepAlive()
+      keepAlive()
+    }
+  }, [globalSocket])
 
   useEffect(() => {
-    let socket = new WebSocket(`${socketURL}?token=${token}`, {
-      handshakeTimeout: 1000000000,
-    })
-
-    socket.onopen = function (event) {
-      dispatch({ type: SET_SOCKET, payload: socket })
+    restartConnection()
+    globalSocket.onopen = function (event) {
+      console.log("opened", socket)
     }
-    socket.onclose = function (e) {
-      console.log(
-        "Socket is closed. Reconnect will be attempted in 1 second.",
-        e.reason
-      )
-      setTimeout(function () {
-        try {
-          socket.close()
-          socket = new WebSocket(`${socketURL}?token=${token}`)
-        } catch (e) {
-          console.log(e)
-        }
-      }, 1000)
+    globalSocket.onclose = function (event) {
+      cancelKeepAlive()
     }
 
-    socket.onerror = function (event) {
+    globalSocket.onerror = function (event) {
       console.log("SOCKET ERROR", event)
     }
-    socket.onmessage = function (event) {
+    globalSocket.onmessage = function (event) {
       let data
       let body
       try {
@@ -182,7 +192,10 @@ export default function SocketClient() {
       }
     }
 
-    return () => socket.close()
+    return () => {
+      cancelKeepAlive()
+      socket.close()
+    }
   }, [])
 
   return <Fragment />
