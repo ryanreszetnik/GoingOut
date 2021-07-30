@@ -26,7 +26,6 @@ export default function ViewPotentialMatch({ navigation }) {
     useSelector((state) => state.foundMatches)
   )
   const onPress = () => {
-    console.log("CREATE NEW MATCH", navigation)
     const newId = uuid.v4()
     matchWithGroup(groupId, newId, match.groupId)
     dispatch({ type: SET_CUR_MATCH, payload: newId })

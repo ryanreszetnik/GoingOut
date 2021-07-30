@@ -89,8 +89,8 @@ export default function ViewSingleTempGroup({ navigation }) {
             >
               <Marker
                 coordinate={{
-                  latitude: event.loc.lat,
-                  longitude: event.loc.lon,
+                  latitude: parseFloat(event.loc.lat),
+                  longitude: parseFloat(event.loc.lon),
                 }}
               ></Marker>
             </MapView>
