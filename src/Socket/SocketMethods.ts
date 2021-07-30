@@ -36,8 +36,8 @@ export const sendMessagePermGroup = (message:Message)=>{
 export const sendMessageTempGroup = (message:Message)=>{
     socketSend(SEND_MESSAGE,{message,type:"TEMPGROUP"})
 }
-export const sendMessageMatch = (message:Message)=>{
-    socketSend(SEND_MESSAGE,{message,type:"MATCH"})
+export const sendMessageMatch = (message:Message, tempGroup)=>{
+    socketSend(SEND_MESSAGE,{message,type:"MATCH",tempGroup})
 }
 export const updateFriendRequest = (friendSub:string, confirm:boolean)=>{
   socketSend(SEND_FRIEND_REQUEST,{friendSub,confirm})
