@@ -8,6 +8,7 @@ import {
   REMOVE_MEMBERS,
   REMOVE_PERM_GROUP,
   SET_CUR_GROUP,
+  SET_CUR_TEMP_GROUP,
 } from "../../Actions/groupActions"
 import {
   removeMembers,
@@ -16,6 +17,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
 import { leavePermGroup } from "../../Socket/SocketMethods"
+import { navigate } from "../../Navigation/RootNavigation"
 
 export default function ViewSingleGroup({ navigation, tabNavigator }) {
   const dispatch = useDispatch()
@@ -33,7 +35,10 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
   const createEvent = () => {
     navigation.navigate("Create Temp From Perm")
   }
-  const goToEvent = (gr) => {}
+  const goToEvent = (gr) => {
+    dispatch({ type: SET_CUR_TEMP_GROUP, payload: gr.groupId })
+    navigate("View Single Temp Group")
+  }
 
   const leaveGroup = async () => {
     const leave = group.members.length !== 1 ? true : false
