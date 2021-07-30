@@ -45,9 +45,9 @@ export default function ViewSingleTempGroup({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="form-textbox"
+                name='form-textbox'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               {`  Group Name`}
@@ -57,9 +57,9 @@ export default function ViewSingleTempGroup({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="card-text"
+                name='card-text'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               {`  Bio`}
@@ -69,9 +69,9 @@ export default function ViewSingleTempGroup({ navigation }) {
           <View style={styles.txtField}>
             <Text>
               <MaterialCommunityIcons
-                name="google-maps"
+                name='google-maps'
                 size={20}
-                color="#6e6869"
+                color='#6e6869'
                 style={styles.icon}
               />
               {`  Location`}
@@ -89,8 +89,8 @@ export default function ViewSingleTempGroup({ navigation }) {
             >
               <Marker
                 coordinate={{
-                  latitude: event.loc.lat,
-                  longitude: event.loc.lon,
+                  latitude: parseFloat(event.loc.lat),
+                  longitude: parseFloat(event.loc.lon),
                 }}
               ></Marker>
             </MapView>
@@ -104,10 +104,10 @@ export default function ViewSingleTempGroup({ navigation }) {
               />
             )
           })}
-          <AppButton title="Find Matches" onPress={onPress}></AppButton>
-          <AppButton title="Members" onPress={goToMembers} />
-          <AppButton title="Leave Event" onPress={leaveEvent} />
-          <AppButton title="Edit Event Details" onPress={editEvent} />
+          <AppButton title='Find Matches' onPress={onPress}></AppButton>
+          <AppButton title='Members' onPress={goToMembers} />
+          <AppButton title='Leave Event' onPress={leaveEvent} />
+          <AppButton title='Edit Event Details' onPress={editEvent} />
         </View>
       )}
     </ScrollView>

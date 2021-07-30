@@ -56,7 +56,7 @@ export default function SocketClient() {
   let socket = null
   var timerId = 0
   function keepAlive() {
-    var timeout = 570000 //570000
+    var timeout = 60000 //570000
     if (globalSocket && globalSocket.readyState === globalSocket.OPEN) {
       console.log("sending ping")
       globalSocket.send("")

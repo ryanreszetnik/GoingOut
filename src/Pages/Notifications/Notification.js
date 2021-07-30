@@ -1,12 +1,15 @@
 import React from "react"
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import moment from "moment"
 
 export default function Notification({ notification }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.message}>{notification.timestamp}</Text>
+    <TouchableOpacity style={styles.container}>
+      <Text style={styles.message}>
+        {moment(notification.timestamp).format("MM/DD/YY, LT")}
+      </Text>
       <Text style={styles.message}>{notification.message}</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 const styles = StyleSheet.create({
