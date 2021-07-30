@@ -5,7 +5,7 @@ import Chat from "../../../Components/Chat"
 import uuid from "react-native-uuid"
 import moment from "moment"
 import { ADD_CHAT } from "../../Actions/chatActions"
-import { sendMessage } from "../../Socket/SocketMethods"
+import { sendMessageTempGroup } from "../../Socket/SocketMethods"
 
 export default function TempGroupChatView() {
   const curID = useSelector((state) => state.current.tempGroup)
@@ -36,7 +36,7 @@ export default function TempGroupChatView() {
     }
 
     dispatch({ type: ADD_CHAT, payload: newMessage })
-    sendMessage(newMessage)
+    sendMessageTempGroup(newMessage)
 
     console.log(JSON.stringify(newMessage))
   }

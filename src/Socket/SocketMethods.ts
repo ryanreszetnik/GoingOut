@@ -30,8 +30,14 @@ const socketSend = (action, data) => {
 };
 
 //Messages
-export const sendMessage = (message:Message)=>{
-    socketSend(SEND_MESSAGE,message)
+export const sendMessagePermGroup = (message:Message)=>{
+    socketSend(SEND_MESSAGE,{message,type:"PERMGROUP"})
+}
+export const sendMessageTempGroup = (message:Message)=>{
+    socketSend(SEND_MESSAGE,{message,type:"TEMPGROUP"})
+}
+export const sendMessageMatch = (message:Message)=>{
+    socketSend(SEND_MESSAGE,{message,type:"MATCH"})
 }
 export const updateFriendRequest = (friendSub:string, confirm:boolean)=>{
   socketSend(SEND_FRIEND_REQUEST,{friendSub,confirm})

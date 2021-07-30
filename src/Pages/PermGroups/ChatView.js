@@ -6,7 +6,7 @@ import uuid from "react-native-uuid"
 import moment from "moment"
 
 import { ADD_CHAT } from "../../Actions/chatActions"
-import { sendMessage } from "../../Socket/SocketMethods"
+import { sendMessagePermGroup } from "../../Socket/SocketMethods"
 
 export default function ChatView() {
   const curID = useSelector((state) => state.current.permGroup)
@@ -26,7 +26,7 @@ export default function ChatView() {
     }
 
     dispatch({ type: ADD_CHAT, payload: newMessage })
-    sendMessage(newMessage)
+    sendMessagePermGroup(newMessage)
 
     console.log(JSON.stringify(newMessage))
   }

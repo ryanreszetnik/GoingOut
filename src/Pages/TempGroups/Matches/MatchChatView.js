@@ -5,9 +5,10 @@ import { View, Text } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
 import Chat from "../../../../Components/Chat"
 import { ADD_CHAT } from "../../../Actions/chatActions"
-import { sendMessage } from "../../../Socket/SocketMethods"
+import { sendMessageMatch } from "../../../Socket/SocketMethods"
 export default function MatchChatView({ navigation }) {
   const curMatchId = useSelector((state) => state.current.match)
+  const curTempGroup = useSelector((state) => state.current.tempGroup)
   const chat = useSelector((state) =>
     state.chats.find((chat) => chat.groupId === curMatchId)
   )
@@ -25,7 +26,7 @@ export default function MatchChatView({ navigation }) {
     }
 
     dispatch({ type: ADD_CHAT, payload: newMessage })
-    sendMessage(newMessage)
+    sendMessageMatch(newMessage, curTempGroup)
 
     console.log(JSON.stringify(newMessage))
   }
