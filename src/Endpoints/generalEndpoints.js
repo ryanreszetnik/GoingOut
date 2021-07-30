@@ -14,7 +14,6 @@ export const appLoad = async () => {
       "Content-Type": "application/json",
     },
   }
-  console.log(apiRequest)
   let data
   try {
     data = await API.get("GeneralEndpoint", "/", apiRequest)

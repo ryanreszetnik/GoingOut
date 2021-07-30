@@ -10,7 +10,7 @@ import { PAGE_BACKGROUND_COLOR } from "../../Styles/theme.style"
 export default function ViewTempGroups({ navigation }) {
   const groups = useSelector((state) =>
     state.tempGroups.sort(function (a, b) {
-      return `${a.date}T${a.time}` > `${b.date}T${b.time}`
+      return `${a.date}T${a.time}` < `${b.date}T${b.time}`
     })
   )
   const baseGroups = groups.filter((gr) => {

@@ -30,7 +30,6 @@ export const ensureProfilesLoaded = async (subs, priority) => {
     return
   }
   const newProfiles = await loadUsers(notLoaded) //call api with subs
-  console.log("called with", notLoaded, "returned", newProfiles)
   store.dispatch({
     type: LOAD_USERS,
     payload: newProfiles.map((p) => {

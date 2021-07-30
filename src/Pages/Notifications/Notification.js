@@ -1,22 +1,23 @@
-import React from 'react'
-import { View, Text, StyleSheet } from "react-native";
+import React from "react"
+import { View, Text, StyleSheet } from "react-native"
 
-export default function Notification({notification}) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.message}>{notification.message}</Text>
-      </View>
-    );
+export default function Notification({ notification }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.message}>{notification.timestamp}</Text>
+      <Text style={styles.message}>{notification.message}</Text>
+    </View>
+  )
 }
 const styles = StyleSheet.create({
   container: {
-    paddingTop:5,
-    paddingLeft:5,
+    paddingTop: 5,
+    paddingLeft: 5,
     borderBottomColor: "black",
     borderTopWidth: 0.5,
-    height:50
+    height: 50,
   },
-  message:{
-      fontSize:16
-  }
-});
+  message: {
+    fontSize: 16,
+  },
+})
