@@ -38,7 +38,7 @@ export default function PermGroups({ navigation }) {
   return (
     <PermGroupNavigator.Navigator>
       <PermGroupNavigator.Screen
-        name="View Perm Groups"
+        name='View Perm Groups'
         component={ViewPermGroups}
         options={{
           headerRight: () => (
@@ -50,24 +50,24 @@ export default function PermGroups({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name="plus"
-                color="tomato"
+                name='plus'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
         }}
       />
       <PermGroupNavigator.Screen
-        name="Create Temp From Perm"
+        name='Create Temp From Perm'
         component={CreateTempFromPerm}
       ></PermGroupNavigator.Screen>
       <PermGroupNavigator.Screen
-        name="Create Group"
+        name='Create Group'
         component={CreatePermGroup}
       ></PermGroupNavigator.Screen>
-      <PermGroupNavigator.Screen name="Choose Day" component={MonthPicker} />
+      <PermGroupNavigator.Screen name='Choose Day' component={MonthPicker} />
       <PermGroupNavigator.Screen
-        name="View Single Group"
+        name='View Single Group'
         component={ViewSingleGroup}
         options={{
           headerTitle: "Group Info",
@@ -80,8 +80,8 @@ export default function PermGroups({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name="users"
-                color="tomato"
+                name='users'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
@@ -89,7 +89,7 @@ export default function PermGroups({ navigation }) {
       />
 
       <PermGroupNavigator.Screen
-        name="Chat View"
+        name='Chat View'
         component={ChatView}
         options={{
           headerTitle: "Group Chat",
@@ -102,25 +102,25 @@ export default function PermGroups({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name="info"
-                color="tomato"
+                name='info'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
         }}
       />
 
-      <PermGroupNavigator.Screen name="Members" component={MemberList} />
+      <PermGroupNavigator.Screen name='Members' component={MemberList} />
 
-      <PermGroupNavigator.Screen name="Edit Group" component={EditGroup} />
-      <PermGroupNavigator.Screen name="Add Members" component={AddMembers} />
+      <PermGroupNavigator.Screen name='Edit Group' component={EditGroup} />
+      <PermGroupNavigator.Screen name='Add Members' component={AddMembers} />
 
       <PermGroupNavigator.Screen
-        name="Member Profile"
+        name='Member Profile'
         component={MemberProfile}
       />
       <PermGroupNavigator.Screen
-        name="Select Day Info"
+        name='Select Day Info'
         component={SelectDayInfo}
       />
     </PermGroupNavigator.Navigator>

@@ -29,12 +29,15 @@ export default function TempGroupPreview({ group, onPress }) {
   return (
     <View>
       {baseGroups ? (
-        <TouchableOpacity onPress={onPress} style={styles.container}>
+        <TouchableOpacity
+          onPress={() => onPress(group)}
+          style={styles.container}
+        >
           <GroupImage photoIds={group.members} size={70} />
           <View style={styles.textContainer}>
             <Text style={styles.header}>{group.name}</Text>
             <View style={{ flexDirection: "row", paddingTop: 3 }}>
-              <Ionicon name="calendar-outline" size={15} />
+              <Ionicon name='calendar-outline' size={15} />
 
               <Text style={{ paddingLeft: 5 }}>
                 {`${
@@ -54,7 +57,7 @@ export default function TempGroupPreview({ group, onPress }) {
 
             {baseGroups.length > 0 && (
               <View style={{ flexDirection: "row", paddingTop: 2 }}>
-                <Ionicon name="chatbubbles-outline" size={15} />
+                <Ionicon name='chatbubbles-outline' size={15} />
                 <Text style={{ paddingLeft: 5 }}>
                   {baseGroups.map((bg) => bg.name).join(", ")}
                 </Text>
