@@ -11,6 +11,8 @@ import { REQUEST } from "../../Constants/friendConstants"
 import { NOTIFICATIONS_PAGE } from "../../Constants/pageConstants"
 import { appLoad, loadUsers } from "../../Endpoints/generalEndpoints"
 import Notification from "./Notification"
+import { SET_CUR_TEMP_GROUP } from "../../Actions/groupActions"
+import { navigate } from "../../Navigation/RootNavigation"
 
 export default function Notifications({ navigation }) {
   const friends = useSelector((state) => state.friends)
@@ -31,7 +33,10 @@ export default function Notifications({ navigation }) {
     })
     navigation.navigate("User Profile")
   }
-  const moveToView = (id) => {}
+  const moveToView = (id) => {
+    dispatch({ type: SET_CUR_TEMP_GROUP, payload: id })
+    navigate("View Single Temp Group")
+  }
 
   return (
     <ScrollView>

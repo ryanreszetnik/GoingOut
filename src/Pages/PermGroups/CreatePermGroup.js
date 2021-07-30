@@ -23,7 +23,6 @@ export default function CreatePermGroup({ navigation }) {
   const [groupName, setGroupName] = useState()
   const [groupBio, setGroupBio] = useState()
   const [ageRange, setAgeRange] = useState([18, 100])
-  const [loc, setLoc] = useState({ lat: 27.1234, lon: -27.342 })
   const [genderPref, setPref] = useState("")
   const curUser = useSelector((state) => state.profile)
   const [members, setMembers] = useState([curUser.sub])
@@ -35,7 +34,6 @@ export default function CreatePermGroup({ navigation }) {
       name: groupName,
       members: members,
       bio: groupBio,
-      loc: loc,
       locRange: locRange,
       ageRange: { minAge: ageRange[0], maxAge: ageRange[1] },
       genderPref: genderPref,
@@ -67,16 +65,16 @@ export default function CreatePermGroup({ navigation }) {
       <AppTextInput
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon="form-textbox"
-        placeholder="Enter Group Name"
-        autoCapitalize="none"
+        leftIcon='form-textbox'
+        placeholder='Enter Group Name'
+        autoCapitalize='none'
       />
       <AppTextInput
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon="card-text"
-        placeholder="Enter a short Bio"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter a short Bio'
+        autoCapitalize='none'
       />
       <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
       <Slider multiSliderValue={ageRange} setMultiSliderValue={setAgeRange} />
@@ -86,11 +84,11 @@ export default function CreatePermGroup({ navigation }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Users"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
+        leftIcon='magnify'
+        placeholder='Search For Users'
+        autoCapitalize='none'
+        keyboardType='email-address'
+        textContentType='emailAddress'
       />
       <UserList
         onPress={onPress}
@@ -98,7 +96,7 @@ export default function CreatePermGroup({ navigation }) {
       />
       <View style={styles.searchArea}>
         <View style={{ alignItems: "center" }}>
-          <AppButton title="Create Group" onPress={createGroup} />
+          <AppButton title='Create Group' onPress={createGroup} />
         </View>
       </View>
     </ScrollView>
