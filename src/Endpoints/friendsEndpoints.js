@@ -20,21 +20,21 @@ export const searchUser = async (search) => {
   return data
 }
 
-export const requestFriend = async (sub) => {
-  const Authorization = (await Auth.currentAuthenticatedUser())
-    .signInUserSession.idToken.jwtToken
+// export const requestFriend = async (sub) => {
+//   const Authorization = (await Auth.currentAuthenticatedUser())
+//     .signInUserSession.idToken.jwtToken
 
-  const apiRequest = {
-    body: { user: sub },
-    headers: {
-      Authorization,
-      "Content-Type": "application/json",
-    },
-  }
-  const data = await API.post("GeneralEndpoint", `/friends`, apiRequest)
+//   const apiRequest = {
+//     body: { user: sub },
+//     headers: {
+//       Authorization,
+//       "Content-Type": "application/json",
+//     },
+//   }
+//   const data = await API.post("GeneralEndpoint", `/friends`, apiRequest)
 
-  return data
-}
+//   return data
+// }
 
 export const getFriends = async (sub) => {
   const Authorization = (await Auth.currentAuthenticatedUser())
@@ -57,33 +57,33 @@ export const getFriends = async (sub) => {
   return data
 }
 
-export const acceptRequest = async (sub) => {
-  const Authorization = (await Auth.currentAuthenticatedUser())
-    .signInUserSession.idToken.jwtToken
+// export const acceptRequest = async (sub) => {
+//   const Authorization = (await Auth.currentAuthenticatedUser())
+//     .signInUserSession.idToken.jwtToken
 
-  const apiRequest = {
-    body: { user: sub },
-    headers: {
-      Authorization,
-      "Content-Type": "application/json",
-    },
-  }
-  const data = await API.put("GeneralEndpoint", `/friends`, apiRequest)
+//   const apiRequest = {
+//     body: { user: sub },
+//     headers: {
+//       Authorization,
+//       "Content-Type": "application/json",
+//     },
+//   }
+//   const data = await API.put("GeneralEndpoint", `/friends`, apiRequest)
 
-  return data
-}
-export const deleteFriend = async (sub) => {
-  const Authorization = (await Auth.currentAuthenticatedUser())
-    .signInUserSession.idToken.jwtToken
+//   return data
+// }
+// export const deleteFriend = async (sub) => {
+//   const Authorization = (await Auth.currentAuthenticatedUser())
+//     .signInUserSession.idToken.jwtToken
 
-  const apiRequest = {
-    body: { user: sub },
-    headers: {
-      Authorization,
-      "Content-Type": "application/json",
-    },
-  }
-  const data = await API.del("GeneralEndpoint", `/friends`, apiRequest)
+//   const apiRequest = {
+//     body: { user: sub },
+//     headers: {
+//       Authorization,
+//       "Content-Type": "application/json",
+//     },
+//   }
+//   const data = await API.del("GeneralEndpoint", `/friends`, apiRequest)
 
-  return data
-}
+//   return data
+// }

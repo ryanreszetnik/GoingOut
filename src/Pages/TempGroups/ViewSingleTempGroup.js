@@ -8,11 +8,12 @@ import { SET_CUR_MATCH } from "../../Actions/groupActions"
 import { leaveTempGroup } from "../../Socket/SocketMethods"
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps"
 export default function ViewSingleTempGroup({ navigation }) {
+  const curGroup = useSelector((state) => state.current.tempGroup)
   const matches = useSelector((state) =>
     state.matches.filter((gr) => gr.groupId === curGroup)
   )
   const dispatch = useDispatch()
-  const curGroup = useSelector((state) => state.current.tempGroup)
+
   const event = useSelector((state) =>
     state.tempGroups.find((group) => group.groupId === curGroup)
   )
@@ -94,10 +95,6 @@ export default function ViewSingleTempGroup({ navigation }) {
               ></Marker>
             </MapView>
           </View>
-          <AppButton title="Find Matches" onPress={onPress}></AppButton>
-          <AppButton title="Members" onPress={goToMembers} />
-          <AppButton title="Leave Event" onPress={leaveEvent} />
-          <AppButton title="Edit Event Details" onPress={editEvent} />
           {matches.map((match) => {
             return (
               <MatchPreview
@@ -107,6 +104,10 @@ export default function ViewSingleTempGroup({ navigation }) {
               />
             )
           })}
+          <AppButton title="Find Matches" onPress={onPress}></AppButton>
+          <AppButton title="Members" onPress={goToMembers} />
+          <AppButton title="Leave Event" onPress={leaveEvent} />
+          <AppButton title="Edit Event Details" onPress={editEvent} />
         </View>
       )}
     </ScrollView>

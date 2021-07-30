@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { useSelector, useDispatch } from "react-redux"
 import MonthPicker from "../../../Components/MonthPicker"
 import CreatePermGroup from "./CreatePermGroup"
-import CreateTempFromPerm from "./CreateTempFromPerm";
+import CreateTempFromPerm from "./CreateTempFromPerm"
 import ViewPermGroups from "./ViewPermGroups"
 import ViewSingleGroup from "./ViewSingleGroup"
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
@@ -16,7 +16,6 @@ import EditGroup from "./EditGroup"
 import ChatView from "./ChatView"
 import AddMembers from "./AddMembers"
 import { SET_PERM_GROUPS } from "../../Actions/groupActions"
-import { getPermGroups } from "../../Endpoints/permGroupsEndpoints"
 import SelectDayInfo from "./SelectDayInfo"
 
 const PermGroupNavigator = createStackNavigator()
@@ -35,7 +34,7 @@ const newGroupInitial = {
   genderPreference: "Neutral",
 }
 export default function PermGroups({ navigation }) {
-  const tabNavigator = navigation;
+  const tabNavigator = navigation
   return (
     <PermGroupNavigator.Navigator>
       <PermGroupNavigator.Screen
@@ -125,7 +124,7 @@ export default function PermGroups({ navigation }) {
         component={SelectDayInfo}
       />
     </PermGroupNavigator.Navigator>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

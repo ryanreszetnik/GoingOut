@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import { View, Text, ScrollView, Switch } from "react-native"
+import { View, Text, ScrollView, Switch, StyleSheet } from "react-native"
 import { useSelector, useDispatch } from "react-redux"
 import AppButton from "../../../Components/AppButton"
 import MonthPicker from "../../../Components/MonthPicker"
@@ -14,6 +14,12 @@ import uuid from "react-native-uuid"
 import AppTextInput from "../../../Components/AppTextInput"
 import GenderPreference from "../../../Components/GenderPreference"
 import { createTempGroup } from "../../Socket/SocketMethods"
+import MapView, {
+  PROVIDER_GOOGLE,
+  animateToRegion,
+  Marker,
+  Circle,
+} from "react-native-maps"
 
 export default function CreateTempFromPerm({ navigation }) {
   const permGroupId = useSelector((state) => state.current.permGroup)
@@ -25,6 +31,14 @@ export default function CreateTempFromPerm({ navigation }) {
   const [bio, setBio] = useState(baseGroup ? baseGroup.bio : "")
   const [date, setDate] = useState("")
   const [time, setTime] = useState(new Date())
+  const [locRange, setLocRange] = useState(25)
+  const [loc, setLoc] = useState({
+    latitude: 43.6532,
+    longitude: -79.3832,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  })
+  const mapRef = useRef()
   const [ageRange, setAgeRange] = useState(
     baseGroup
       ? [Math.max(baseGroup.ageRange.minAge, 13), baseGroup.ageRange.maxAge]
@@ -76,8 +90,8 @@ export default function CreateTempFromPerm({ navigation }) {
       const payload = {
         groupId: uuid.v4(),
         members: baseGroup.members,
-        loc: baseGroup.loc,
-        locRange: baseGroup.locRange,
+        loc: { lat: loc.latitude, lon: loc.longitude },
+        locRange: locRange,
         date,
         time: formattedTime,
         baseGroups: [baseGroup.groupId],
@@ -132,6 +146,34 @@ export default function CreateTempFromPerm({ navigation }) {
         />
       )*/}
           {formattedTime !== "" && <Text>Selected Time: {formattedTime}</Text>}
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            initialRegion={loc}
+            style={styles.map}
+            ref={mapRef}
+            onPress={(e) => {
+              mapRef.current?.animateToRegion(
+                {
+                  ...e.nativeEvent.coordinate,
+                  latitudeDelta: 0.015 * locRange,
+                  longitudeDelta: 0.015 * locRange,
+                },
+                1500
+              )
+              setLoc({
+                ...e.nativeEvent.coordinate,
+                latitudeDelta: 0.015 * locRange,
+                longitudeDelta: 0.015 * locRange,
+              })
+            }}
+          >
+            <Marker coordinate={loc}></Marker>
+            <Circle
+              center={loc}
+              radius={locRange * 1000}
+              fillColor={"rgba(255, 0, 0, 0.07)"}
+            ></Circle>
+          </MapView>
           <Text>Use Same Values As Group</Text>
           <Switch value={useDefault} onValueChange={changeSwitch} />
           {useDefault ? (
@@ -179,3 +221,6 @@ export default function CreateTempFromPerm({ navigation }) {
     </ScrollView>
   )
 }
+const styles = StyleSheet.create({
+  map: { width: "100%", height: 250 },
+})

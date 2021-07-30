@@ -10,13 +10,15 @@ import { PAGE_BACKGROUND_COLOR } from "../../Styles/theme.style"
 export default function ViewTempGroups({ navigation }) {
   const groups = useSelector((state) =>
     state.tempGroups.sort(function (a, b) {
-      return `${a.date}T${a.time}` < `${b.date}T${b.time}`
+      return `${a.date}T${a.time}` > `${b.date}T${b.time}`
     })
   )
-  const baseGroups = groups.filter((gr) => {
+  const newGroups = groups.filter((gr) => new Date(gr.date) >= new Date())
+  const oldGroups = groups.filter((gr) => new Date(gr.date) < new Date())
+  const baseGroups = newGroups.filter((gr) => {
     return gr.tempGroups.length > 0
   })
-  const masterGroups = groups.filter((gr) => !baseGroups.includes(gr))
+  const masterGroups = newGroups.filter((gr) => !baseGroups.includes(gr))
 
   const dispatch = useDispatch()
   const moveToView = (id) => {
@@ -29,7 +31,9 @@ export default function ViewTempGroups({ navigation }) {
 
   return (
     <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
-      {baseGroups.length > 0 && <Text>Master Groups</Text>}
+      {(baseGroups.length > 0 || oldGroups.length > 0) && (
+        <Text>Upcoming Events</Text>
+      )}
       {masterGroups.map((group) => {
         return (
           <TempGroupPreview
@@ -40,8 +44,19 @@ export default function ViewTempGroups({ navigation }) {
           />
         )
       })}
-      {baseGroups.length > 0 && <Text>Sub Groups</Text>}
+      {baseGroups.length > 0 && <Text>Sub Groups for Upcoming</Text>}
       {baseGroups.map((group) => {
+        return (
+          <TempGroupPreview
+            group={group}
+            key={group.groupId}
+            onPress={() => moveToView(group.groupId)}
+            id={group.groupId}
+          />
+        )
+      })}
+      {oldGroups.length > 0 && <Text>Past Events</Text>}
+      {oldGroups.map((group) => {
         return (
           <TempGroupPreview
             group={group}

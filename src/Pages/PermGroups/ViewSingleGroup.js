@@ -9,10 +9,6 @@ import {
   REMOVE_PERM_GROUP,
   SET_CUR_GROUP,
 } from "../../Actions/groupActions"
-import {
-  removeMembers,
-  removePermGroup,
-} from "../../Endpoints/permGroupsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import TempGroupPreview from "../../../Components/TempGroupPreview"
 import { leavePermGroup } from "../../Socket/SocketMethods"
@@ -49,9 +45,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='form-textbox'
+                  name="form-textbox"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Group Name`}
@@ -61,9 +57,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='card-text'
+                  name="card-text"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Bio`}
@@ -73,9 +69,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name='google-maps'
+                  name="google-maps"
                   size={20}
-                  color='#6e6869'
+                  color="#6e6869"
                   style={styles.icon}
                 />
                 {`  Location`}
@@ -106,9 +102,9 @@ export default function ViewSingleGroup({ navigation, tabNavigator }) {
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <AppButton title='Edit Group' onPress={editGroup} />
-            <AppButton title='Create Event' onPress={createEvent} />
-            <AppButton title='Leave Group' onPress={leaveGroup} />
+            <AppButton title="Edit Group" onPress={editGroup} />
+            <AppButton title="Create Event" onPress={createEvent} />
+            <AppButton title="Leave Group" onPress={leaveGroup} />
           </View>
         </View>
       )}
