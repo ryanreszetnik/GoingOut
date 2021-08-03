@@ -69,18 +69,12 @@ export default function Events({ navigation }) {
               <TouchableOpacity
                 style={styles.headerView}
                 onPress={() =>
-                  navigation.navigate(EVENTS_CHAT, {
+                  navigation.navigate(EVENTS_EDIT_EVENT, {
                     eventId: route.params.eventId,
                   })
                 }
               >
-                <Text style={styles.headerText}>Chat</Text>
-                <FontAwesome5
-                  style={{ marginRight: 20 }}
-                  size={20}
-                  name="comments"
-                  color="tomato"
-                />
+                <Text style={styles.headerText}>Edit</Text>
               </TouchableOpacity>
             ),
           }
@@ -158,5 +152,7 @@ const styles = StyleSheet.create({
   headerText: {
     marginRight: 10,
     color: "tomato",
+    fontSize: 18,
+    paddingRight: 5,
   },
 })
