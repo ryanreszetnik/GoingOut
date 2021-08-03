@@ -31,7 +31,7 @@ export default function ViewSingleGroup({ navigation, route }) {
     navigate(EVENTS_SINGLE_EVENT, { eventId: gr.eventId })
   }
 
-  const leaveGroup = async () => {
+  const leaveGroupHere = async () => {
     const leave = group.members.length !== 1 ? true : false
     leaveGroup(groupId, leave)
     navigation.navigate(GROUPS_VIEW)
@@ -104,7 +104,7 @@ export default function ViewSingleGroup({ navigation, route }) {
           <View style={{ alignItems: "center" }}>
             <AppButton title="Edit Group" onPress={editGroup} />
             <AppButton title="Create Event" onPress={createEvent} />
-            <AppButton title="Leave Group" onPress={leaveGroup} />
+            <AppButton title="Leave Group" onPress={leaveGroupHere} />
           </View>
         </View>
       )}
