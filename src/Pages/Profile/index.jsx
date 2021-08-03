@@ -23,12 +23,13 @@ const ProfileStack = createStackNavigator()
 export default function Profile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator screenOptions={{ headerStyle: { backgroundColor: 'black' } }}>
       <ProfileStack.Screen
         name={PROFILE_VIEW}
         component={ViewProfile}
         options={{
           headerTitle: user.username,
+          headerTitleStyle:{color:"white"},
           headerRight: () => (
             <TouchableOpacity
               style={styles.headerView}
@@ -39,7 +40,7 @@ export default function Profile({ navigation }) {
                 style={{ marginRight: 20 }}
                 size={20}
                 name="user-edit"
-                color="tomato"
+                color="white"
               />
             </TouchableOpacity>
           ),
@@ -89,6 +90,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginRight: 10,
-    color: "tomato",
+    color: "white",
   },
 })

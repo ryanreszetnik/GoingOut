@@ -6,7 +6,7 @@
     "build-ios": "cd ios && pod install && cd .. && react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "kill":"killall -9 node"
+    "kill": "killall -9 node"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.21.0",

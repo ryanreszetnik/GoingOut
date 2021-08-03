@@ -20,7 +20,9 @@ export default function index() {
       <SocketClient />
       <Tab.Navigator
         lazy={false}
+        
         screenOptions={({ route }) => ({
+          
           tabBarIcon: ({ focused, color, size }) => {
             let iconName = "ios-information-circle"
             let iconType = "ion"

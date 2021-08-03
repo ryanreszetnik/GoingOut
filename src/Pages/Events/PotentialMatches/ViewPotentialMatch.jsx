@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native"
 import AppButton from "../../../Components/AppButton"
 import { useSelector } from "react-redux"
 import uuid from "react-native-uuid"
-import { matchWithEvent } from "../../../Socket/socketMethods"
+import { matchWithEvent } from "../../../Socket/SocketMethods"
 import UserList from "../../../Components/UserList"
 import { EVENTS_SINGLE_MATCH } from "../../../Constants/screens"
 

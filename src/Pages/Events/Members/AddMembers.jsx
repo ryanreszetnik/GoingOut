@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { searchUser } from "../../../Endpoints/friendsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import AppButton from "../../../Components/AppButton"
-import { addEventMembers } from "../../../Socket/socketMethods"
+import { addEventMembers } from "../../../Socket/SocketMethods"
 import { EVENTS_MEMBERS } from "../../../Constants/screens"
 
 export default function AddMembers({ navigation, route }) {

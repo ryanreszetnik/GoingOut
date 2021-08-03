@@ -19,9 +19,10 @@ export default function ViewProfile({ navigation }) {
   }
 
   return (
-    <View style={{ backgroundColor: "#e0e0e0" }}>
+    <View style={{ backgroundColor: "#212121", height: "100%" }}>
       {profile ? (
         <View style={styles.container}>
+          <Text style={styles.imgTitle}>{profile.name}</Text>
           <View style={styles.topOfPage}>
             <View style={styles.imgFollowers}>
               <Image
@@ -29,74 +30,34 @@ export default function ViewProfile({ navigation }) {
                 source={imgSource}
                 defaultSource={defaultImg}
               />
-
-              <View style={styles.imageFriends}>
-                <View style={styles.friendsButton}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      navigation.navigate(PROFILE_FRIENDS, { sub: profile.sub })
-                    }}
-                    style={{ backgroundColor: "#c0c0c0" }}
-                  >
-                    <Text style={styles.imgText}>
-                      <MaterialCommunityIcons
-                        name="account-multiple"
-                        size={20}
-                        color="#6e6869"
-                        style={styles.icon}
-                      />
-                      {`Friends`}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <View style={styles.imageFriends}></View>
             </View>
-            <Text style={styles.imgTitle}>{profile.name}</Text>
           </View>
-
+          <View style={styles.friendsButton}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(PROFILE_FRIENDS, { sub: profile.sub })
+              }}
+              style={{ backgroundColor: "#c0c0c0" }}
+            >
+              <Text style={styles.imgText}>
+                <MaterialCommunityIcons
+                  name='account-multiple'
+                  size={20}
+                  color='#6e6869'
+                  style={styles.icon}
+                />
+                {`Friends`}
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.attributeContainer}>
             <View style={styles.txtField}>
-              <Text>
+              <Text style={styles.attributeTitle}>
                 <MaterialCommunityIcons
-                  name="account"
+                  name='emoticon-happy-outline'
                   size={20}
-                  color="#6e6869"
-                  style={styles.icon}
-                />
-                Username
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.username}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name="email"
-                  size={20}
-                  color="#6e6869"
-                  style={styles.icon}
-                />
-                Email
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.email}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name="phone"
-                  size={20}
-                  color="#6e6869"
-                  style={styles.icon}
-                />
-                Phone Number
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.phone_number}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name="emoticon-happy-outline"
-                  size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 Gender
@@ -104,11 +65,11 @@ export default function ViewProfile({ navigation }) {
               <Text style={styles.attributeTxt}>{profile.gender}</Text>
             </View>
             <View style={styles.txtField}>
-              <Text>
+              <Text style={styles.attributeTitle}>
                 <MaterialCommunityIcons
-                  name="cake"
+                  name='cake'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 Birth Date
@@ -126,26 +87,27 @@ export default function ViewProfile({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "95%",
     alignSelf: "center",
+    alignContent: "center",
+    width: "100%",
   },
   imgFollowers: {
     flexDirection: "row",
   },
   topOfPage: {
     width: "100%",
-
     alignItems: "baseline",
+    alignSelf: "center",
+    alignItems: "center",
   },
   img: {
     width: 100,
     height: 100,
     borderRadius: 100,
     backgroundColor: "white",
+    alignSelf: "center",
   },
   imageFriends: {
-    flexDirection: "row",
-    padding: 30,
     paddingLeft: 0,
   },
 
@@ -158,6 +120,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     marginVertical: 15,
+    color: "white",
   },
   attributeContainer: {
     marginVertical: 10,
@@ -172,11 +135,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 2,
     marginVertical: 2,
+    color: "white",
   },
   friendsButton: {
-    paddingLeft: 40,
-
-    margin: 0,
+    width: "30% ",
+  },
+  attributeTitle: {
+    color: "white",
   },
 })
-//await Auth.currentAuthenticatedUser()

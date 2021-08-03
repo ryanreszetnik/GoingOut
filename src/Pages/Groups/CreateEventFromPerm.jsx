@@ -10,7 +10,7 @@ import AgeRange from "../../Components/AgeRange"
 import uuid from "react-native-uuid"
 import AppTextInput from "../../Components/AppTextInput"
 import GenderPreference from "../../Components/GenderPreference"
-import { createEvent } from "../../Socket/socketMethods"
+import { createEvent } from "../../Socket/SocketMethods"
 import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps"
 import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
 

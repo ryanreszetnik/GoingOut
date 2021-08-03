@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../Components/AppButton"
 import MatchPreview from "../../Components/MatchPreview"
-import { leaveEvent } from "../../Socket/socketMethods"
+import { leaveEvent } from "../../Socket/SocketMethods"
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps"
 import {
   EVENTS_EDIT_EVENT,
