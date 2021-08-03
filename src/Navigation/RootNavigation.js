@@ -1,8 +1,7 @@
-import React, { createRef } from "react"
-import { View, Text } from "react-native"
+import { createRef } from "react"
 
 export const navigationRef = createRef()
 
-export function navigate(name) {
-  navigationRef.current?.navigate(name)
+export function navigate(name, params) {
+  navigationRef.current?.navigate(name, params)
 }

@@ -5,7 +5,8 @@
     "ios": "react-native run-ios",
     "build-ios": "cd ios && pod install && cd .. && react-native run-ios",
     "web": "expo start --web",
-    "start": "react-native start"
+    "start": "react-native start",
+    "kill":"killall -9 node"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.21.0",
@@ -38,7 +39,6 @@
     "react-native-gesture-handler": "~1.10.2",
     "react-native-image-crop-picker": "^0.36.2",
     "react-native-maps": "0.28.0",
-    "react-native-notifications": "^4.1.1",
     "react-native-paper": "^4.9.1",
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "^3.2.0",

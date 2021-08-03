@@ -1,7 +1,7 @@
 import { registerRootComponent } from "expo"
-import App from "./App"
+import App from "./src/App"
 import React from "react"
-import store from "./src/Store/store"
+import store from "./src/Redux/store"
 import { Provider } from "react-redux"
 
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
