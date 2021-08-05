@@ -58,8 +58,8 @@ const LoadingData = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" color="tomato" />
-      <Button title="Loading App Data" color="tomato" />
+      <ActivityIndicator size='large' color='tomato' />
+      <Button title='Loading App Data' color='tomato' />
     </View>
   )
 }
@@ -67,7 +67,7 @@ const LoadingData = () => {
 const Initializing = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" color="tomato" />
+      <ActivityIndicator size='large' color='tomato' />
     </View>
   )
 }

@@ -5,7 +5,7 @@ import Chat from "../../CommonPages/Chat"
 import uuid from "react-native-uuid"
 import moment from "moment"
 import { ADD_CHAT } from "../../Constants/reducerEvents"
-import { sendMessageEvent } from "../../Socket/socketMethods"
+import { sendMessageEvent } from "../../Socket/SocketMethods"
 
 export default function EventChat({ route }) {
   const { eventId } = route.params

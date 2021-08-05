@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, Text } from "react-native"
+import { View, Text, Animated } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import UserList from "../Components/UserList"
 import { useDispatch, useSelector } from "react-redux"
@@ -16,10 +16,16 @@ export default function UserFriendsList({ selectUser, sub }) {
     if (!isSignedInSub && sub) {
       makeFriends()
     }
+    return () => {
+      setFriends([])
+    }
   }, [sub])
   useEffect(() => {
     if (isSignedInSub && sub) {
       makeFriends()
+    }
+    return () => {
+      setFriends([])
     }
   }, [signedInFriends, sub])
 
@@ -35,22 +41,24 @@ export default function UserFriendsList({ selectUser, sub }) {
   }
 
   return (
-    <ScrollView>
-      <AppTextInput
-        value={searchTerm}
-        onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Friends by Name"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
-      />
-      <UserList
-        onPress={selectUser}
-        subs={friends}
-        showFriendships={true}
-        filterTerm={searchTerm}
-      />
+    <ScrollView style={{ backgroundColor: "#111" }}>
+      <View style={{ width: "95%", alignSelf: "center" }}>
+        <AppTextInput
+          value={searchTerm}
+          onChangeText={(text) => updateSearch(text)}
+          leftIcon='magnify'
+          placeholder='Search For Friends by Name'
+          autoCapitalize='none'
+          keyboardType='email-address'
+          textContentType='emailAddress'
+        />
+        <UserList
+          onPress={selectUser}
+          subs={friends}
+          showFriendships={true}
+          filterTerm={searchTerm}
+        />
+      </View>
     </ScrollView>
   )
 }

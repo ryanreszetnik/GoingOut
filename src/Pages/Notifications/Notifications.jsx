@@ -34,7 +34,7 @@ export default function Notifications({ navigation }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "#111" }}>
       <View style={styles.firstContainer}>
         <Text style={styles.header}>Next Event</Text>
         {nextEvent ? (
@@ -45,7 +45,7 @@ export default function Notifications({ navigation }) {
             id={nextEvent.eventId}
           />
         ) : (
-          <Text>No events</Text>
+          <Text style={{ color: "white" }}>No events</Text>
         )}
       </View>
       <View style={styles.container}>
@@ -53,7 +53,7 @@ export default function Notifications({ navigation }) {
         {requests.length > 0 ? (
           <UserList onPress={selectUser} subs={requests} />
         ) : (
-          <Text>No Requests</Text>
+          <Text style={{ color: "white" }}>No Requests</Text>
         )}
       </View>
 
@@ -78,5 +78,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     fontWeight: "600",
+    color: "white",
   },
 })

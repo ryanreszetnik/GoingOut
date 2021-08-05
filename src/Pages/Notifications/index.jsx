@@ -11,7 +11,12 @@ const NotificationNavigator = createStackNavigator()
 
 export default function NotificationPage() {
   return (
-    <NotificationNavigator.Navigator>
+    <NotificationNavigator.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#2C2C2C" },
+        headerTintColor: "white",
+      }}
+    >
       <NotificationNavigator.Screen
         name={NOTIFICATIONS_VIEW}
         component={Notifications}

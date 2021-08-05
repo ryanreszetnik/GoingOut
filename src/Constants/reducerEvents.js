@@ -50,3 +50,6 @@ export const ADD_NOTIFICATION = "ADD_NOTIFICATION"
 //profile actions
 export const SET_PROFILE = "SET_PROFILE"
 export const UPLOAD_IMAGE = "UPLOAD_IMAGE"
+
+//animations
+export const ANIMATION_UPDATE = "ANIMATION_UPDATE"

@@ -5,7 +5,7 @@ import Chat from "../../CommonPages/Chat"
 import uuid from "react-native-uuid"
 import moment from "moment"
 
-import { sendMessageGroup } from "../../Socket/socketMethods"
+import { sendMessageGroup } from "../../Socket/SocketMethods"
 
 export default function ChatView({ route }) {
   const { groupId } = route.params

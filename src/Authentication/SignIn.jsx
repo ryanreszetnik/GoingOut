@@ -38,23 +38,23 @@ export default function SignIn({ navigation, route }) {
         <AppTextInput
           value={username}
           onChangeText={(text) => setUsername(text)}
-          leftIcon="account"
-          placeholder="Enter username"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
+          leftIcon='account'
+          placeholder='Enter username'
+          autoCapitalize='none'
+          keyboardType='email-address'
+          textContentType='emailAddress'
         />
         <AppTextInput
           value={password}
           onChangeText={(text) => setPassword(text)}
-          leftIcon="lock"
-          placeholder="Enter password"
-          autoCapitalize="none"
+          leftIcon='lock'
+          placeholder='Enter password'
+          autoCapitalize='none'
           autoCorrect={false}
           secureTextEntry
-          textContentType="password"
+          textContentType='password'
         />
-        <AppButton title="Login" onPress={signIn} />
+        <AppButton title='Login' onPress={signIn} />
 
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity
@@ -75,7 +75,7 @@ export default function SignIn({ navigation, route }) {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#111",
   },
   container: {
     flex: 1,
@@ -83,9 +83,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: "#202020",
+    color: "white",
     fontWeight: "500",
     marginVertical: 15,
+    fontFamily: "SF Pro Display",
   },
   footerButtonContainer: {
     marginVertical: 15,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   forgotPasswordButtonText: {
-    color: "tomato",
+    color: "white",
     fontSize: 18,
     fontWeight: "600",
   },
