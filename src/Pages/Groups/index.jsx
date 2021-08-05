@@ -34,6 +34,7 @@ export default function Groups() {
         component={ViewGroups}
         options={({ navigation, route }) => {
           return {
+            headerTitle: "Groups",
             headerRight: () => (
               <TouchableOpacity
                 style={styles.headerView}
@@ -43,8 +44,8 @@ export default function Groups() {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name="plus"
-                  color="tomato"
+                  name='plus'
+                  color='tomato'
                 />
               </TouchableOpacity>
             ),
@@ -78,8 +79,8 @@ export default function Groups() {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name="users"
-                  color="tomato"
+                  name='users'
+                  color='tomato'
                 />
               </TouchableOpacity>
             ),
@@ -106,8 +107,8 @@ export default function Groups() {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name="info"
-                  color="tomato"
+                  name='info'
+                  color='tomato'
                 />
               </TouchableOpacity>
             ),

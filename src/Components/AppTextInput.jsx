@@ -8,13 +8,13 @@ export default function AppTextInput({ leftIcon, ...otherProps }) {
         <MaterialCommunityIcons
           name={leftIcon}
           size={20}
-          color="#6e6869"
+          color='#6e6869'
           style={styles.icon}
         />
       )}
       <TextInput
         style={styles.input}
-        placeholderTextColor="#6e6869"
+        placeholderTextColor='gray'
         {...otherProps}
       />
     </View>
@@ -22,7 +22,7 @@ export default function AppTextInput({ leftIcon, ...otherProps }) {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#e9e9e9",
+    backgroundColor: "#2C2C2C",
     borderRadius: 25,
     flexDirection: "row",
     padding: 15,
@@ -30,10 +30,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    color: "gray",
   },
   input: {
     width: "80%",
     fontSize: 18,
-    color: "#101010",
+    color: "white",
   },
 })

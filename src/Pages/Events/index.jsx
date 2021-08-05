@@ -52,8 +52,8 @@ export default function Events({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={25}
-                name="plus"
-                color="tomato"
+                name='plus'
+                color='tomato'
               />
             </TouchableOpacity>
           ),
@@ -119,8 +119,8 @@ export default function Events({ navigation }) {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name="link"
-                  color="tomato"
+                  name='link'
+                  color='tomato'
                 />
               </TouchableOpacity>
             ),

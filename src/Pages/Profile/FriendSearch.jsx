@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppTextInput from "../../Components/AppTextInput"
 import UserList from "../../Components/UserList"
-import { PROFILE_PAGE } from "../../Constants/screens"
+import { PROFILE_PROFILE } from "../../Constants/screens"
 
 export default function FriendSearch({ navigation }) {
   const [searchTerm, setSearchTerm] = useState("")
@@ -27,27 +27,29 @@ export default function FriendSearch({ navigation }) {
     setSearchTerm(term)
 
     const newFriends = await searchUser(term)
-    console.log(newFriends)
     setFoundUsers(newFriends)
   }
 
   const onSelect = (profile) => {
-    navigation.navigate(PROFILE_PAGE, { sub: profile })
+    navigation.navigate(PROFILE_PROFILE, { sub: profile })
   }
 
   return (
-    <View>
+    <View style={{ backgroundColor: "#111", height: "100%" }}>
       <Text style={styles.title}>Add friends by username</Text>
       <View style={styles.mainBackground}>
         <AppTextInput
           value={searchTerm}
           onChangeText={(text) => updateSearch(text)}
-          leftIcon="magnify"
-          placeholder="Search For Users"
-          autoCapitalize="none"
+          leftIcon='magnify'
+          placeholder='Search For Users'
+          autoCapitalize='none'
         />
       </View>
-      <UserList onPress={onSelect} subs={filtered} showFriendships={true} />
+
+      {searchTerm.length > 0 && (
+        <UserList onPress={onSelect} subs={filtered} showFriendships={true} />
+      )}
     </View>
   )
 }
@@ -57,16 +59,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginVertical: 15,
     textAlign: "center",
+    color: "white",
+    fontFamily: "SF Pro Display",
   },
   mainBackground: {
-    backgroundColor: "white",
+    backgroundColor: "#111",
     width: "99%",
     alignSelf: "center",
   },
   friendBackground: {
     borderWidth: 0.5,
     borderColor: "lightgray",
-    backgroundColor: "white",
+    backgroundColor: "#111",
   },
   friendText: {
     color: "black",

@@ -21,11 +21,13 @@ export default function ImageSelector({ source, setSource }) {
       includeBase64: true,
       mediaType: "photo",
       forceJpg: true,
-    }).then((image) => {
-      console.log(image.sourceURL, image.data.length, Object.keys(image))
-      var base64Icon = `data:image/png;base64,${image.data}`
-      setSource({ uri: base64Icon, base64: image.data })
     })
+      .then((image) => {
+        console.log(image.sourceURL, image.data.length, Object.keys(image))
+        var base64Icon = `data:image/png;base64,${image.data}`
+        setSource({ uri: base64Icon, base64: image.data })
+      })
+      .catch((e) => {})
   }
 
   const takeImg = () => {
@@ -43,11 +45,13 @@ export default function ImageSelector({ source, setSource }) {
       includeBase64: true,
       mediaType: "photo",
       forceJpg: true,
-    }).then((image) => {
-      console.log(image.sourceURL, image.data.length, Object.keys(image))
-      var base64Icon = `data:image/png;base64,${image.data}`
-      setSource({ uri: base64Icon, base64: image.data })
     })
+      .then((image) => {
+        console.log(image.sourceURL, image.data.length, Object.keys(image))
+        var base64Icon = `data:image/png;base64,${image.data}`
+        setSource({ uri: base64Icon, base64: image.data })
+      })
+      .catch((e) => {})
   }
   return (
     <View style={styles.container}>
@@ -67,30 +71,33 @@ export default function ImageSelector({ source, setSource }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "lightgray",
+    backgroundColor: "#2C2C2C",
+    width: "100%",
+    borderRadius: 10,
   },
   image: {
     borderColor: "gray",
     borderWidth: 1,
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     borderRadius: 100,
-    margin: "4%",
-    marginLeft: 25,
+    marginVertical: 10,
+    marginLeft: 10,
     backgroundColor: "white",
   },
   buttonList: {
     justifyContent: "center",
   },
   button: {
-    backgroundColor: "tomato",
+    backgroundColor: "gray",
     padding: 10,
     margin: 10,
-    marginLeft: 45,
+    marginLeft: 15,
     borderRadius: 20,
   },
   buttonText: {
     textAlign: "center",
     color: "white",
+    fontFamily: "SF Pro Display",
   },
 })

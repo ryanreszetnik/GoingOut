@@ -1,11 +1,24 @@
-import React, { useEffect, useState } from "react"
-import { View, Text, StyleSheet, Image } from "react-native"
+import React, { useEffect, useState, useRef } from "react"
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Animated,
+  ScrollView,
+} from "react-native"
 import { useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { getImageURIBySub } from "../../Utils/aws.utils"
 import defaultImg from "../../../Assets/default-profile-pic.jpg"
-import { PROFILE_FRIENDS } from "../../Constants/screens"
+import {
+  EVENTS_PAGE,
+  PROFILE_EDIT_PROFILE,
+  PROFILE_FRIENDS,
+} from "../../Constants/screens"
+import SmallButton from "../../Components/SmallButton"
+import { push } from "../../Navigation/RootNavigation"
 
 export default function ViewProfile({ navigation }) {
   const profile = useSelector((state) => state.profile)
@@ -17,130 +30,146 @@ export default function ViewProfile({ navigation }) {
   const getImg = async () => {
     setImgSource(await getImageURIBySub(userData.attributes.sub))
   }
-
+  // const animatedValue1 = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+  // const animatedValue3 = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+  // const opacityAnimator = useRef(new Animated.Value(0)).current
+  // const opacityAnimator2 = useRef(new Animated.Value(0)).current
   return (
-    <View style={{ backgroundColor: "#212121", height: "100%" }}>
-      {profile ? (
-        <View style={styles.container}>
-          <Text style={styles.imgTitle}>{profile.name}</Text>
+    <ScrollView style={{ backgroundColor: "#1B1B1B", height: "100%" }}>
+      {profile && (
+        <View>
+          <Text style={styles.pageTitle}>{profile.name}</Text>
           <View style={styles.topOfPage}>
-            <View style={styles.imgFollowers}>
+            <View style={styles.leftHalf}>
               <Image
                 style={styles.img}
                 source={imgSource}
                 defaultSource={defaultImg}
               />
-              <View style={styles.imageFriends}></View>
+            </View>
+            <View style={styles.buttonsContainer}>
+              <SmallButton
+                size={50}
+                icon='user-friends'
+                onPress={() => {
+                  navigation.push(PROFILE_FRIENDS, { sub: profile.sub })
+                }}
+                style={{
+                  width: 75,
+                  marginVertical: "auto",
+                }}
+                textStyle={{ color: "white" }}
+                //animatedValue={animatedValue1.getTranslateTransform()}
+                //opacityAnimator={opacityAnimator}
+              />
+              <SmallButton
+                size={50}
+                icon={"user-edit"}
+                onPress={() => {
+                  navigation.navigate(PROFILE_EDIT_PROFILE)
+                }}
+                style={{
+                  width: 75,
+                }}
+                textStyle={{ color: "white" }}
+                //animatedValue={animatedValue3.getTranslateTransform()}
+                //opacityAnimator={opacityAnimator}
+              />
             </View>
           </View>
-          <View style={styles.friendsButton}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate(PROFILE_FRIENDS, { sub: profile.sub })
+          <Animated.View
+            style={{ ...styles.bioContainer /*opacity: opacityAnimator2*/ }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "600",
+                textAlign: "center",
+                margin: 5,
               }}
-              style={{ backgroundColor: "#c0c0c0" }}
             >
-              <Text style={styles.imgText}>
-                <MaterialCommunityIcons
-                  name='account-multiple'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                {`Friends`}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.attributeContainer}>
-            <View style={styles.txtField}>
-              <Text style={styles.attributeTitle}>
-                <MaterialCommunityIcons
-                  name='emoticon-happy-outline'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                Gender
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.gender}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text style={styles.attributeTitle}>
-                <MaterialCommunityIcons
-                  name='cake'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                Birth Date
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.birthdate}</Text>
-            </View>
-          </View>
+              sample biodjask jhdklsa jhdfas as
+              fj;js;ja;fas;lfj;saljlas;jfasl;jf;ljals
+            </Text>
+          </Animated.View>
+          <Animated.View
+            style={{ ...styles.imagesContainer /*opacity: opacityAnimator2*/ }}
+          ></Animated.View>
         </View>
-      ) : (
-        <View />
       )}
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignSelf: "center",
-    alignContent: "center",
-    width: "100%",
-  },
-  imgFollowers: {
-    flexDirection: "row",
+  leftHalf: {
+    height: "100%",
+    width: "60%",
+    justifyContent: "center",
   },
   topOfPage: {
+    marginTop: 10,
     width: "100%",
-    alignItems: "baseline",
-    alignSelf: "center",
-    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    height: 220,
   },
   img: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+    backgroundColor: "white",
+    alignSelf: "flex-end",
+    marginVertical: 20,
+    borderColor: "#2C2C2C",
+    borderWidth: 2,
+  },
+  buttonsContainer: {
+    marginTop: 20,
+    marginLeft: -5,
+    width: "45%",
+    height: "100%",
+    alignSelf: "center",
+    justifyContent: "space-evenly",
+    alignItems: "flex-start",
+  },
+  bioContainer: {
+    width: "85%",
+    alignSelf: "center",
+    height: "auto",
+    backgroundColor: "#2C2C2C",
+    borderRadius: 10,
+    shadowColor: "white",
+    elevation: 10,
+  },
+  imgBorder: {
+    width: 135,
+    height: 135,
     borderRadius: 100,
     backgroundColor: "white",
     alignSelf: "center",
+    borderColor: "white",
+    borderWidth: 3,
+    justifyContent: "center",
   },
-  imageFriends: {
-    paddingLeft: 0,
-  },
-
-  imgText: {
-    padding: 5,
-    borderRadius: 5,
-    alignSelf: "center",
-  },
-  imgTitle: {
-    fontSize: 20,
+  pageTitle: {
     textAlign: "center",
-    marginVertical: 15,
+    alignSelf: "center",
+    fontFamily: "SF Pro Display",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 24,
+    lineHeight: 29,
     color: "white",
+    marginTop: 10,
   },
-  attributeContainer: {
-    marginVertical: 10,
-  },
-  txtField: {
-    borderTopWidth: 0.5,
-    marginVertical: 5,
-    paddingVertical: 5,
-  },
-
-  attributeTxt: {
-    fontSize: 20,
-    paddingVertical: 2,
-    marginVertical: 2,
-    color: "white",
-  },
-  friendsButton: {
-    width: "30% ",
-  },
-  attributeTitle: {
-    color: "white",
+  imagesContainer: {
+    alignSelf: "center",
+    width: "85%",
+    height: 500,
+    backgroundColor: "white",
+    borderRadius: 15,
+    elevation: 10,
+    marginVertical: 20,
   },
 })

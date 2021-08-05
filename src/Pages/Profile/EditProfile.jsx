@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { View, Text, Button, StyleSheet } from "react-native"
-import { Auth } from "aws-amplify"
-import {
-  SET_AUTH_STATUS,
-  SET_PROFILE,
-  UPLOAD_IMAGE,
-} from "../../Constants/reducerEvents"
+import { SET_PROFILE, UPLOAD_IMAGE } from "../../Constants/reducerEvents"
 import { LOGGED_OUT } from "../../Constants/constants"
 import { batch, useDispatch, useSelector } from "react-redux"
 import { updateUser } from "../../Endpoints/profileEndpoints"
@@ -23,6 +18,10 @@ import { decode } from "base64-arraybuffer"
 import defaultImg from "../../../Assets/default-profile-pic.jpg"
 import { PROFILE_CONFIRM_EMAIL, PROFILE_VIEW } from "../../Constants/screens"
 import { PROFILE_EDIT_PROFILE } from "../../Constants/screens"
+import CalendarPicker from "react-native-calendar-picker"
+import MonthPicker from "../../Components/MonthPicker"
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5"
+import moment from "moment"
 
 export default function EditProfile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
@@ -30,9 +29,9 @@ export default function EditProfile({ navigation }) {
   const dispatch = useDispatch()
   const curEmail = profile.email
   const [email, setEmail] = useState(profile.email)
-  const [phone_number, setPhone] = useState(profile.phone_number)
+  const [bio, setBio] = useState(profile.bio)
   const [gender, setGender] = useState(profile.gender)
-  const [birthdate, setBirthday] = useState(profile.birthdate)
+  const [birthdate, setBirthday] = useState(new Date(profile.birthdate))
   const [name, setName] = useState(profile.name)
   const [imgSource, setImgSource] = useState(null)
   useEffect(() => {
@@ -40,15 +39,6 @@ export default function EditProfile({ navigation }) {
   }, [])
   const getImg = async () => {
     setImgSource(await getImageURIBySub(user.attributes.sub))
-  }
-
-  async function signOut() {
-    try {
-      await Auth.signOut()
-      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
-    } catch (error) {
-      console.log("Error signing out: ", error)
-    }
   }
 
   const uploadImageOnS3 = async () => {
@@ -77,12 +67,13 @@ export default function EditProfile({ navigation }) {
   async function updateProfile() {
     const newUser = {
       email,
-      birthdate,
-      phone_number,
+      birthdate: moment(birthdate).format("YYYY-MM-DD"),
+      bio,
       gender,
       name,
     }
-    if (imgSource) {
+
+    if (imgSource && imgSource.base64) {
       await uploadImageOnS3()
     }
     try {
@@ -107,9 +98,8 @@ export default function EditProfile({ navigation }) {
       navigation.navigate(PROFILE_VIEW)
     }
   }
-
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "#111" }}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.imgTitle}>Change your profile picture</Text>
         <ImageSelector
@@ -120,62 +110,88 @@ export default function EditProfile({ navigation }) {
 
         <View style={styles.editHeading}>
           <FontAwesome5
-            name="edit"
-            color="tomato"
+            name='edit'
+            color='white'
             onPress={() => navigation.navigate(PROFILE_EDIT_PROFILE)}
             style={styles.icon}
           />
-          <Text>Full Name</Text>
+          <Text style={styles.text}>Full Name</Text>
         </View>
 
         <AppTextInput
           value={name}
           onChangeText={(text) => setName(text)}
-          leftIcon="emoticon-happy-outline"
-          placeholder="Enter full name"
-          autoCapitalize="none"
+          leftIcon='emoticon-happy-outline'
+          placeholder='Enter full name'
+          autoCapitalize='none'
         />
         <View style={styles.editHeading}>
-          <FontAwesome5 name="edit" color="tomato" style={styles.icon} />
-          <Text>Email Address</Text>
+          <FontAwesome5 name='edit' color='white' style={styles.icon} />
+          <Text style={styles.text}>Email Address</Text>
         </View>
         <AppTextInput
           value={email}
           onChangeText={(text) => setEmail(text)}
-          leftIcon="email"
-          placeholder="Enter Email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
+          leftIcon='email'
+          placeholder='Enter Email'
+          autoCapitalize='none'
+          keyboardType='email-address'
+          textContentType='emailAddress'
         />
-        <View style={styles.editHeading}>
-          <FontAwesome5 name="edit" color="tomato" style={styles.icon} />
-          <Text>Date of Birth</Text>
-        </View>
-        <AppTextInput
-          value={birthdate}
-          onChangeText={(text) => setBirthday(text)}
-          placeholder="Enter Birthday"
-          autoCapitalize="none"
-        />
-        <View style={styles.editHeading}>
-          <FontAwesome5 name="edit" color="tomato" style={styles.icon} />
-          <Text>Phone Number</Text>
-        </View>
-        <AppTextInput
-          value={phone_number}
-          onChangeText={(text) => setPhone(text)}
-          leftIcon="phone"
-          placeholder="Enter Phone Number"
-          autoCapitalize="none"
-          autoCorrect={false}
-          keyboardType="phone-pad"
-          textContentType="telephoneNumber"
-        />
-        <GenderPicker checked={gender} setChecked={setGender}></GenderPicker>
 
-        <AppButton title="Save Changes" onPress={updateProfile} />
-        <AppButton title="Sign Out" onPress={signOut} />
+        <GenderPicker checked={gender} setChecked={setGender}></GenderPicker>
+        <View style={styles.editHeading}>
+          <FontAwesome5 name='edit' color='white' style={styles.icon} />
+          <Text style={styles.text}>Date of Birth</Text>
+        </View>
+        <ScrollView
+          style={{
+            backgroundColor: "#2C2C2C",
+            borderRadius: 10,
+            marginVertical: 10,
+          }}
+        >
+          <CalendarPicker
+            scrollable={true}
+            selectedDayStyle={{
+              backgroundColor: "white",
+            }}
+            yearTitleStyle={{
+              color: "white",
+              marginLeft: 10,
+              padding: 5,
+              borderRadius: 20,
+              textAlign: "center",
+              backgroundColor: "gray",
+              width: 100,
+              fontFamily: "SF Pro Display",
+              marginVertical: 10,
+            }}
+            monthTitleStyle={{
+              color: "white",
+              padding: 5,
+              marginVertical: 10,
+              borderRadius: 20,
+              textAlign: "center",
+              backgroundColor: "gray",
+              width: 100,
+              fontFamily: "SF Pro Display",
+            }}
+            previousComponent={
+              <FontAwesome5Icon name='chevron-left' color='white' size={20} />
+            }
+            nextComponent={
+              <FontAwesome5Icon name='chevron-right' color='white' size={20} />
+            }
+            textStyle={{ color: "white", fontFamily: "SF Pro Display" }}
+            onDateChange={(date) => {
+              setBirthday(date)
+            }}
+            initialDate={moment(birthdate)}
+          />
+        </ScrollView>
+
+        <AppButton title='Save Changes' onPress={updateProfile} />
       </SafeAreaView>
     </ScrollView>
   )
@@ -191,12 +207,18 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
     marginTop: 10,
+    color: "white",
   },
   editHeading: {
-    marginVertical: 5,
+    marginTop: 25,
     flexDirection: "row",
   },
   icon: {
     marginRight: 20,
+  },
+  text: {
+    fontFamily: "SF Pro Display",
+    color: "white",
+    fontSize: 16,
   },
 })

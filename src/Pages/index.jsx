@@ -7,22 +7,23 @@ import EventsPage from "./Events"
 import GroupsPage from "./Groups"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Fontawesome from "react-native-vector-icons/FontAwesome"
+import theme from "../Theme/theme.style"
 import {
   EVENTS_PAGE,
   GROUPS_PAGE,
   NOTIFICATIONS_PAGE,
   PROFILE_PAGE,
 } from "../Constants/screens"
+import { useSelector } from "react-redux"
 const Tab = createBottomTabNavigator()
 export default function index() {
+  const notifications = useSelector((state) => state.notifications).length
   return (
     <Fragment>
       <SocketClient />
       <Tab.Navigator
         lazy={false}
-        
         screenOptions={({ route }) => ({
-          
           tabBarIcon: ({ focused, color, size }) => {
             let iconName = "ios-information-circle"
             let iconType = "ion"
@@ -50,15 +51,20 @@ export default function index() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: "tomato",
-          inactiveTintColor: "gray",
+          activeTintColor: theme.ACCENT_COLOR,
+          inactiveTintColor: "#111",
+          activeBackgroundColor: "#2C2C2C",
+          inactiveBackgroundColor: "#2C2C2C",
         }}
       >
         <Tab.Screen
           name={NOTIFICATIONS_PAGE}
           component={NotificationPage}
           options={{
-            tabBarBadge: 2,
+            tabBarBadgeStyle: {
+              backgroundColor: theme.SECONDARY_ACCENT,
+            },
+            tabBarBadge: notifications,
             tabBarLabel: () => {
               return null
             },

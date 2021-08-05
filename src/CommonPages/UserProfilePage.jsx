@@ -1,5 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react"
-import { View, Text, StyleSheet, Image } from "react-native"
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  Animated,
+} from "react-native"
 import { useSelector } from "react-redux"
 
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -9,6 +16,11 @@ import { updateFriendRequest } from "../Socket/SocketMethods"
 import theme from "../Theme/theme.style"
 import { getImageURIBySub } from "../Utils/aws.utils"
 import defaultImg from "../../Assets/default-profile-pic.jpg"
+import SmallButton from "../Components/SmallButton"
+import { useRef } from "react"
+import { Button, Overlay } from "react-native-elements"
+import { navigate, push } from "../Navigation/RootNavigation"
+import { PROFILE_FRIENDS } from "../Constants/screens"
 
 export default function UserProfilePage({ goToFriends, showFriends, sub }) {
   const friendship = useSelector((state) =>
@@ -21,6 +33,7 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
   )
   const photo = useSelector((state) => state.profile.photo)
   const [imgSource, setImgSource] = useState()
+
   useEffect(() => {
     getImg()
   }, [photo])
@@ -49,197 +62,316 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
     }
   }
 
-  const getButtons = (sub) => {
-    if (signedInProfile.sub === sub) {
-      return <Fragment />
-    }
+  const getButtonNames = () => {
     switch (friendStatus) {
       case REQUESTED:
-        return (
-          <TouchableOpacity onPress={removeFriend}>
-            <Text style={styles.buttonText}>Cancel Request</Text>
-          </TouchableOpacity>
-        )
+        return {
+          icon: "user-minus",
+          name: "Cancel Request",
+          onPress: removeFriend,
+          overlay: false,
+        }
       case REQUEST:
-        return (
-          <View style={styles.incoming}>
-            <TouchableOpacity
-              onPress={requestAccept}
-              style={styles.primaryButton}
-            >
-              <Text style={styles.buttonText}>Accept Request</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={removeFriend}
-              style={styles.secondaryButton}
-            >
-              <Text style={styles.buttonText}>Deny Request</Text>
-            </TouchableOpacity>
-          </View>
-        )
+        return {
+          icon: "exclamation",
+          name: "Pending Request",
+          onPress: () => {
+            setOverlay(!overlay)
+          },
+          overlay: true,
+        }
       case CONFIRMED:
-        return (
-          <TouchableOpacity
-            onPress={removeFriend}
-            style={styles.secondaryButton}
-          >
-            <Text style={styles.buttonText}>Remove Friend</Text>
-          </TouchableOpacity>
-        )
+        return {
+          icon: "user-minus",
+          name: "Remove Friend",
+          onPress: removeFriend,
+          overlay: false,
+        }
       default:
-        return (
-          <TouchableOpacity onPress={sendRequest} style={styles.primaryButton}>
-            <Text style={styles.buttonText}>Friend Request</Text>
-          </TouchableOpacity>
-        )
+        return {
+          icon: "user-plus",
+          name: "Friend Request",
+          onPress: sendRequest,
+          overlay: false,
+        }
     }
   }
-
+  const buttonNames = getButtonNames()
+  const animatedValue1 = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+  const animatedValue2 = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+  const animatedValue3 = useRef(new Animated.ValueXY({ x: 0, y: 0 })).current
+  const opacityAnimator = useRef(new Animated.Value(0)).current
+  const opacityAnimator2 = useRef(new Animated.Value(0)).current
+  const [overlay, setOverlay] = useState(buttonNames.overlay)
+  useEffect(() => {
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(animatedValue1, {
+          toValue: { x: -50, y: 40 },
+          duration: 1,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedValue2, {
+          toValue: { x: -60, y: 0 },
+          duration: 1,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedValue3, {
+          toValue: { x: -50, y: -40 },
+          duration: 1,
+          useNativeDriver: true,
+        }),
+      ]),
+      Animated.parallel([
+        Animated.stagger(300, [
+          Animated.spring(animatedValue1, {
+            toValue: { x: 0, y: 0 },
+            speed: 1,
+            useNativeDriver: true,
+          }),
+          Animated.spring(animatedValue2, {
+            toValue: { x: 0, y: 0 },
+            speed: 1,
+            useNativeDriver: true,
+          }),
+          Animated.spring(animatedValue3, {
+            toValue: { x: 0, y: 0 },
+            speed: 1,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacityAnimator2, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: true,
+          }),
+        ]),
+        Animated.timing(opacityAnimator, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ]),
+    ]).start()
+  }, [])
   return (
-    <View>
+    <ScrollView>
       {profile && (
-        <View style={styles.container}>
-          <Text style={styles.imgTitle}>{profile.name}</Text>
-          <View style={styles.imageFriends}>
-            <Image
-              style={styles.img}
-              source={imgSource}
-              defaultSource={defaultImg}
-            />
+        <View style={{ backgroundColor: "#111", height: "100%" }}>
+          <Text style={styles.pageTitle}>{profile.name}</Text>
+          <View style={styles.topOfPage}>
+            <View style={styles.leftHalf}>
+              <Image
+                style={styles.img}
+                source={imgSource}
+                defaultSource={defaultImg}
+              />
+            </View>
+            <View style={styles.buttonsContainer}>
+              <SmallButton
+                size={50}
+                icon='user-friends'
+                onPress={() => {
+                  push(PROFILE_FRIENDS, { sub })
+                }}
+                style={{
+                  width: 75,
+                  marginVertical: "auto",
+                }}
+                textStyle={{ color: "white" }}
+                animatedValue={animatedValue1.getTranslateTransform()}
+                opacityAnimator={opacityAnimator}
+              />
 
-            <View style={styles.col}>
-              {showFriends && (
-                <TouchableOpacity onPress={goToFriends}>
-                  <Text style={styles.imgText}>
-                    <MaterialCommunityIcons
-                      name="account-group"
-                      size={20}
-                      color="#6e6869"
-                      style={styles.icon}
-                    />
-                    {`   Friends`}
-                  </Text>
-                </TouchableOpacity>
-              )}
-              {getButtons(sub)}
+              <SmallButton
+                size={50}
+                icon={buttonNames.icon}
+                onPress={buttonNames.onPress}
+                style={{
+                  width: 75,
+                  marginLeft: 20,
+                  marginVertical: "auto",
+                }}
+                textStyle={{ color: "white" }}
+                animatedValue={animatedValue2.getTranslateTransform()}
+                opacityAnimator={opacityAnimator}
+              />
+              <SmallButton
+                size={50}
+                icon={"comment"}
+                onPress={() => {}}
+                style={{
+                  width: 75,
+                }}
+                textStyle={{ color: "white" }}
+                animatedValue={animatedValue3.getTranslateTransform()}
+                opacityAnimator={opacityAnimator}
+              />
             </View>
           </View>
-
-          <View style={styles.attributeContainer}>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name="account"
-                  size={20}
-                  color="#6e6869"
-                  style={styles.icon}
-                />
-                Username
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.username}</Text>
+          <Overlay
+            isVisible={overlay}
+            onBackdropPress={() => {
+              setOverlay(!overlay)
+            }}
+            overlayStyle={{ backgroundColor: "#2C2C2C", borderRadius: 30 }}
+          >
+            <Text style={styles.requestTitle}>
+              {profile.name.substr(0, profile.name.indexOf(" "))} wants to be
+              your friend!
+            </Text>
+            <Image style={styles.requestImage} source={imgSource}></Image>
+            <View style={styles.requestContainer}>
+              <Button
+                buttonStyle={styles.requestButton}
+                title='Accept'
+                titleStyle={{
+                  color: "white",
+                  textAlign: "center",
+                  fontFamily: "SF Pro Display",
+                }}
+                onPress={() => {
+                  requestAccept()
+                  setOverlay(!overlay)
+                }}
+              ></Button>
+              <Button
+                buttonStyle={styles.requestButton}
+                title='Decline'
+                titleStyle={{
+                  color: "white",
+                  textAlign: "center",
+                  fontFamily: "SF Pro Display",
+                }}
+                onPress={() => {
+                  removeFriend()
+                  setOverlay(!overlay)
+                }}
+              ></Button>
             </View>
-
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name="emoticon-happy-outline"
-                  size={20}
-                  color="#6e6869"
-                  style={styles.icon}
-                />
-                Gender
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.gender}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name="cake"
-                  size={20}
-                  color="#6e6869"
-                  style={styles.icon}
-                />
-                Birth Date
-              </Text>
-              <Text style={styles.attributeTxt}>{profile.birthdate}</Text>
-            </View>
-          </View>
+          </Overlay>
+          <Animated.View
+            style={{ ...styles.bioContainer, opacity: opacityAnimator2 }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "600",
+                textAlign: "center",
+                margin: 5,
+              }}
+            >
+              sample biodjask jhdklsa jhdfas as
+              fj;js;ja;fas;lfj;saljlas;jfasl;jf;ljals
+            </Text>
+          </Animated.View>
+          <Animated.View
+            style={{ ...styles.imagesContainer, opacity: opacityAnimator2 }}
+          ></Animated.View>
         </View>
       )}
-    </View>
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "95%",
-    alignSelf: "center",
+  leftHalf: {
+    height: "100%",
+    width: "60%",
+    justifyContent: "center",
+  },
+  topOfPage: {
+    marginTop: 10,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    height: 220,
   },
   img: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     borderRadius: 100,
-    borderWidth: 1,
-    borderColor: "gray",
     backgroundColor: "white",
-    marginLeft: "10%",
+    alignSelf: "flex-end",
+    marginVertical: 20,
+    borderColor: "#2C2C2C",
+    borderWidth: 2,
   },
-  imageFriends: {
-    flexDirection: "row",
-  },
-  col: {
-    flexDirection: "column",
-  },
-  imgText: {
-    backgroundColor: "#c0c0c0",
-    padding: 5,
-    marginLeft: "30%",
-    borderRadius: 5,
+  buttonsContainer: {
+    marginLeft: -5,
+    width: "45%",
+    height: "100%",
     alignSelf: "center",
-  },
-  imgTitle: {
-    fontSize: 20,
-    textAlign: "center",
-    marginVertical: 15,
-  },
-  attributeContainer: {
-    marginVertical: 10,
-  },
-  txtField: {
-    borderTopWidth: 0.5,
-    marginVertical: 5,
-    paddingVertical: 5,
-  },
 
-  attributeTxt: {
-    fontSize: 20,
-    paddingVertical: 2,
-    marginVertical: 2,
+    justifyContent: "flex-end",
+    alignItems: "flex-start",
   },
-  primaryButton: {
-    backgroundColor: theme.PRIMARY_COLOR,
-    borderRadius: 6,
-    padding: 5,
-    width: 120,
-    height: 30,
-    borderWidth: 1,
-    borderColor: "#888",
-    margin: 5,
+  bioContainer: {
+    width: "85%",
+    alignSelf: "center",
+    height: "auto",
+    backgroundColor: "#2C2C2C",
+    borderRadius: 10,
+    shadowColor: "white",
+    elevation: 10,
   },
-  secondaryButton: {
-    backgroundColor: theme.SECONDARY_COLOR,
-    borderRadius: 6,
-    padding: 5,
-    width: 120,
-    height: 30,
-    borderWidth: 1,
-    borderColor: "#888",
-    margin: 5,
+  imgBorder: {
+    width: 135,
+    height: 135,
+    borderRadius: 100,
+    backgroundColor: "white",
+    alignSelf: "center",
+    borderColor: "white",
+    borderWidth: 3,
+    justifyContent: "center",
   },
-  incoming: {
-    padding: 10,
-  },
-  buttonText: {
+  pageTitle: {
     textAlign: "center",
+    alignSelf: "center",
+    fontFamily: "SF Pro Display",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 24,
+    lineHeight: 29,
+    color: "white",
+    marginTop: 10,
+  },
+  imagesContainer: {
+    alignSelf: "center",
+    width: "85%",
+    height: 500,
+    backgroundColor: "white",
+    borderRadius: 15,
+    elevation: 10,
+    marginVertical: 20,
+  },
+  requestContainer: {
+    width: "90%",
+    alignSelf: "center",
+    backgroundColor: "#222",
+    borderRadius: 10,
+    marginVertical: 10,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
+  requestTitle: {
+    fontFamily: "SF Pro Display",
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  requestButton: {
+    backgroundColor: "#3C3C3C",
+    padding: 4,
+    margin: 8,
+    width: 150,
+    borderRadius: 10,
+  },
+  requestImage: {
+    width: 200,
+    height: 200,
+    backgroundColor: "white",
+    alignSelf: "center",
+    marginVertical: 10,
+    borderRadius: 200,
   },
 })
