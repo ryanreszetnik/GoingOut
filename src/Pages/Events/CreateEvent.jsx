@@ -20,11 +20,15 @@ import MapView, {
   Marker,
   Circle,
 } from "react-native-maps"
-import { EVENTS_VIEW } from "../../Constants/screens"
+import { EVENTS_LOCATION_SELECT, EVENTS_VIEW } from "../../Constants/screens"
+import CustomMarker from "../../Components/CustomMarker"
+import CustomDateTimePicker from "../../Components/CustomDateTimePicker"
 
 export default function CreateEvent({ navigation }) {
   const groups = useSelector((state) => state.groups)
   const curSub = useSelector((state) => state.profile.sub)
+  const [startTime, setStartTime] = useState(Date.now())
+  const [endTime, setEndTime] = useState(Date.now())
   const [name, setName] = useState("")
   const [bio, setBio] = useState("")
   const [genderPref, setGenderPref] = useState("None")
@@ -34,7 +38,19 @@ export default function CreateEvent({ navigation }) {
   const [friends, setFriends] = useState([])
   const [searchTerm, setSearchTerm] = useState("")
   const [ageRange, setAgeRange] = useState({ minAge: 18, maxAge: 100 })
+  const mapRef = useRef()
   const [loc, setLoc] = useState({
+    lat: 43.6532,
+    lon: -79.3832,
+    name: "",
+  })
+  const [shownLocation, setShownLocation] = useState({
+    latitude: 43.6532,
+    longitude: -79.3832,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  })
+  const [mapRegion, setMapRegion] = useState({
     latitude: 43.6532,
     longitude: -79.3832,
     latitudeDelta: 0.005,
@@ -42,6 +58,19 @@ export default function CreateEvent({ navigation }) {
   })
   const [locRange, setLocRange] = useState(1)
   const [show, setShow] = useState(false)
+
+  const updateLocation = (data) => {
+    console.log("RECIEVED", data)
+    const newRegion = {
+      latitude: data.lat,
+      longitude: data.lon,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
+    }
+    setShownLocation(newRegion)
+    setLoc(data)
+    mapRef.current.animateToRegion(newRegion, 1500)
+  }
 
   const addMember = (sub) => {
     setMembers((mem) => [...mem, sub])
@@ -54,7 +83,7 @@ export default function CreateEvent({ navigation }) {
     setFriends(await searchUser(term))
   }
   const scrollRef = useRef()
-  const mapRef = useRef()
+
   const createNewEvent = async () => {
     if (date === "" || (name === "") | (bio === "")) {
       scrollRef.current?.scrollTo({
@@ -75,19 +104,34 @@ export default function CreateEvent({ navigation }) {
       showMessage(message)
     } else {
       const payload = {
-        loc: { lat: loc.latitude, lon: loc.longitude },
-        locRange,
-        ageRange: ageRange,
-        genderPref,
-        events: [],
         eventId: uuid.v4(),
-        members,
-        date,
-        time: moment(time).format("LT"),
-        baseGroups: [],
+        name: name,
+        startTime: 0,
+        endTime: 0,
+        cancelled: false,
+        location: {
+          latitude: 0,
+          longitude: 0,
+          name: "",
+          address: "",
+          locationId: "",
+        },
+        locRange: 0,
+        members: [],
+        confirmed: [],
+
+        bio: "",
+        ageRange: { minAge: 0, maxAge: 0 },
+        genderPref: "",
         isVisible: false,
-        name,
-        bio,
+
+        averageAge: 0,
+        averageGender: 0,
+        numMales: 0,
+        numFemales: 0,
+
+        baseGroups: [],
+        events: [],
       }
       console.log(payload)
       createEvent(payload)
@@ -97,6 +141,17 @@ export default function CreateEvent({ navigation }) {
 
   return (
     <ScrollView ref={scrollRef}>
+      <CustomDateTimePicker
+        title="Starts"
+        time={startTime}
+        setTime={setStartTime}
+      />
+      <CustomDateTimePicker
+        title="Ends"
+        time={endTime}
+        setTime={setEndTime}
+        minDate={startTime}
+      />
       <Text>Event Name</Text>
       <AppTextInput
         value={name}
@@ -113,58 +168,32 @@ export default function CreateEvent({ navigation }) {
         placeholder="Enter a short Bio"
         autoCapitalize="none"
       />
-      <Text>Select Date</Text>
-      <MonthPicker
-        updateDate={(date) => {
-          setDate(date)
-          setShow(true)
-        }}
-      />
-      <Text>Select Time</Text>
-      {show && (
-        <DateTimePicker
-          value={time}
-          mode="time"
-          is24Hour={false}
-          display="default"
-          onChange={(e, newTime) => {
-            if (e.type === "dismissed") {
-              setShow(false)
-              setTime(time)
-            }
-            if (newTime) {
-              setShow(false)
-              setTime(newTime)
-            }
-          }}
-        />
-      )}
+
       <GenderPicker setChecked={setGenderPref} checked={genderPref} />
       <Text>Choose Event Location</Text>
+      <AppButton
+        title="Edit Location"
+        onPress={() =>
+          navigation.navigate(EVENTS_LOCATION_SELECT, {
+            callBack: updateLocation,
+          })
+        }
+      />
       <MapView
         provider={PROVIDER_GOOGLE}
-        initialRegion={loc}
+        region={mapRegion}
+        onRegionChange={(e) => {
+          setMapRegion(e)
+        }}
         style={styles.map}
         ref={mapRef}
-        onPress={(e) => {
-          mapRef.current?.animateToRegion(
-            {
-              ...e.nativeEvent.coordinate,
-              latitudeDelta: 0.015 * locRange,
-              longitudeDelta: 0.015 * locRange,
-            },
-            1500
-          )
-          setLoc({
-            ...e.nativeEvent.coordinate,
-            latitudeDelta: 0.015 * locRange,
-            longitudeDelta: 0.015 * locRange,
-          })
-        }}
       >
-        <Marker coordinate={loc}></Marker>
+        <CustomMarker
+          coordinate={shownLocation}
+          label={loc.name}
+        ></CustomMarker>
         <Circle
-          center={loc}
+          center={shownLocation}
           radius={locRange * 1000}
           fillColor={"rgba(255, 0, 0, 0.07)"}
         ></Circle>

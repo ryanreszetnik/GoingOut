@@ -15,6 +15,7 @@ import {
   EVENTS_SINGLE_MATCH,
   EVENTS_VIEW,
   EVENTS_CHAT,
+  EVENTS_POTENTIAL_LOCATION,
 } from "../../Constants/screens"
 import SmallButton from "../../Components/SmallButton"
 import LocationRecommendations from "../../Components/LocationRecommendations"
@@ -148,7 +149,15 @@ export default function ViewSingleEvent({ navigation, route }) {
           )}
           <View style={styles.txtField}>
             <Text>Recomended Nearby Locations</Text>
-            <LocationRecommendations loc={event.loc} />
+            <LocationRecommendations
+              loc={event.loc}
+              onPress={(selectedLoc) =>
+                navigation.navigate(EVENTS_POTENTIAL_LOCATION, {
+                  eventId: eventId,
+                  location: selectedLoc,
+                })
+              }
+            />
           </View>
         </View>
       )}
