@@ -38,7 +38,12 @@ const EventNavigator = createStackNavigator()
 
 export default function Events({ navigation }) {
   return (
-    <EventNavigator.Navigator>
+    <EventNavigator.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#2C2C2C" },
+        headerTintColor: "white",
+      }}
+    >
       <EventNavigator.Screen
         name={EVENTS_VIEW}
         component={ViewEvents}
@@ -53,7 +58,7 @@ export default function Events({ navigation }) {
                 style={{ marginRight: 20 }}
                 size={25}
                 name='plus'
-                color='tomato'
+                color='white'
               />
             </TouchableOpacity>
           ),
@@ -120,7 +125,7 @@ export default function Events({ navigation }) {
                   style={{ marginRight: 20 }}
                   size={20}
                   name='link'
-                  color='tomato'
+                  color='white'
                 />
               </TouchableOpacity>
             ),
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginRight: 10,
-    color: "tomato",
+    color: "white",
     fontSize: 18,
     paddingRight: 5,
   },

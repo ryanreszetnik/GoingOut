@@ -28,7 +28,12 @@ const GroupNavigator = createStackNavigator()
 
 export default function Groups() {
   return (
-    <GroupNavigator.Navigator>
+    <GroupNavigator.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#2C2C2C" },
+        headerTintColor: "white",
+      }}
+    >
       <GroupNavigator.Screen
         name={GROUPS_VIEW}
         component={ViewGroups}
@@ -45,7 +50,7 @@ export default function Groups() {
                   style={{ marginRight: 20 }}
                   size={20}
                   name='plus'
-                  color='tomato'
+                  color='white'
                 />
               </TouchableOpacity>
             ),
@@ -80,7 +85,7 @@ export default function Groups() {
                   style={{ marginRight: 20 }}
                   size={20}
                   name='users'
-                  color='tomato'
+                  color='white'
                 />
               </TouchableOpacity>
             ),
@@ -108,7 +113,7 @@ export default function Groups() {
                   style={{ marginRight: 20 }}
                   size={20}
                   name='info'
-                  color='tomato'
+                  color='white'
                 />
               </TouchableOpacity>
             ),
@@ -132,6 +137,6 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginRight: 10,
-    color: "tomato",
+    color: "white",
   },
 })

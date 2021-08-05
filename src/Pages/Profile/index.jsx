@@ -18,22 +18,17 @@ import {
   PROFILE_VIEW,
   PROFILE_SEARCH_FRIENDS,
   PROFILE_PROFILE,
+  PROFILE_SETTINGS,
 } from "../../Constants/screens"
 import themeStyle from "../../Theme/theme.style"
 import { SET_AUTH_STATUS } from "../../Constants/reducerEvents"
 import { LOGGED_OUT } from "../../Constants/constants"
+import UserSettings from "./UserSettings"
 const ProfileStack = createStackNavigator()
 export default function Profile({ navigation, route }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.userSession.user)
-  async function signOut() {
-    try {
-      await Auth.signOut()
-      dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
-    } catch (error) {
-      console.log("Error signing out: ", error)
-    }
-  }
+
   return (
     <ProfileStack.Navigator
       screenOptions={{ headerStyle: { backgroundColor: "#2C2C2C" } }}
@@ -47,13 +42,15 @@ export default function Profile({ navigation, route }) {
           headerRight: () => (
             <TouchableOpacity
               style={styles.headerView}
-              onPress={() => signOut()}
+              onPress={() => {
+                navigation.navigate(PROFILE_SETTINGS)
+              }}
             >
-              <Text style={styles.headerText}>Sign Out</Text>
+              <Text style={styles.headerText}>Settings</Text>
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name='sign-out-alt'
+                name='cog'
                 color='white'
               />
             </TouchableOpacity>
@@ -72,6 +69,15 @@ export default function Profile({ navigation, route }) {
       <ProfileStack.Screen
         name={PROFILE_CONFIRM_EMAIL}
         component={ConfirmNewEmail}
+      />
+      <ProfileStack.Screen
+        name={PROFILE_SETTINGS}
+        component={UserSettings}
+        options={{
+          headerTintColor: "white",
+          headerTitle: "Settings",
+          headerTitleStyle: { color: "white" },
+        }}
       />
       <ProfileStack.Screen
         name={PROFILE_FRIENDS}
