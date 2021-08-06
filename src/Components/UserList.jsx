@@ -26,6 +26,7 @@ export default function UserList({
   filterTerm = "",
   horizontal = false,
   addMember = false,
+  removeIcon = false,
 }) {
   const [imgSources, setImgSources] = useState([])
   const signedInProfile = useSelector((state) => state.profile)
@@ -114,6 +115,7 @@ export default function UserList({
           source={imgSource}
           defaultSource={defaultImg}
         />
+
         <View style={styles.textContainer}>
           <Text style={horizontal ? styles.textHorizontal : styles.text}>
             {user ? user.username : ""}
@@ -124,6 +126,42 @@ export default function UserList({
             </Text>
           )}
         </View>
+        {removeIcon && sub !== signedInProfile.sub && (
+          <View
+            style={{
+              width: "100%",
+              height: 20,
+              position: "absolute",
+              alignSelf: "baseline",
+            }}
+          >
+            <View
+              style={{
+                alignSelf: "flex-end",
+                width: 25,
+                height: 25,
+                borderRadius: 25,
+                paddingLeft: 6,
+
+                backgroundColor: "rgba(100,100,100,0.9)",
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  position: "relative",
+                  top: -2,
+                  left: 1,
+                  fontSize: 25,
+                  transform: [{ rotate: "45deg" }],
+                  fontWeight: "600",
+                }}
+              >
+                +
+              </Text>
+            </View>
+          </View>
+        )}
       </TouchableOpacity>
     )
   }
@@ -148,6 +186,7 @@ const styles = StyleSheet.create({
   componentContainer: {},
   componentContainerHorizontal: {
     height: 110,
+    paddingTop: 5,
     alignContent: "center",
   },
   container: {

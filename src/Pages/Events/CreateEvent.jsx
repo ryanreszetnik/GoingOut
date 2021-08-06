@@ -156,6 +156,7 @@ export default function CreateEvent({ navigation }) {
       <View style={styles.inputContainer}>
         <AppTextInput
           label="Event Name"
+          required
           value={name}
           onChangeText={(text) => setName(text)}
           placeholder="Enter Event Name"
@@ -241,6 +242,7 @@ export default function CreateEvent({ navigation }) {
         <Text style={styles.title}>Members</Text>
         <UserList
           subs={members}
+          removeIcon
           onPress={(sub) => removeMember(sub)}
           horizontal={true}
           addMember={() =>

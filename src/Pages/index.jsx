@@ -57,8 +57,10 @@ export default function index() {
         tabBarOptions={{
           activeTintColor: ACCENT_COLOR,
           inactiveTintColor: "white",
-          activeBackgroundColor: "#2C2C2C",
-          inactiveBackgroundColor: "#2C2C2C",
+          style: {
+            backgroundColor: "#2C2C2C",
+            borderTopWidth: 0,
+          },
         }}
       >
         <Tab.Screen
