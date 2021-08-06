@@ -9,7 +9,7 @@ import UserList from "../../Components/UserList"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppButton from "../../Components/AppButton"
 import uuid from "react-native-uuid"
-import { createGroup } from "../../Socket/SocketMethods"
+import { createGroup } from "../../Socket/socketMethods"
 import { GROUPS_VIEW } from "../../Constants/screens"
 
 export default function CreateGroup({ navigation }) {
@@ -61,16 +61,16 @@ export default function CreateGroup({ navigation }) {
       <AppTextInput
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon="form-textbox"
-        placeholder="Enter Group Name"
-        autoCapitalize="none"
+        leftIcon='form-textbox'
+        placeholder='Enter Group Name'
+        autoCapitalize='none'
       />
       <AppTextInput
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon="card-text"
-        placeholder="Enter a short Bio"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter a short Bio'
+        autoCapitalize='none'
       />
       <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
       <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
@@ -80,11 +80,11 @@ export default function CreateGroup({ navigation }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Users"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
+        leftIcon='magnify'
+        placeholder='Search For Users'
+        autoCapitalize='none'
+        keyboardType='email-address'
+        textContentType='emailAddress'
       />
       <UserList
         onPress={onPress}
@@ -92,7 +92,7 @@ export default function CreateGroup({ navigation }) {
       />
       <View style={styles.searchArea}>
         <View style={{ alignItems: "center" }}>
-          <AppButton title="Create Group" onPress={createNewGroup} />
+          <AppButton title='Create Group' onPress={createNewGroup} />
         </View>
       </View>
     </ScrollView>

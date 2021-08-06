@@ -7,7 +7,7 @@ import { searchUser } from "../../Endpoints/friendsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import AppButton from "../../Components/AppButton"
 import { ADD_PERM_MEMBERS } from "../../Constants/reducerEvents"
-import { addGroupMembers } from "../../Socket/SocketMethods"
+import { addGroupMembers } from "../../Socket/socketMethods"
 import { GROUPS_MEMBERS } from "../../Constants/screens"
 
 export default function AddMembers({ navigation, route }) {
@@ -50,11 +50,11 @@ export default function AddMembers({ navigation, route }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Users"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
+        leftIcon='magnify'
+        placeholder='Search For Users'
+        autoCapitalize='none'
+        keyboardType='email-address'
+        textContentType='emailAddress'
       />
       <View style={styles.searchArea}>
         <UserList
@@ -64,7 +64,7 @@ export default function AddMembers({ navigation, route }) {
         />
       </View>
       <View style={styles.buttonArea}>
-        <AppButton title="Save Changes" onPress={saveChanges} />
+        <AppButton title='Save Changes' onPress={saveChanges} />
       </View>
     </ScrollView>
   )

@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../Components/AppButton"
 import { ScrollView } from "react-native-gesture-handler"
 import EventPreview from "../../Components/EventPreview"
-import { leaveGroup } from "../../Socket/SocketMethods"
+import { leaveGroup } from "../../Socket/socketMethods"
 import { navigate } from "../../Navigation/RootNavigation"
 import {
   EVENTS_SINGLE_EVENT,
@@ -45,9 +45,9 @@ export default function ViewSingleGroup({ navigation, route }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name="form-textbox"
+                  name='form-textbox'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`  Group Name`}
@@ -57,9 +57,9 @@ export default function ViewSingleGroup({ navigation, route }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name="card-text"
+                  name='card-text'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`  Bio`}
@@ -69,9 +69,9 @@ export default function ViewSingleGroup({ navigation, route }) {
             <View style={styles.txtField}>
               <Text>
                 <MaterialCommunityIcons
-                  name="google-maps"
+                  name='google-maps'
                   size={20}
-                  color="#6e6869"
+                  color='#6e6869'
                   style={styles.icon}
                 />
                 {`  Location`}
@@ -102,9 +102,9 @@ export default function ViewSingleGroup({ navigation, route }) {
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <AppButton title="Edit Group" onPress={editGroup} />
-            <AppButton title="Create Event" onPress={createEvent} />
-            <AppButton title="Leave Group" onPress={leaveGroupHere} />
+            <AppButton title='Edit Group' onPress={editGroup} />
+            <AppButton title='Create Event' onPress={createEvent} />
+            <AppButton title='Leave Group' onPress={leaveGroupHere} />
           </View>
         </View>
       )}

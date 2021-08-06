@@ -10,7 +10,7 @@ import AgeRange from "../../Components/AgeRange"
 import uuid from "react-native-uuid"
 import AppTextInput from "../../Components/AppTextInput"
 import GenderPreference from "../../Components/GenderPreference"
-import { createEvent } from "../../Socket/SocketMethods"
+import { createEvent } from "../../Socket/socketMethods"
 import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps"
 import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
 
@@ -175,17 +175,17 @@ export default function CreateTempFromPerm({ navigation, route }) {
               <AppTextInput
                 value={name}
                 onChangeText={(text) => setName(text)}
-                leftIcon="card-text"
-                placeholder="Enter Event Name"
-                autoCapitalize="none"
+                leftIcon='card-text'
+                placeholder='Enter Event Name'
+                autoCapitalize='none'
               />
               <Text>Event Bio</Text>
               <AppTextInput
                 value={bio}
                 onChangeText={(text) => setBio(text)}
-                leftIcon="card-text"
-                placeholder="Enter a short Bio"
-                autoCapitalize="none"
+                leftIcon='card-text'
+                placeholder='Enter a short Bio'
+                autoCapitalize='none'
               />
               <Text>{baseGroup.genderPref}</Text>
               <GenderPreference
@@ -195,7 +195,7 @@ export default function CreateTempFromPerm({ navigation, route }) {
               <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
             </View>
           )}
-          <AppButton title="Create Event" onPress={createNewEvent} />
+          <AppButton title='Create Event' onPress={createNewEvent} />
           <FlashMessage />
         </View>
       ) : (

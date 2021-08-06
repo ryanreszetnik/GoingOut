@@ -7,7 +7,7 @@ import AgeRange from "../../Components/AgeRange"
 import GenderPicker from "../../Components/GenderPicker"
 import AppButton from "../../Components/AppButton"
 
-import { editGroup } from "../../Socket/SocketMethods"
+import { editGroup } from "../../Socket/socketMethods"
 import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
 
 export default function EditGroup({ navigation, route }) {
@@ -42,22 +42,22 @@ export default function EditGroup({ navigation, route }) {
       <AppTextInput
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon="form-textbox"
-        placeholder="Enter Group Name"
-        autoCapitalize="none"
+        leftIcon='form-textbox'
+        placeholder='Enter Group Name'
+        autoCapitalize='none'
       />
       <AppTextInput
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon="card-text"
-        placeholder="Enter a short Bio"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter a short Bio'
+        autoCapitalize='none'
       />
       <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
       <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
       <GenderPicker checked={genderPref} setChecked={setPref} />
       <View style={{ alignItems: "center" }}>
-        <AppButton title="Save Changes" onPress={editGroup} />
+        <AppButton title='Save Changes' onPress={editGroup} />
       </View>
     </ScrollView>
   )

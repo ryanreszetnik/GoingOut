@@ -5,7 +5,7 @@ import { View } from "react-native"
 import { useSelector } from "react-redux"
 import Chat from "../../../CommonPages/Chat"
 import { ADD_CHAT } from "../../../Constants/reducerEvents"
-import { sendMessageMatch } from "../../../Socket/SocketMethods"
+import { sendMessageMatch } from "../../../Socket/socketMethods"
 export default function MatchChatView({ navigation, route }) {
   const { matchId, eventId } = route.params
   const chat = useSelector((state) =>

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import AppButton from "../../../Components/AppButton"
 import AppTextInput from "../../../Components/AppTextInput"
 import { EVENTS_VIEW } from "../../../Constants/screens"
-import { sendMergeRequest } from "../../../Socket/SocketMethods"
+import { sendMergeRequest } from "../../../Socket/socketMethods"
 
 export default function Merging({ navigation, route }) {
   const { eventId, matchId } = route.params
@@ -34,18 +34,18 @@ export default function Merging({ navigation, route }) {
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        placeholder="Enter name"
-        autoCapitalize="none"
+        placeholder='Enter name'
+        autoCapitalize='none'
         autoCorrect={false}
       />
       <AppTextInput
         value={bio}
         onChangeText={(text) => setBio(text)}
-        placeholder="Enter bio"
-        autoCapitalize="none"
+        placeholder='Enter bio'
+        autoCapitalize='none'
         autoCorrect={false}
       />
-      <AppButton onPress={onMerge} title="Merge" />
+      <AppButton onPress={onMerge} title='Merge' />
       <Text></Text>
     </View>
   )

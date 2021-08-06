@@ -9,7 +9,7 @@ import { showMessage, hideMessage } from "react-native-flash-message"
 import FlashMessage from "react-native-flash-message"
 import uuid from "react-native-uuid"
 import AppTextInput from "../../Components/AppTextInput"
-import { createEvent } from "../../Socket/SocketMethods"
+import { createEvent } from "../../Socket/socketMethods"
 import GenderPicker from "../../Components/GenderPreference"
 import UserList from "../../Components/UserList"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
@@ -101,17 +101,17 @@ export default function CreateEvent({ navigation }) {
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        leftIcon="card-text"
-        placeholder="Enter Event Name"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter Event Name'
+        autoCapitalize='none'
       />
       <Text>Event Bio</Text>
       <AppTextInput
         value={bio}
         onChangeText={(text) => setBio(text)}
-        leftIcon="card-text"
-        placeholder="Enter a short Bio"
-        autoCapitalize="none"
+        leftIcon='card-text'
+        placeholder='Enter a short Bio'
+        autoCapitalize='none'
       />
       <Text>Select Date</Text>
       <MonthPicker
@@ -124,9 +124,9 @@ export default function CreateEvent({ navigation }) {
       {show && (
         <DateTimePicker
           value={time}
-          mode="time"
+          mode='time'
           is24Hour={false}
-          display="default"
+          display='default'
           onChange={(e, newTime) => {
             if (e.type === "dismissed") {
               setShow(false)
@@ -174,17 +174,17 @@ export default function CreateEvent({ navigation }) {
       <AppTextInput
         value={searchTerm}
         onChangeText={(text) => updateSearch(text)}
-        leftIcon="magnify"
-        placeholder="Search For Users"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
+        leftIcon='magnify'
+        placeholder='Search For Users'
+        autoCapitalize='none'
+        keyboardType='email-address'
+        textContentType='emailAddress'
       />
       <UserList
         onPress={addMember}
         subs={friends.filter((f) => !members.some((m) => m === f))}
       />
-      <AppButton title="Create Event" onPress={createNewEvent} />
+      <AppButton title='Create Event' onPress={createNewEvent} />
       <FlashMessage />
     </ScrollView>
   )
