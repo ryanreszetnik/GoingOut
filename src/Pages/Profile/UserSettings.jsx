@@ -6,6 +6,7 @@ import { LOGGED_OUT } from "../../Constants/constants"
 import { useDispatch } from "react-redux"
 import AppButton from "../../Components/AppButton"
 import { Button, Overlay } from "react-native-elements"
+import { PAGE_BACKGROUND_COLOR, PRIMARY_FONT } from "../../Theme/theme.style"
 
 export default function UserSettings() {
   const dispatch = useDispatch()
@@ -19,10 +20,10 @@ export default function UserSettings() {
     }
   }
   return (
-    <ScrollView style={{ backgroundColor: "#111" }}>
+    <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
       <View style={styles.buttonContainer}>
         <AppButton
-          title='sign out'
+          title="sign out"
           onPress={() => {
             setOverlay(!overlay)
           }}
@@ -43,7 +44,7 @@ export default function UserSettings() {
             fontSize: 20,
             textAlign: "center",
             color: "white",
-            fontFamily: "SF Pro Display",
+            fontFamily: PRIMARY_FONT,
           }}
         >
           Are you sure you want to sign out?
@@ -51,11 +52,11 @@ export default function UserSettings() {
         <View style={{ flexDirection: "row", marginTop: 10 }}>
           <Button
             buttonStyle={styles.requestButton}
-            title='Yes'
+            title="Yes"
             titleStyle={{
               color: "white",
               textAlign: "center",
-              fontFamily: "SF Pro Display",
+              fontFamily: PRIMARY_FONT,
             }}
             onPress={() => {
               signOut()
@@ -63,11 +64,11 @@ export default function UserSettings() {
           ></Button>
           <Button
             buttonStyle={styles.requestButton}
-            title='No'
+            title="No"
             titleStyle={{
               color: "white",
               textAlign: "center",
-              fontFamily: "SF Pro Display",
+              fontFamily: PRIMARY_FONT,
             }}
             onPress={() => {
               setOverlay(!overlay)

@@ -14,6 +14,7 @@ import { appLoad, loadUsers } from "../../Endpoints/generalEndpoints"
 import Notification from "./Notification"
 import { navigate } from "../../Navigation/RootNavigation"
 import { EVENTS_SINGLE_EVENT } from "../../Constants/screens"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 
 export default function Notifications({ navigation }) {
   const friends = useSelector((state) => state.friends)
@@ -34,7 +35,7 @@ export default function Notifications({ navigation }) {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: "#111" }}>
+    <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
       <View style={styles.firstContainer}>
         <Text style={styles.header}>Next Event</Text>
         {nextEvent ? (

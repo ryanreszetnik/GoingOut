@@ -13,6 +13,7 @@ export const SOCKET_RECEIVE_GROUP_UPDATED = "permGroupUpdated"
 export const SOCKET_RECEIVE_GROUP_MEMBERS_ADDED = "permGroupMembersAdded"
 
 export const SOCKET_RECEIVE_NEW_EVENT = "newEvent"
+export const SOCKET_RECEIVE_NEW_EVENT_CONFIRMATION = "newEventConfirmation"
 export const SOCKET_RECEIVE_EVENT_LEFT = "eventLeft"
 export const SOCKET_RECEIVE_EVENT_OTHER_LEFT = "eventOtherLeft"
 export const SOCKET_RECEIVE_EVENT_UPDATED = "eventUpdated"

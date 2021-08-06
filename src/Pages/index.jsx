@@ -7,7 +7,11 @@ import EventsPage from "./Events"
 import GroupsPage from "./Groups"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import Fontawesome from "react-native-vector-icons/FontAwesome"
-import theme from "../Theme/theme.style"
+import {
+  ACCENT_COLOR,
+  PAGE_BACKGROUND_COLOR,
+  SECONDARY_ACCENT,
+} from "../Theme/theme.style"
 import {
   EVENTS_PAGE,
   GROUPS_PAGE,
@@ -51,8 +55,8 @@ export default function index() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: theme.ACCENT_COLOR,
-          inactiveTintColor: "#111",
+          activeTintColor: ACCENT_COLOR,
+          inactiveTintColor: "white",
           activeBackgroundColor: "#2C2C2C",
           inactiveBackgroundColor: "#2C2C2C",
         }}
@@ -62,7 +66,7 @@ export default function index() {
           component={NotificationPage}
           options={{
             tabBarBadgeStyle: {
-              backgroundColor: theme.SECONDARY_ACCENT,
+              backgroundColor: SECONDARY_ACCENT,
             },
             tabBarBadge: notifications,
             tabBarLabel: () => {

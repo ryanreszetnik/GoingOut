@@ -13,7 +13,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { CONFIRMED, REQUEST, REQUESTED } from "../Constants/constants"
 import { updateFriendRequest } from "../Socket/socketMethods"
-import theme from "../Theme/theme.style"
+import { PAGE_BACKGROUND_COLOR, PRIMARY_FONT } from "../Theme/theme.style"
 import { getImageURIBySub } from "../Utils/aws.utils"
 import defaultImg from "../../Assets/default-profile-pic.jpg"
 import SmallButton from "../Components/SmallButton"
@@ -154,9 +154,11 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
     ]).start()
   }, [])
   return (
-    <ScrollView>
+    <ScrollView
+      style={{ height: "100%", backgroundColor: PAGE_BACKGROUND_COLOR }}
+    >
       {profile && (
-        <View style={{ backgroundColor: "#111", height: "100%" }}>
+        <View>
           <Text style={styles.pageTitle}>{profile.name}</Text>
           <View style={styles.topOfPage}>
             <View style={styles.leftHalf}>
@@ -227,7 +229,7 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
                 titleStyle={{
                   color: "white",
                   textAlign: "center",
-                  fontFamily: "SF Pro Display",
+                  fontFamily: PRIMARY_FONT,
                 }}
                 onPress={() => {
                   requestAccept()
@@ -240,7 +242,7 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
                 titleStyle={{
                   color: "white",
                   textAlign: "center",
-                  fontFamily: "SF Pro Display",
+                  fontFamily: PRIMARY_FONT,
                 }}
                 onPress={() => {
                   removeFriend()
@@ -264,9 +266,9 @@ export default function UserProfilePage({ goToFriends, showFriends, sub }) {
               fj;js;ja;fas;lfj;saljlas;jfasl;jf;ljals
             </Text>
           </Animated.View>
-          <Animated.View
+          {/* <Animated.View
             style={{ ...styles.imagesContainer, opacity: opacityAnimator2 }}
-          ></Animated.View>
+          ></Animated.View> */}
         </View>
       )}
     </ScrollView>
@@ -327,7 +329,7 @@ const styles = StyleSheet.create({
   pageTitle: {
     textAlign: "center",
     alignSelf: "center",
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     fontStyle: "normal",
     fontWeight: "bold",
     fontSize: 24,
@@ -354,7 +356,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   requestTitle: {
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     color: "white",
     fontSize: 20,
     textAlign: "center",

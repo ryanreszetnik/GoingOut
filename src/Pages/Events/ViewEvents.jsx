@@ -3,7 +3,7 @@ import { View, Text } from "react-native"
 import { ScrollView } from "react-native-gesture-handler"
 import { useSelector } from "react-redux"
 import EventPreview from "../../Components/EventPreview"
-import themeStyle from "../../Theme/theme.style"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 import { EVENTS_SINGLE_EVENT } from "../../Constants/screens"
 
 export default function ViewEvents({ navigation }) {
@@ -24,7 +24,7 @@ export default function ViewEvents({ navigation }) {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: themeStyle.PAGE_BACKGROUND_COLOR }}>
+    <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
       {(baseEvents.length > 0 || oldEvents.length > 0) && (
         <Text>Upcoming Events</Text>
       )}

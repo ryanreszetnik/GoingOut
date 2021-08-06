@@ -3,29 +3,15 @@ import MultiSlider from "@ptomasroos/react-native-multi-slider"
 import { Platform, View, Text, StyleSheet } from "react-native"
 import { ACCENT_COLOR, CONTAINER_COLOR } from "../Theme/theme.style"
 
-const optionsArray = [
-  ...[...Array(38).keys()].map((k) => k + 18),
-  60,
-  65,
-  70,
-  75,
-  80,
-  85,
-  90,
-  95,
-  100,
-]
-
-const AgeRange = ({ ageRange, setAgeRange }) => {
-  const multiSliderValuesChange = (values) =>
-    setAgeRange({ minAge: values[0], maxAge: values[1] })
+export default LocationRange = ({ locRange, setLocRange }) => {
+  const multiSliderValuesChange = (value) => {
+    setLocRange(value[0])
+  }
 
   return (
     <View style={styles.ViewContainer}>
       <View style={styles.Labelwrapper}>
-        <Text
-          style={styles.sliderTxt}
-        >{`Age Range: ${ageRange.minAge}-${ageRange.maxAge}`}</Text>
+        <Text style={styles.sliderTxt}>{`Location Range: ${locRange} km`}</Text>
       </View>
       <View style={styles.sliderContainer}>
         <MultiSlider
@@ -72,9 +58,10 @@ const AgeRange = ({ ageRange, setAgeRange }) => {
             borderRadius: 20,
             slipDisplacement: 40,
           }}
-          values={[ageRange.minAge, ageRange.maxAge]}
+          values={[locRange]}
+          min={1}
+          max={100}
           sliderLength={280}
-          optionsArray={optionsArray}
           onValuesChange={multiSliderValuesChange}
           allowOverlap={false}
           minMarkerOverlapDistance={28}
@@ -112,4 +99,3 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 })
-export default AgeRange

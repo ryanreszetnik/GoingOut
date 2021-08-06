@@ -54,21 +54,21 @@ export default function EditEvent({ navigation, route }) {
       <AppTextInput
         value={name}
         onChangeText={(text) => setName(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Event Name'
-        autoCapitalize='none'
+        leftIcon="form-textbox"
+        placeholder="Enter Event Name"
+        autoCapitalize="none"
       />
       <AppTextInput
         value={bio}
         onChangeText={(text) => setBio(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Event Bio'
-        autoCapitalize='none'
+        leftIcon="form-textbox"
+        placeholder="Enter Event Bio"
+        autoCapitalize="none"
       />
       <Text>Current Time: {moment(time).format("LT")}</Text>
 
       <AppButton
-        title='Change Time '
+        title="Change Time "
         onPress={() => {
           setShow(true)
         }}
@@ -76,9 +76,9 @@ export default function EditEvent({ navigation, route }) {
       {show && (
         <DateTimePicker
           value={time}
-          mode='time'
+          mode="time"
           is24Hour={false}
-          display='default'
+          display="default"
           onChange={(e, newTime) => {
             if (e.type === "dismissed") {
               setShow(false)
@@ -117,7 +117,7 @@ export default function EditEvent({ navigation, route }) {
           fillColor={"rgba(255, 0, 0, 0.07)"}
         ></Circle>
       </MapView>
-      <AppButton title='Save Changes' onPress={onEdit} />
+      <AppButton title="Save Changes" onPress={onEdit} />
     </ScrollView>
   )
 }

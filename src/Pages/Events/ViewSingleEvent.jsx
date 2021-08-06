@@ -15,6 +15,7 @@ import {
   EVENTS_SINGLE_MATCH,
   EVENTS_VIEW,
   EVENTS_CHAT,
+  EVENTS_POTENTIAL_LOCATION,
 } from "../../Constants/screens"
 import SmallButton from "../../Components/SmallButton"
 import LocationRecommendations from "../../Components/LocationRecommendations"
@@ -85,29 +86,29 @@ export default function ViewSingleEvent({ navigation, route }) {
             <View style={{ display: "flex", flexDirection: "row" }}>
               <SmallButton
                 size={40}
-                icon='users'
-                text='Members'
+                icon="users"
+                text="Members"
                 onPress={goToMembers}
                 style={{ width: 100 }}
               />
               <SmallButton
                 size={40}
-                icon='comments'
-                text='Chat'
+                icon="comments"
+                text="Chat"
                 onPress={goToChat}
                 style={{ width: 100 }}
               />
               <SmallButton
                 size={40}
-                icon='search'
-                text='Find Matches'
+                icon="search"
+                text="Find Matches"
                 onPress={onPress}
                 style={{ width: 100 }}
               />
               <SmallButton
                 size={40}
-                icon='sign-out-alt'
-                text='Leave'
+                icon="sign-out-alt"
+                text="Leave"
                 onPress={leaveEventHere}
                 style={{ width: 100 }}
               />
@@ -148,7 +149,15 @@ export default function ViewSingleEvent({ navigation, route }) {
           )}
           <View style={styles.txtField}>
             <Text>Recomended Nearby Locations</Text>
-            <LocationRecommendations loc={event.loc} />
+            <LocationRecommendations
+              loc={event.loc}
+              onPress={(selectedLoc) =>
+                navigation.navigate(EVENTS_POTENTIAL_LOCATION, {
+                  eventId: eventId,
+                  location: selectedLoc,
+                })
+              }
+            />
           </View>
         </View>
       )}

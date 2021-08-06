@@ -19,6 +19,7 @@ import {
 } from "../../Constants/screens"
 import SmallButton from "../../Components/SmallButton"
 import { push } from "../../Navigation/RootNavigation"
+import { PRIMARY_FONT } from "../../Theme/theme.style"
 
 export default function ViewProfile({ navigation }) {
   const profile = useSelector((state) => state.profile)
@@ -50,7 +51,7 @@ export default function ViewProfile({ navigation }) {
             <View style={styles.buttonsContainer}>
               <SmallButton
                 size={50}
-                icon='user-friends'
+                icon="user-friends"
                 onPress={() => {
                   navigation.push(PROFILE_FRIENDS, { sub: profile.sub })
                 }}
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
   pageTitle: {
     textAlign: "center",
     alignSelf: "center",
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     fontStyle: "normal",
     fontWeight: "bold",
     fontSize: 24,

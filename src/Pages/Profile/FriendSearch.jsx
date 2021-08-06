@@ -5,6 +5,7 @@ import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppTextInput from "../../Components/AppTextInput"
 import UserList from "../../Components/UserList"
 import { PROFILE_PROFILE } from "../../Constants/screens"
+import { PAGE_BACKGROUND_COLOR, PRIMARY_FONT } from "../../Theme/theme.style"
 
 export default function FriendSearch({ navigation }) {
   const [searchTerm, setSearchTerm] = useState("")
@@ -35,15 +36,15 @@ export default function FriendSearch({ navigation }) {
   }
 
   return (
-    <View style={{ backgroundColor: "#111", height: "100%" }}>
+    <View style={{ backgroundColor: PAGE_BACKGROUND_COLOR, height: "100%" }}>
       <Text style={styles.title}>Add friends by username</Text>
       <View style={styles.mainBackground}>
         <AppTextInput
           value={searchTerm}
           onChangeText={(text) => updateSearch(text)}
-          leftIcon='magnify'
-          placeholder='Search For Users'
-          autoCapitalize='none'
+          leftIcon="magnify"
+          placeholder="Search For Users"
+          autoCapitalize="none"
         />
       </View>
 
@@ -60,17 +61,17 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     textAlign: "center",
     color: "white",
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
   },
   mainBackground: {
-    backgroundColor: "#111",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
     width: "99%",
     alignSelf: "center",
   },
   friendBackground: {
     borderWidth: 0.5,
     borderColor: "lightgray",
-    backgroundColor: "#111",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
   },
   friendText: {
     color: "black",

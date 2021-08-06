@@ -5,6 +5,7 @@ import UserList from "../Components/UserList"
 import { useDispatch, useSelector } from "react-redux"
 import { getFriends } from "../Endpoints/friendsEndpoints"
 import AppTextInput from "../Components/AppTextInput"
+import { PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
 
 export default function UserFriendsList({ selectUser, sub }) {
   const isSignedInSub = useSelector((state) => state.profile.sub) === sub
@@ -41,16 +42,16 @@ export default function UserFriendsList({ selectUser, sub }) {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: "#111" }}>
+    <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
       <View style={{ width: "95%", alignSelf: "center" }}>
         <AppTextInput
           value={searchTerm}
           onChangeText={(text) => updateSearch(text)}
-          leftIcon='magnify'
-          placeholder='Search For Friends by Name'
-          autoCapitalize='none'
-          keyboardType='email-address'
-          textContentType='emailAddress'
+          leftIcon="magnify"
+          placeholder="Search For Friends by Name"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="emailAddress"
         />
         <UserList
           onPress={selectUser}
