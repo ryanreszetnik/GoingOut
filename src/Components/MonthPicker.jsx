@@ -4,10 +4,15 @@ import CalendarPicker from "react-native-calendar-picker"
 import moment from "moment"
 import { ACCENT_COLOR } from "../Theme/theme.style"
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5"
-export default function MonthPicker({ updateDate, minDate = null }) {
+export default function MonthPicker({
+  initialDate,
+  updateDate,
+  minDate = null,
+}) {
   const changeDate = (day) => {
     updateDate(moment(day).format("YYYY-MM-DD"))
   }
+  console.log("INITIAL", initialDate)
   return (
     <View
       style={{
@@ -20,7 +25,8 @@ export default function MonthPicker({ updateDate, minDate = null }) {
       <CalendarPicker
         restrictMonthNavigation={true}
         minDate={minDate ? minDate : moment()}
-        maxDate={moment().endOf("month").add(1, "days").endOf("month")}
+        // maxDate={moment().endOf("month").add(1, "days").endOf("month")}
+        selectedStartDate={new Date(initialDate)}
         onDateChange={changeDate}
         textStyle={{ color: "#FFF" }}
         selectedDayTextColor="#DDD"
