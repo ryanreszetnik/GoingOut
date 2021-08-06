@@ -36,6 +36,7 @@ import CustomMarker from "../../Components/CustomMarker"
 import CustomDateTimePicker from "../../Components/CustomDateTimePicker"
 import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 import { useEffect } from "react"
+import AppSwitch from "../../Components/AppSwitch"
 
 export default function CreateEvent({ navigation }) {
   const curSub = useSelector((state) => state.profile.sub)
@@ -47,14 +48,28 @@ export default function CreateEvent({ navigation }) {
   const [genderPref, setGenderPref] = useState("None")
   const [locRange, setLocRange] = useState(50)
   const [members, setMembers] = useState([curSub])
+  const [visible, setVisible] = useState(false)
   const [ageRange, setAgeRange] = useState({ minAge: 18, maxAge: 100 })
-  const mapRef = useRef()
+
   const [loc, setLoc] = useState({
     latitude: 43.6532,
     longitude: -79.3832,
     name: "",
     address: "",
   })
+  const updateStartTime = (time) => {
+    if (endTime < time) {
+      setEndTime(time)
+    }
+    setStartTime(time)
+  }
+  const updateEndTime = (time) => {
+    if (time < startTime) {
+      setEndTime(startTime)
+    } else {
+      setEndTime(time)
+    }
+  }
   const [shownLocation, setShownLocation] = useState({
     latitude: 43.6532,
     longitude: -79.3832,
@@ -177,12 +192,12 @@ export default function CreateEvent({ navigation }) {
       <CustomDateTimePicker
         title='Starts'
         time={startTime}
-        setTime={setStartTime}
+        setTime={updateStartTime}
       />
       <CustomDateTimePicker
         title='Ends'
         time={endTime}
-        setTime={setEndTime}
+        setTime={updateEndTime}
         minDate={startTime}
       />
       <TouchableOpacity
@@ -220,24 +235,6 @@ export default function CreateEvent({ navigation }) {
         </View>
       </TouchableOpacity>
 
-      {/* <MapView
-        scrollEnabled={false}
-        provider={PROVIDER_GOOGLE}
-        region={shownLocation}
-        style={styles.map}
-        ref={mapRef}
-      >
-        <CustomMarker
-          coordinate={shownLocation}
-          label={loc.name}
-        ></CustomMarker>
-        <Circle
-          center={shownLocation}
-          radius={locRange * 1000}
-          fillColor={"rgba(255, 0, 0, 0.07)"}
-        ></Circle>
-      </MapView> */}
-
       <View style={{ paddingBottom: 10 }}>
         <Text style={styles.title}>Members</Text>
         <UserList
@@ -254,6 +251,11 @@ export default function CreateEvent({ navigation }) {
         />
       </View>
       <Text style={styles.title}>Matching Preferences</Text>
+      <AppSwitch
+        value={visible}
+        onChange={() => setVisible((v) => !v)}
+        label="Private Event"
+      />
       <View style={styles.inputContainer}>
         <AppTextInput
           label='Event Bio'

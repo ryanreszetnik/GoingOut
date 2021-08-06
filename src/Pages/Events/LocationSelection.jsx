@@ -124,30 +124,37 @@ export default function LocationSelection({ route, navigation }) {
         ></CustomMarker>
       </MapView>
       {manual ? (
-        <View>
-          <AppTextInput
-            value={name}
-            onChangeText={(text) => {
-              setName(text)
-              setDisplayName(text)
-            }}
-            leftIcon="map-marker"
-            placeholder="Enter Location Name"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="emailAddress"
-          />
-          <AppTextInput
-            value={address}
-            onChangeText={(text) => {
-              setAddress(text)
-            }}
-            leftIcon="map-marker"
-            placeholder="Enter Location Details/Address"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="emailAddress"
-          />
+        <View style={{ paddingTop: 3 }}>
+          <View style={styles.textContainer}>
+            <AppTextInput
+              value={name}
+              label="Name"
+              required
+              onChangeText={(text) => {
+                setName(text)
+                setDisplayName(text)
+              }}
+              leftIcon="map-marker"
+              placeholder="Enter Location Name"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+            />
+          </View>
+          <View style={styles.textContainer}>
+            <AppTextInput
+              label="Address"
+              value={address}
+              onChangeText={(text) => {
+                setAddress(text)
+              }}
+              leftIcon="map-marker"
+              placeholder="Enter Location Details/Address"
+              autoCapitalize="none"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+            />
+          </View>
         </View>
       ) : (
         <View>
@@ -194,4 +201,5 @@ export default function LocationSelection({ route, navigation }) {
 const styles = StyleSheet.create({
   map: { width: "100%", height: 250 },
   recomendations: { borderTopWidth: 1, paddingTop: 2, marginTop: 5 },
+  textContainer: { paddingVertical: 2 },
 })

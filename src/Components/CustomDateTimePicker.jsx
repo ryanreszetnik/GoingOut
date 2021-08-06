@@ -23,7 +23,7 @@ export default function CustomDateTimePicker({
     setTime(newDateTime)
   }
   const updateDate = (e) => {
-    const date = new Date(`${e}T${moment(time).format("hh:mm:ss")}`).getTime()
+    const date = new Date(`${e}T${moment(time).format("HH:mm:ss")}`).getTime()
     setTime(date.valueOf())
     console.log(date)
   }
@@ -61,7 +61,11 @@ export default function CustomDateTimePicker({
             </View>
           </View>
 
-          <MonthPicker updateDate={updateDate} minDate={minDate} />
+          <MonthPicker
+            initialDate={time}
+            updateDate={updateDate}
+            minDate={minDate}
+          />
         </View>
       )}
     </View>

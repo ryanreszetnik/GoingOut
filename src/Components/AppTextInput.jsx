@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   wholeContainer: {
     backgroundColor: "green",
     backgroundColor: CONTAINER_COLOR,
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 8,
   },
   label: {

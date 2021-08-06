@@ -103,7 +103,7 @@ export default function Events({ navigation }) {
       <EventNavigator.Screen
         name={EVENTS_CREATE_EVENT}
         component={CreateEvent}
-        options={({ navigation }) => {
+        options={() => {
           return {
             headerTitle: "Create New Event",
           }
@@ -161,10 +161,20 @@ export default function Events({ navigation }) {
       <EventNavigator.Screen
         name={EVENTS_LOCATION_SELECT}
         component={LocationSelection}
+        options={() => {
+          return {
+            headerTitle: "Select Location",
+          }
+        }}
       />
       <EventNavigator.Screen
         name={EVENTS_POTENTIAL_LOCATION}
         component={PotentialLocation}
+        options={() => {
+          return {
+            headerTitle: "Potential Location",
+          }
+        }}
       />
       <EventNavigator.Screen
         name={EVENTS_EDIT_MEMBERS}
