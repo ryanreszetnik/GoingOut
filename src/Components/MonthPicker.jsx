@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import { View, Text } from "react-native"
 import CalendarPicker from "react-native-calendar-picker"
 import moment from "moment"
+import { ACCENT_COLOR } from "../Theme/theme.style"
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5"
 export default function MonthPicker({ updateDate, minDate = null }) {
   const changeDate = (day) => {
     updateDate(moment(day).format("YYYY-MM-DD"))
@@ -24,7 +26,13 @@ export default function MonthPicker({ updateDate, minDate = null }) {
         selectedDayTextColor="#DDD"
         todayTextStyle="#FFF"
         todayBackgroundColor="#444"
-        selectedDayColor="red"
+        selectedDayColor={ACCENT_COLOR}
+        previousComponent={
+          <FontAwesome5Icon name="chevron-left" color="white" size={20} />
+        }
+        nextComponent={
+          <FontAwesome5Icon name="chevron-right" color="white" size={20} />
+        }
       />
     </View>
   )

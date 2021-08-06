@@ -1,11 +1,15 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { View, Text, Image } from "react-native"
 import { Marker } from "react-native-maps"
 import MarkerImage from "../../Assets/Marker.png"
 export default function CustomMarker({ coordinate, label }) {
   const isShown = label && label.length > 0
+  const [key, setKey] = useState(0)
+  useEffect(() => {
+    setKey(Math.random())
+  }, [coordinate])
   return (
-    <Marker coordinate={coordinate}>
+    <Marker coordinate={coordinate} key={key}>
       <View style={{ alignContent: "center", alignItems: "center" }}>
         <Text
           style={{

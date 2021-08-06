@@ -1,41 +1,34 @@
 import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { RadioButton } from "react-native-paper"
+import { ACCENT_COLOR, CONTAINER_COLOR } from "../Theme/theme.style"
 
 export default function GenderPicker({ checked, setChecked }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Matching Gender Preference</Text>
-      <RadioButton.Group style={styles.radioContainer}>
-        <RadioButton.Item
-          value="None"
-          label="None"
-          status={checked === "None" ? "checked" : "unchecked"}
-          onPress={() => setChecked("None")}
-          uncheckedColor="gray"
-          color="tomato"
-          style={styles.item}
-        />
-        <RadioButton.Item
-          value="Male"
-          label="Male"
-          status={checked === "Male" ? "checked" : "unchecked"}
-          onPress={() => setChecked("Male")}
-          uncheckedColor="gray"
-          color="tomato"
-          style={styles.item}
-        />
+  const button = (value) => {
+    if (value === checked) {
+      return (
+        <TouchableOpacity style={styles.selectedOption}>
+          <Text style={styles.optionText}>{value}</Text>
+        </TouchableOpacity>
+      )
+    }
+    return (
+      <TouchableOpacity style={styles.option} onPress={() => setChecked(value)}>
+        <Text style={styles.optionText}>{value}</Text>
+      </TouchableOpacity>
+    )
+  }
 
-        <RadioButton.Item
-          value="Female"
-          label="Female"
-          status={checked === "Female" ? "checked" : "unchecked"}
-          onPress={() => setChecked("Female")}
-          uncheckedColor="gray"
-          color="tomato"
-          style={styles.item}
-        />
-      </RadioButton.Group>
+  return (
+    <View style={{ width: "100%", paddingHorizontal: 10 }}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Matching Gender Preference</Text>
+        <View style={styles.options}>
+          {button("None")}
+          {button("Male")}
+          {button("Female")}
+        </View>
+      </View>
     </View>
   )
 }
@@ -43,19 +36,32 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     alignSelf: "center",
-    backgroundColor: "#e9e9e9",
-    borderRadius: 20,
-    width: "90%",
-    marginVertical: 10,
-    paddingTop: 15,
+    backgroundColor: CONTAINER_COLOR,
+    borderRadius: 10,
+    width: "100%",
+    marginVertical: 3,
+    paddingHorizontal: 20,
+    paddingBottom: 5,
+    paddingTop: 5,
   },
-  radioContainer: {
+  options: {
     flexDirection: "row",
   },
   title: {
-    color: "#737373",
+    color: "white",
     fontSize: 20,
     marginBottom: 5,
   },
-  item: {},
+  option: { padding: 10, width: "25%" },
+  selectedOption: {
+    backgroundColor: ACCENT_COLOR,
+    padding: 10,
+    width: "25%",
+    borderRadius: 4,
+  },
+  optionText: {
+    color: "white",
+    textAlign: "center",
+    borderRadius: 4,
+  },
 })

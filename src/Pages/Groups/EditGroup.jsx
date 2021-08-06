@@ -7,7 +7,7 @@ import AgeRange from "../../Components/AgeRange"
 import GenderPicker from "../../Components/GenderPicker"
 import AppButton from "../../Components/AppButton"
 
-import { editGroup } from "../../Socket/SocketMethods"
+import { editGroup } from "../../Socket/socketMethods"
 import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
 
 export default function EditGroup({ navigation, route }) {

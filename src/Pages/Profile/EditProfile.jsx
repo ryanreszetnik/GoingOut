@@ -22,6 +22,7 @@ import CalendarPicker from "react-native-calendar-picker"
 import MonthPicker from "../../Components/MonthPicker"
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5"
 import moment from "moment"
+import { PAGE_BACKGROUND_COLOR, PRIMARY_FONT } from "../../Theme/theme.style"
 
 export default function EditProfile({ navigation }) {
   const user = useSelector((state) => state.userSession.user)
@@ -99,7 +100,7 @@ export default function EditProfile({ navigation }) {
     }
   }
   return (
-    <ScrollView style={{ backgroundColor: "#111" }}>
+    <ScrollView style={{ backgroundColor: PAGE_BACKGROUND_COLOR }}>
       <SafeAreaView style={styles.container}>
         <Text style={styles.imgTitle}>Change your profile picture</Text>
         <ImageSelector
@@ -110,8 +111,8 @@ export default function EditProfile({ navigation }) {
 
         <View style={styles.editHeading}>
           <FontAwesome5
-            name='edit'
-            color='white'
+            name="edit"
+            color="white"
             onPress={() => navigation.navigate(PROFILE_EDIT_PROFILE)}
             style={styles.icon}
           />
@@ -121,27 +122,27 @@ export default function EditProfile({ navigation }) {
         <AppTextInput
           value={name}
           onChangeText={(text) => setName(text)}
-          leftIcon='emoticon-happy-outline'
-          placeholder='Enter full name'
-          autoCapitalize='none'
+          leftIcon="emoticon-happy-outline"
+          placeholder="Enter full name"
+          autoCapitalize="none"
         />
         <View style={styles.editHeading}>
-          <FontAwesome5 name='edit' color='white' style={styles.icon} />
+          <FontAwesome5 name="edit" color="white" style={styles.icon} />
           <Text style={styles.text}>Email Address</Text>
         </View>
         <AppTextInput
           value={email}
           onChangeText={(text) => setEmail(text)}
-          leftIcon='email'
-          placeholder='Enter Email'
-          autoCapitalize='none'
-          keyboardType='email-address'
-          textContentType='emailAddress'
+          leftIcon="email"
+          placeholder="Enter Email"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="emailAddress"
         />
 
         <GenderPicker checked={gender} setChecked={setGender}></GenderPicker>
         <View style={styles.editHeading}>
-          <FontAwesome5 name='edit' color='white' style={styles.icon} />
+          <FontAwesome5 name="edit" color="white" style={styles.icon} />
           <Text style={styles.text}>Date of Birth</Text>
         </View>
         <ScrollView
@@ -164,7 +165,7 @@ export default function EditProfile({ navigation }) {
               textAlign: "center",
               backgroundColor: "gray",
               width: 100,
-              fontFamily: "SF Pro Display",
+              fontFamily: PRIMARY_FONT,
               marginVertical: 10,
             }}
             monthTitleStyle={{
@@ -175,15 +176,15 @@ export default function EditProfile({ navigation }) {
               textAlign: "center",
               backgroundColor: "gray",
               width: 100,
-              fontFamily: "SF Pro Display",
+              fontFamily: PRIMARY_FONT,
             }}
             previousComponent={
-              <FontAwesome5Icon name='chevron-left' color='white' size={20} />
+              <FontAwesome5Icon name="chevron-left" color="white" size={20} />
             }
             nextComponent={
-              <FontAwesome5Icon name='chevron-right' color='white' size={20} />
+              <FontAwesome5Icon name="chevron-right" color="white" size={20} />
             }
-            textStyle={{ color: "white", fontFamily: "SF Pro Display" }}
+            textStyle={{ color: "white", fontFamily: PRIMARY_FONT }}
             onDateChange={(date) => {
               setBirthday(date)
             }}
@@ -191,7 +192,7 @@ export default function EditProfile({ navigation }) {
           />
         </ScrollView>
 
-        <AppButton title='Save Changes' onPress={updateProfile} />
+        <AppButton title="Save Changes" onPress={updateProfile} />
       </SafeAreaView>
     </ScrollView>
   )
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   text: {
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     color: "white",
     fontSize: 16,
   },

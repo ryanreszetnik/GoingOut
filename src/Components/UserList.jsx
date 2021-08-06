@@ -11,7 +11,11 @@ import { useSelector } from "react-redux"
 import defaultImg from "../../Assets/default-profile-pic.jpg"
 import { getImageURIBySub } from "../Utils/aws.utils"
 import { REQUEST, REQUESTED, CONFIRMED } from "../Constants/constants"
-import theme from "../Theme/theme.style"
+import {
+  LIST_ITEM_BORDER_COLOR,
+  LIST_ITEM_COLOR,
+  PRIMARY_FONT,
+} from "../Theme/theme.style"
 import { ensureProfilesLoaded } from "../Utils/profiles.utils"
 
 export default function UserList({
@@ -21,6 +25,7 @@ export default function UserList({
   showFriendships = false,
   filterTerm = "",
   horizontal = false,
+  addMember = false,
 }) {
   const [imgSources, setImgSources] = useState([])
   const signedInProfile = useSelector((state) => state.profile)
@@ -59,6 +64,34 @@ export default function UserList({
   }
   const filter = (user, term) => {
     return !(user.username.includes(term) || user.name.includes(term))
+  }
+  const addButton = () => {
+    return (
+      <TouchableOpacity
+        style={styles.containerHorizontal}
+        key="AddMember"
+        onPress={addMember}
+      >
+        <View style={styles.photo}>
+          <Text
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+              bottom: 11,
+              color: "white",
+              fontSize: 60,
+              textAlign: "center",
+            }}
+          >
+            {"+"}
+          </Text>
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.textHorizontal}>Add Member</Text>
+        </View>
+      </TouchableOpacity>
+    )
   }
 
   const userPreview = (sub) => {
@@ -104,6 +137,7 @@ export default function UserList({
           : styles.componentContainer
       }
     >
+      {addMember && horizontal && addButton()}
       {subs.map((sub) => {
         return userPreview(sub)
       })}
@@ -113,13 +147,13 @@ export default function UserList({
 const styles = StyleSheet.create({
   componentContainer: {},
   componentContainerHorizontal: {
-    height: 100,
-    flexDirection: "row",
+    height: 110,
+    alignContent: "center",
   },
   container: {
     height: 70,
-    borderColor: theme.LIST_ITEM_BORDER_COLOR,
-    backgroundColor: theme.LIST_ITEM_COLOR,
+    borderColor: LIST_ITEM_BORDER_COLOR,
+    backgroundColor: LIST_ITEM_COLOR,
     flexDirection: "row",
     paddingTop: 5,
     borderRadius: 10,
@@ -130,7 +164,7 @@ const styles = StyleSheet.create({
     height: 70,
     width: 80,
     alignItems: "center",
-    borderColor: theme.LIST_ITEM_BORDER_COLOR,
+    borderColor: LIST_ITEM_BORDER_COLOR,
     flexDirection: "column",
     paddingTop: 5,
     borderRadius: 10,
@@ -138,18 +172,20 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "500",
     fontSize: 20,
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     color: "white",
   },
   textHorizontal: {
+    textAlign: "center",
     fontWeight: "300",
     fontSize: 14,
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     color: "white",
   },
+
   photo: {
     marginLeft: 5,
-    backgroundColor: "#EEE",
+    backgroundColor: "#333",
     borderColor: "#2C2C2C",
     borderWidth: 2,
     width: 60,
@@ -165,7 +201,7 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     fontSize: 14,
     paddingTop: 3,
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
     color: "white",
   },
 })

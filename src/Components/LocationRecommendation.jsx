@@ -6,22 +6,26 @@ export default function LocationRecommendation({
   currentLoc,
   recomendation,
   onPress,
+  showDistance = true,
 }) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
         width: "100%",
-        height: 50,
-        backgroundColor: "#DDD",
+        height: 60,
+        backgroundColor: "#333",
         marginVertical: 2,
       }}
     >
-      <Text>{recomendation.name}</Text>
-      <Text>{`${getDistanceBetweenLocations(
-        currentLoc,
-        recomendation.loc
-      )} km away`}</Text>
+      <Text style={{ color: "white" }}>{recomendation.name}</Text>
+      <Text style={{ color: "white" }}>{recomendation.address}</Text>
+      {showDistance && (
+        <Text style={{ color: "white" }}>{`${getDistanceBetweenLocations(
+          currentLoc,
+          recomendation
+        )} km away`}</Text>
+      )}
     </TouchableOpacity>
   )
 }

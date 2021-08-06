@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import AppButton from "../../../Components/AppButton"
 import AppTextInput from "../../../Components/AppTextInput"
 import { EVENTS_VIEW } from "../../../Constants/screens"
-import { sendMergeRequest } from "../../../Socket/SocketMethods"
+import { sendMergeRequest } from "../../../Socket/socketMethods"
 
 export default function Merging({ navigation, route }) {
   const { eventId, matchId } = route.params

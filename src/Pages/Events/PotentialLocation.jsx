@@ -4,20 +4,19 @@ import { useSelector } from "react-redux"
 import LocationAd from "../../CommonPages/LocationAd"
 import AppButton from "../../Components/AppButton"
 
-export default function PotentialLocation({ route }) {
-  const { location, eventId, callBack } = route.params
-  const event = useSelector((state) =>
-    state.events.find((e) => e.eventId === eventId)
-  )
+export default function PotentialLocation({ route, navigation }) {
+  const { location, currentLocation, callBack } = route.params
+
   const onSelect = () => {
     console.log("Update info")
     callBack(location)
+    navigation.pop(1)
   }
   return (
     <View>
       <LocationAd
         location={location}
-        currentLoc={event ? event.loc : null}
+        currentLocation={currentLocation}
         onSelect={onSelect}
       />
     </View>

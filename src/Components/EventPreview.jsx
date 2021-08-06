@@ -3,7 +3,7 @@ import React from "react"
 import { Text, StyleSheet, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { useSelector } from "react-redux"
-import theme from "../Theme/theme.style"
+import { LIST_ITEM_BORDER_COLOR, LIST_ITEM_COLOR } from "../Theme/theme.style"
 import GroupImage from "./GroupImage"
 import Ionicon from "react-native-vector-icons/Ionicons"
 
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     height: 80,
     padding: 5,
     flexDirection: "row",
-    borderColor: theme.LIST_ITEM_BORDER_COLOR,
-    backgroundColor: theme.LIST_ITEM_COLOR,
+    borderColor: LIST_ITEM_BORDER_COLOR,
+    backgroundColor: LIST_ITEM_COLOR,
   },
   header: {
     fontSize: 20,

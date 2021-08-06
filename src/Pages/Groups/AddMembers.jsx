@@ -7,7 +7,7 @@ import { searchUser } from "../../Endpoints/friendsEndpoints"
 import { ScrollView } from "react-native-gesture-handler"
 import AppButton from "../../Components/AppButton"
 import { ADD_PERM_MEMBERS } from "../../Constants/reducerEvents"
-import { addGroupMembers } from "../../Socket/SocketMethods"
+import { addGroupMembers } from "../../Socket/socketMethods"
 import { GROUPS_MEMBERS } from "../../Constants/screens"
 
 export default function AddMembers({ navigation, route }) {

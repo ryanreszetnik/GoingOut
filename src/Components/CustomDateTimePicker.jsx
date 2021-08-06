@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import MonthPicker from "./MonthPicker"
 import moment from "moment"
 import DateTimePicker from "@react-native-community/datetimepicker"
+import { PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
 
 export default function CustomDateTimePicker({
   title,
@@ -27,7 +28,7 @@ export default function CustomDateTimePicker({
     console.log(date)
   }
   return (
-    <View>
+    <View on>
       <TouchableOpacity
         style={styles.preview}
         onPress={() => setOpened(!opened)}
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: {
     width: "100%",
-    backgroundColor: "#888",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
   },
   timeContainer: {
     width: "100%",

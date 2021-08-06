@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import AppButton from "../../Components/AppButton"
 import MatchPreview from "../../Components/MatchPreview"
-import { leaveEvent } from "../../Socket/SocketMethods"
+import { leaveEvent } from "../../Socket/socketMethods"
 import GroupImage from "../../Components/GroupImage"
 import moment from "moment"
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps"
@@ -86,29 +86,29 @@ export default function ViewSingleEvent({ navigation, route }) {
             <View style={{ display: "flex", flexDirection: "row" }}>
               <SmallButton
                 size={40}
-                icon='users'
-                text='Members'
+                icon="users"
+                text="Members"
                 onPress={goToMembers}
                 style={{ width: 100 }}
               />
               <SmallButton
                 size={40}
-                icon='comments'
-                text='Chat'
+                icon="comments"
+                text="Chat"
                 onPress={goToChat}
                 style={{ width: 100 }}
               />
               <SmallButton
                 size={40}
-                icon='search'
-                text='Find Matches'
+                icon="search"
+                text="Find Matches"
                 onPress={onPress}
                 style={{ width: 100 }}
               />
               <SmallButton
                 size={40}
-                icon='sign-out-alt'
-                text='Leave'
+                icon="sign-out-alt"
+                text="Leave"
                 onPress={leaveEventHere}
                 style={{ width: 100 }}
               />

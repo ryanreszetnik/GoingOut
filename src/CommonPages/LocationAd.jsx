@@ -13,7 +13,7 @@ export default function LocationAd({
   onSelect,
 }) {
   const distance = currentLocation
-    ? getDistanceBetweenLocations(currentLocation, location.loc)
+    ? getDistanceBetweenLocations(currentLocation, location)
     : 10
 
   const description =
@@ -39,8 +39,8 @@ export default function LocationAd({
       <MapView
         provider={PROVIDER_GOOGLE}
         region={{
-          latitude: location.loc.lat,
-          longitude: location.loc.lon,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: distance / 50,
           longitudeDelta: distance / 50,
         }}
@@ -48,21 +48,9 @@ export default function LocationAd({
         style={styles.map}
       >
         {currentLocation && (
-          <CustomMarker
-            coordinate={{
-              latitude: parseFloat(currentLocation.lat),
-              longitude: parseFloat(currentLocation.lon),
-            }}
-            label="Old Location"
-          />
+          <CustomMarker coordinate={currentLocation} label="Old Location" />
         )}
-        <CustomMarker
-          coordinate={{
-            latitude: parseFloat(location.loc.lat),
-            longitude: parseFloat(location.loc.lon),
-          }}
-          label={location.name}
-        />
+        <CustomMarker coordinate={location} label={location.name} />
       </MapView>
       <View>
         <Text>Any Specials Here</Text>

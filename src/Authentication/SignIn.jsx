@@ -7,6 +7,7 @@ import AppButton from "../Components/AppButton"
 import { LOADING_DATA } from "../Constants/constants"
 import { SET_AUTH_STATUS, SET_AUTH_USER } from "../Constants/reducerEvents"
 import { useDispatch, useSelector } from "react-redux"
+import { PAGE_BACKGROUND_COLOR, PRIMARY_FONT } from "../Theme/theme.style"
 import { FORGOT_PASSWORD_PAGE, SIGN_UP_PAGE } from "../Constants/screens"
 export default function SignIn({ navigation, route }) {
   const [username, setUsername] = useState(
@@ -38,23 +39,23 @@ export default function SignIn({ navigation, route }) {
         <AppTextInput
           value={username}
           onChangeText={(text) => setUsername(text)}
-          leftIcon='account'
-          placeholder='Enter username'
-          autoCapitalize='none'
-          keyboardType='email-address'
-          textContentType='emailAddress'
+          leftIcon="account"
+          placeholder="Enter username"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="emailAddress"
         />
         <AppTextInput
           value={password}
           onChangeText={(text) => setPassword(text)}
-          leftIcon='lock'
-          placeholder='Enter password'
-          autoCapitalize='none'
+          leftIcon="lock"
+          placeholder="Enter password"
+          autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry
-          textContentType='password'
+          textContentType="password"
         />
-        <AppButton title='Login' onPress={signIn} />
+        <AppButton title="Login" onPress={signIn} />
 
         <View style={styles.footerButtonContainer}>
           <TouchableOpacity
@@ -75,7 +76,7 @@ export default function SignIn({ navigation, route }) {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "#111",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
   },
   container: {
     flex: 1,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "500",
     marginVertical: 15,
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
   },
   footerButtonContainer: {
     marginVertical: 15,

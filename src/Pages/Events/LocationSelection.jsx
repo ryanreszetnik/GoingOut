@@ -10,44 +10,52 @@ import CustomMarker from "../../Components/CustomMarker"
 import LocationRecommendation from "../../Components/LocationRecommendation"
 import { EVENTS_POTENTIAL_LOCATION } from "../../Constants/screens"
 import { getNearbyLocations } from "../../Endpoints/eventEndpoints"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 
 export default function LocationSelection({ route, navigation }) {
-  const { callBack } = route.params
-  const [loc, setLoc] = useState({
-    lat: 43.6532,
-    lon: -79.3832,
-  })
+  const { callBack, initialLocation } = route.params
+  const [location, setLocation] = useState(initialLocation)
   const [nearby, setNearby] = useState([])
   const [manual, setManual] = useState(true)
   const [name, setName] = useState("")
   const [displayName, setDisplayName] = useState("")
   const [currentLocation, setCurrentLocation] = useState(null)
   const [address, setAddress] = useState("")
-  const [shownLocation, setShownLocation] = useState({
-    latitude: 43.6532,
-    longitude: -79.3832,
-    latitudeDelta: 0.005,
-    longitudeDelta: 0.005,
-  })
+
+  useEffect(() => {
+    setLocation({
+      latitude: initialLocation.latitude,
+      longitude: initialLocation.longitude,
+      latitudeDelta: 0.005,
+      longitudeDelta: 0.005,
+    })
+    if (initialLocation.locationId) {
+      setCurrentLocation(initialLocation)
+      setManual(false)
+    } else {
+      setName(initialLocation.name)
+      setAddress(initialLocation.address)
+    }
+    setDisplayName(initialLocation.name)
+  }, [initialLocation])
   const mapRef = useRef()
   useEffect(() => {
     loadNewLocations()
-  }, [loc])
+  }, [location])
   const loadNewLocations = async () => {
-    setNearby(await getNearbyLocations(loc))
+    const newNearby = await getNearbyLocations(location)
+    console.log("getting nearby", newNearby)
+    setNearby(newNearby)
   }
   const updateLocation = (latitude, longitude) => {
     console.log("Setting location", latitude, longitude)
-    setLoc({
-      lat: latitude,
-      lon: longitude,
-    })
-    setShownLocation({
+    setLocation({
       latitude,
       longitude,
       latitudeDelta: 0.005,
       longitudeDelta: 0.005,
     })
+
     mapRef.current?.animateToRegion(
       {
         latitude,
@@ -62,17 +70,17 @@ export default function LocationSelection({ route, navigation }) {
     let data = {}
     if (manual) {
       data = {
-        lat: loc.lat,
-        lon: loc.lon,
-        locName: name,
+        latitude: location.latitude,
+        longitude: location.longitude,
+        name: name,
         address,
         locationId: null,
       }
     } else {
       data = {
-        lat: currentLocation.loc.lat,
-        lon: currentLocation.loc.lon,
-        locName: currentLocation.name,
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+        name: currentLocation.name,
         address: currentLocation.address,
         locationId: currentLocation.locationId,
       }
@@ -88,19 +96,19 @@ export default function LocationSelection({ route, navigation }) {
     setManual(true)
   }
   const selectAdLocation = (location) => {
-    console.log("Preset", location.loc)
+    console.log("Preset", location)
     setCurrentLocation(location)
     setDisplayName(location.name)
-    updateLocation(location.loc.lat, location.loc.lon)
+    updateLocation(location.latitude, location.longitude)
     setManual(false)
   }
   return (
-    <View>
+    <View style={{ backgroundColor: PAGE_BACKGROUND_COLOR, height: "100%" }}>
       <MapView
         provider={PROVIDER_GOOGLE}
         initialRegion={{
-          latitude: loc.lat,
-          longitude: loc.lon,
+          latitude: location.latitude,
+          longitude: location.longitude,
           latitudeDelta: 0.005,
           longitudeDelta: 0.005,
         }}
@@ -111,7 +119,7 @@ export default function LocationSelection({ route, navigation }) {
         }}
       >
         <CustomMarker
-          coordinate={shownLocation}
+          coordinate={location}
           label={`${displayName}`}
         ></CustomMarker>
       </MapView>
@@ -143,9 +151,10 @@ export default function LocationSelection({ route, navigation }) {
         </View>
       ) : (
         <View>
-          <Text>Selected Location</Text>
+          <Text style={{ color: "white" }}>Selected Location:</Text>
           <LocationRecommendation
-            currentLoc={loc}
+            currentLoc={location}
+            showDistance={false}
             recomendation={currentLocation}
             onPress={() => {
               navigation.navigate(EVENTS_POTENTIAL_LOCATION, {
@@ -163,15 +172,15 @@ export default function LocationSelection({ route, navigation }) {
               currentLocation === null ||
               l.locationId !== currentLocation.locationId
           )
-          .map((location) => {
+          .map((recomendation) => {
             return (
               <LocationRecommendation
-                currentLoc={loc}
-                recomendation={location}
+                currentLoc={location}
+                recomendation={recomendation}
                 onPress={() => {
                   navigation.navigate(EVENTS_POTENTIAL_LOCATION, {
-                    location: location,
-                    currentLoc: shownLocation,
+                    location: recomendation,
+                    currentLocation: location,
                     callBack: selectAdLocation,
                   })
                 }}

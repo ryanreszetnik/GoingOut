@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import ImagePicker from "react-native-image-crop-picker"
 import defaultImg from "../../Assets/default-profile-pic.jpg"
+import { PRIMARY_FONT } from "../Theme/theme.style"
 
 export default function ImageSelector({ source, setSource }) {
   const chooseImg = () => {
@@ -98,6 +99,6 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: "white",
-    fontFamily: "SF Pro Display",
+    fontFamily: PRIMARY_FONT,
   },
 })

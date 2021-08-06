@@ -20,7 +20,6 @@ import {
   PROFILE_PROFILE,
   PROFILE_SETTINGS,
 } from "../../Constants/screens"
-import themeStyle from "../../Theme/theme.style"
 import { SET_AUTH_STATUS } from "../../Constants/reducerEvents"
 import { LOGGED_OUT } from "../../Constants/constants"
 import UserSettings from "./UserSettings"
@@ -50,8 +49,8 @@ export default function Profile({ navigation, route }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name='cog'
-                color='white'
+                name="cog"
+                color="white"
               />
             </TouchableOpacity>
           ),
@@ -95,8 +94,8 @@ export default function Profile({ navigation, route }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={20}
-                name='plus'
-                color='white'
+                name="plus"
+                color="white"
               />
             </TouchableOpacity>
           ),

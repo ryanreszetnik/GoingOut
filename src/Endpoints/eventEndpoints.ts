@@ -22,7 +22,7 @@ export const searchMatches = async (id) => {
 }
 export const getNearbyLocations=async(loc,locRange,category)=>{
   return [
-    { name: "Dirty Dogs", loc: { lat: 43.654, lon: -79.4 },locationId:"2311tgqwifak",address:"Somewhere Over the Rainbow" },
-    { name: "Warehouse", loc: { lat: 0, lon: 0 },locationId:"bakjflajsdfj",address:"Way Up High"  },
+    { name: "Dirty Dogs", latitude: 43.654, longitude: -79.4 ,locationId:"2311tgqwifak",address:"347 St. Laurent" },
+    { name: "Warehouse", latitude: 0, longitude: 0,address:"842 Avenue Road" ,locationId:"bakjflajsdfj", },
   ]
 }

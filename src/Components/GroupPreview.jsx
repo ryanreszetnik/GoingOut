@@ -2,7 +2,7 @@ import React from "react"
 import { Text, StyleSheet, View } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import { useSelector } from "react-redux"
-import theme from "../Theme/theme.style"
+import { LIST_ITEM_BORDER_COLOR, LIST_ITEM_COLOR } from "../Theme/theme.style"
 import GroupImage from "./GroupImage"
 
 export default function GroupPreview({ group, onPress }) {
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderStyle: "solid",
     padding: 5,
-    borderColor: theme.LIST_ITEM_BORDER_COLOR,
-    backgroundColor: theme.LIST_ITEM_COLOR,
+    borderColor: LIST_ITEM_BORDER_COLOR,
+    backgroundColor: LIST_ITEM_COLOR,
     height: 80,
   },
   header: { fontSize: 20, fontWeight: "600" },

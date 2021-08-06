@@ -22,6 +22,7 @@ import {
   EVENTS_CHAT,
   EVENTS_CREATE_EVENT,
   EVENTS_EDIT_EVENT,
+  EVENTS_EDIT_MEMBERS,
   EVENTS_LOCATION_SELECT,
   EVENTS_MATCHES,
   EVENTS_MATCH_CHAT,
@@ -37,6 +38,7 @@ import {
 import { EVENTS_SINGLE_MATCH } from "../../Constants/screens"
 import PotentialLocation from "./PotentialLocation"
 import LocationSelection from "./LocationSelection"
+import EditMembers from "./EditMembers"
 
 const EventNavigator = createStackNavigator()
 
@@ -61,8 +63,8 @@ export default function Events({ navigation }) {
               <FontAwesome5
                 style={{ marginRight: 20 }}
                 size={25}
-                name='plus'
-                color='white'
+                name="plus"
+                color="white"
               />
             </TouchableOpacity>
           ),
@@ -101,6 +103,11 @@ export default function Events({ navigation }) {
       <EventNavigator.Screen
         name={EVENTS_CREATE_EVENT}
         component={CreateEvent}
+        options={({ navigation }) => {
+          return {
+            headerTitle: "Create New Event",
+          }
+        }}
       />
       <EventNavigator.Screen
         name={EVENTS_SINGLE_MATCH}
@@ -128,8 +135,8 @@ export default function Events({ navigation }) {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name='link'
-                  color='white'
+                  name="link"
+                  color="white"
                 />
               </TouchableOpacity>
             ),
@@ -158,6 +165,10 @@ export default function Events({ navigation }) {
       <EventNavigator.Screen
         name={EVENTS_POTENTIAL_LOCATION}
         component={PotentialLocation}
+      />
+      <EventNavigator.Screen
+        name={EVENTS_EDIT_MEMBERS}
+        component={EditMembers}
       />
     </EventNavigator.Navigator>
   )

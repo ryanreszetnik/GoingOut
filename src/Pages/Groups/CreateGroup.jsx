@@ -9,7 +9,7 @@ import UserList from "../../Components/UserList"
 import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppButton from "../../Components/AppButton"
 import uuid from "react-native-uuid"
-import { createGroup } from "../../Socket/SocketMethods"
+import { createGroup } from "../../Socket/socketMethods"
 import { GROUPS_VIEW } from "../../Constants/screens"
 
 export default function CreateGroup({ navigation }) {
