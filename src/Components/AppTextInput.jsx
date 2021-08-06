@@ -2,10 +2,20 @@ import React from "react"
 import { View, StyleSheet, TextInput, Text } from "react-native"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { ACCENT_COLOR, CONTAINER_COLOR } from "../Theme/theme.style"
-export default function AppTextInput({ label = "", leftIcon, ...otherProps }) {
+export default function AppTextInput({
+  label = "",
+  leftIcon,
+  required = false,
+  ...otherProps
+}) {
   return (
     <View style={styles.wholeContainer}>
-      {label.length > 0 && <Text style={styles.label}>{label}</Text>}
+      {(label.length > 0 || required) && (
+        <View style={{ display: "flex", flexDirection: "row" }}>
+          {label.length > 0 && <Text style={styles.label}>{label}</Text>}
+          {required && <Text style={styles.required}>*</Text>}
+        </View>
+      )}
       <View style={styles.container}>
         {leftIcon && (
           <MaterialCommunityIcons
@@ -48,5 +58,12 @@ const styles = StyleSheet.create({
     width: "80%",
     fontSize: 18,
     color: "white",
+  },
+  required: {
+    color: "red",
+    fontSize: 20,
+    position: "relative",
+    top: -3,
+    paddingLeft: 5,
   },
 })

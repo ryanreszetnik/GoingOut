@@ -32,7 +32,12 @@ export default function SelectMembers({ members, addMember, removeMember }) {
       }}
     >
       <View style={{ height: 120 }}>
-        <UserList subs={members} onPress={tryRemoveMember} horizontal={true} />
+        <UserList
+          subs={members}
+          onPress={tryRemoveMember}
+          horizontal={true}
+          removeIcon
+        />
       </View>
       <AppTextInput
         value={searchTerm}
