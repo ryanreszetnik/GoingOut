@@ -64,15 +64,23 @@ export default function index() {
         <Tab.Screen
           name={NOTIFICATIONS_PAGE}
           component={NotificationPage}
-          options={{
-            tabBarBadgeStyle: {
-              backgroundColor: SECONDARY_ACCENT,
-            },
-            tabBarBadge: notifications,
-            tabBarLabel: () => {
-              return null
-            },
-          }}
+          options={
+            notifications > 0
+              ? {
+                  tabBarBadgeStyle: {
+                    backgroundColor: SECONDARY_ACCENT,
+                  },
+                  tabBarBadge: notifications,
+                  tabBarLabel: () => {
+                    return null
+                  },
+                }
+              : {
+                  tabBarLabel: () => {
+                    return null
+                  },
+                }
+          }
         />
 
         <Tab.Screen
