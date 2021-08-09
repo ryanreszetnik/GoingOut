@@ -121,12 +121,28 @@ export default function Groups() {
         }}
       />
 
-      <GroupNavigator.Screen name={GROUPS_MEMBERS} component={MemberList} />
+      <GroupNavigator.Screen
+        name={GROUPS_MEMBERS}
+        component={MemberList}
+        options={{ headerTitle: "Members" }}
+      />
 
-      <GroupNavigator.Screen name={GROUPS_EDIT_GROUP} component={EditGroup} />
-      <GroupNavigator.Screen name={GROUPS_ADD_MEMBERS} component={AddMembers} />
+      <GroupNavigator.Screen
+        name={GROUPS_EDIT_GROUP}
+        component={EditGroup}
+        options={{ headerTitle: "Edit Group" }}
+      />
+      <GroupNavigator.Screen
+        name={GROUPS_ADD_MEMBERS}
+        component={AddMembers}
+        options={{ headerTitle: "Add Members" }}
+      />
 
-      <GroupNavigator.Screen name={GROUPS_PROFILE} component={MemberProfile} />
+      <GroupNavigator.Screen
+        name={GROUPS_PROFILE}
+        component={MemberProfile}
+        options={{ headerTitle: "Member Profile" }}
+      />
     </GroupNavigator.Navigator>
   )
 }

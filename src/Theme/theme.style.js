@@ -1,17 +1,11 @@
-export default {
-  //  FONT_SIZE_SMALL: 12,
-  // FONT_SIZE_MEDIUM: 14,
-  // FONT_SIZE_LARGE: 16,
-  LIST_ITEM_COLOR: "#2C2C2C",
-  LIST_ITEM_BORDER_COLOR: "gray",
-  PRIMARY_COLOR: "#AAE",
-  SECONDARY_COLOR: "#DDD",
-
-  SECONDARY_ACCENT: "#6925C9",
-  ICON_COLOR: "#AAA",
-  SECONDARY_FONT: "",
-}
+export const LIST_ITEM_COLOR = "#2C2C2C"
+export const LIST_ITEM_BORDER_COLOR = "gray"
 export const ACCENT_COLOR = "#a73ce6"
 export const PAGE_BACKGROUND_COLOR = "#111"
 export const PRIMARY_FONT = "Arial"
 export const CONTAINER_COLOR = "#444"
+export const PRIMARY_COLOR = "#AAE"
+export const SECONDARY_COLOR = "#DDD"
+export const SECONDARY_ACCENT = "#6925C9"
+export const ICON_COLOR = "#AAA"
+export const SECONDARY_FONT = ""
