@@ -18,11 +18,13 @@ import {
   GROUPS_CREATE_EVENT,
   GROUPS_CREATE_GROUP,
   GROUPS_EDIT_GROUP,
+  GROUPS_EDIT_MEMBERS,
   GROUPS_MEMBERS,
   GROUPS_PROFILE,
   GROUPS_SINGLE_GROUP,
   GROUPS_VIEW,
 } from "../../Constants/screens"
+import EditMembers from "./EditMembers"
 
 const GroupNavigator = createStackNavigator()
 
@@ -49,8 +51,8 @@ export default function Groups() {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name='plus'
-                  color='white'
+                  name="plus"
+                  color="white"
                 />
               </TouchableOpacity>
             ),
@@ -84,8 +86,8 @@ export default function Groups() {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name='users'
-                  color='white'
+                  name="users"
+                  color="white"
                 />
               </TouchableOpacity>
             ),
@@ -112,8 +114,8 @@ export default function Groups() {
                 <FontAwesome5
                   style={{ marginRight: 20 }}
                   size={20}
-                  name='info'
-                  color='white'
+                  name="info"
+                  color="white"
                 />
               </TouchableOpacity>
             ),
@@ -122,7 +124,10 @@ export default function Groups() {
       />
 
       <GroupNavigator.Screen name={GROUPS_MEMBERS} component={MemberList} />
-
+      <GroupNavigator.Screen
+        name={GROUPS_EDIT_MEMBERS}
+        component={EditMembers}
+      />
       <GroupNavigator.Screen name={GROUPS_EDIT_GROUP} component={EditGroup} />
       <GroupNavigator.Screen name={GROUPS_ADD_MEMBERS} component={AddMembers} />
 

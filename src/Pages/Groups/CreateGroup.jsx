@@ -10,18 +10,17 @@ import { searchUser } from "../../Endpoints/friendsEndpoints"
 import AppButton from "../../Components/AppButton"
 import uuid from "react-native-uuid"
 import { createGroup } from "../../Socket/socketMethods"
-import { GROUPS_VIEW } from "../../Constants/screens"
+import { GROUPS_VIEW, GROUPS_EDIT_MEMBERS } from "../../Constants/screens"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 
 export default function CreateGroup({ navigation }) {
-  const [locRange, setLocRange] = useState(25)
+  const [locRange, setLocRange] = useState(50)
   const [groupName, setGroupName] = useState()
   const [groupBio, setGroupBio] = useState()
   const [ageRange, setAgeRange] = useState({ minAge: 18, maxAge: 100 })
-  const [genderPref, setPref] = useState("")
+  const [genderPref, setPref] = useState("None")
   const curUser = useSelector((state) => state.profile)
   const [members, setMembers] = useState([curUser.sub])
-  const [searchTerm, setSearchTerm] = useState("")
-  const [friends, setFriends] = useState([])
 
   const createNewGroup = async () => {
     const newGroup = {
@@ -38,62 +37,54 @@ export default function CreateGroup({ navigation }) {
     console.log("Done Creating group")
     navigation.navigate(GROUPS_VIEW)
   }
-  useEffect(() => {
-    updateSearch("")
-  }, [])
-  const updateSearch = async (term) => {
-    setSearchTerm(term)
-
-    const newFriends = await searchUser(term)
-    setFriends(newFriends)
-  }
-
   const removeMember = (user) => {
     user !== curUser.sub &&
       setMembers(members.filter((member) => user !== member))
   }
-  const onPress = (user) => {
-    setMembers([...members, user])
-  }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.page}>
       <AppTextInput
+        label="Group Name"
+        required
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Group Name'
-        autoCapitalize='none'
+        placeholder="Enter Group Name"
+        autoCapitalize="none"
       />
+
+      <View style={{ paddingBottom: 10 }}>
+        <Text style={styles.title}>Members</Text>
+        <UserList
+          subs={members}
+          removeIcon
+          onPress={(sub) => removeMember(sub)}
+          horizontal={true}
+          addMember={() =>
+            navigation.navigate(GROUPS_EDIT_MEMBERS, {
+              initialMembers: members,
+              setMembers: setMembers,
+            })
+          }
+        />
+      </View>
+      <Text style={styles.title}>Preset Event Values</Text>
+      <Text style={styles.description}>
+        *Set default values for creating events from this group
+      </Text>
       <AppTextInput
+        label="Event Bio"
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon='card-text'
-        placeholder='Enter a short Bio'
-        autoCapitalize='none'
+        leftIcon="card-text"
+        placeholder="Enter a short public bio"
+        autoCapitalize="none"
       />
-      <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
+      <LocationRange locRange={locRange} setLocRange={setLocRange} />
       <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
-      <GenderPicker checked={genderPref} setChecked={setPref} />
-      <Text style={styles.searchTitle}>Add members to group</Text>
-      <UserList subs={members} onPress={removeMember} horizontal={true} />
-      <AppTextInput
-        value={searchTerm}
-        onChangeText={(text) => updateSearch(text)}
-        leftIcon='magnify'
-        placeholder='Search For Users'
-        autoCapitalize='none'
-        keyboardType='email-address'
-        textContentType='emailAddress'
-      />
-      <UserList
-        onPress={onPress}
-        subs={friends.filter((f) => !members.some((m) => m === f))}
-      />
-      <View style={styles.searchArea}>
-        <View style={{ alignItems: "center" }}>
-          <AppButton title='Create Group' onPress={createNewGroup} />
-        </View>
+      <GenderPicker setChecked={setPref} checked={genderPref} />
+      <View style={{ alignItems: "center" }}>
+        <AppButton title="Create Group" onPress={createNewGroup} />
       </View>
     </ScrollView>
   )
@@ -119,9 +110,20 @@ const styles = StyleSheet.create({
     borderTopColor: "black",
     width: "90%",
   },
-  searchArea: {
-    marginTop: 10,
-    backgroundColor: "white",
-    height: 450,
+  page: {
+    backgroundColor: PAGE_BACKGROUND_COLOR,
+    paddingTop: 10,
+  },
+  title: {
+    color: "white",
+    fontSize: 25,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  description: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "400",
+    textAlign: "center",
   },
 })

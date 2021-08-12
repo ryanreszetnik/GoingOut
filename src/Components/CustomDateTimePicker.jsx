@@ -3,16 +3,25 @@ import { useState } from "react"
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import MonthPicker from "./MonthPicker"
 import moment from "moment"
+import { Picker } from "@react-native-community/picker"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
+import { useEffect } from "react"
+import AppSwitch from "./AppSwitch"
+
+const hourList = [...Array(24).keys()]
+const minuteList = [...Array(12).keys()].map((n) => n * 5)
 
 export default function CustomDateTimePicker({
   title,
   time,
   setTime,
-  minDate = null,
+  minTime = null,
 }) {
   const [opened, setOpened] = useState(false)
+  const [useDuration, setUseDuration] = useState(false)
+  const [hours, setHours] = useState(0)
+  const [minutes, setMinutes] = useState(0)
 
   const selectTime = (e, value) => {
     const newTime = moment(time)
@@ -27,8 +36,19 @@ export default function CustomDateTimePicker({
     setTime(date.valueOf())
     console.log(date)
   }
+  useEffect(() => {
+    if (minTime !== null) {
+      setTime(minTime + hours * 60000 * 60 + minutes * 60000)
+    }
+  }, [hours, minutes])
+
+  useEffect(() => {
+    if (minTime !== null && minTime > time) {
+      setTime(minTime)
+    }
+  }, [minTime])
   return (
-    <View on>
+    <View>
       <TouchableOpacity
         style={styles.preview}
         onPress={() => setOpened(!opened)}
@@ -41,31 +61,101 @@ export default function CustomDateTimePicker({
       </TouchableOpacity>
       {opened && (
         <View style={styles.bottomContainer}>
-          <View style={styles.timeContainer}>
-            <Text style={styles.previewText}>Time</Text>
-            <View style={styles.timeSelector}>
-              <DateTimePicker
-                style={{
-                  backgroundColor: "#CCC",
+          {minTime !== null && (
+            <AppSwitch
+              value={useDuration}
+              onChange={setUseDuration}
+              label="Select Duration"
+            />
+          )}
+          {useDuration ? (
+            <View>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <Picker
+                  selectedValue={hours}
+                  style={{
+                    width: "25%",
+                    color: "white",
+                  }}
+                  itemStyle={{ height: 125 }}
+                  onValueChange={setHours}
+                >
+                  {hourList.map((h) => (
+                    <Picker.Item
+                      color="white"
+                      label={`${h}`}
+                      key={h}
+                      value={h}
+                    />
+                  ))}
+                </Picker>
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    paddingRight: 20,
+                  }}
+                >
+                  Hours
+                </Text>
+                <Picker
+                  selectedValue={minutes}
+                  style={{
+                    width: "25%",
+                    color: "white",
+                  }}
+                  itemStyle={{ height: 125 }}
+                  onValueChange={setMinutes}
+                >
+                  {minuteList.map((h) => (
+                    <Picker.Item
+                      color="white"
+                      label={`${h}`}
+                      key={h}
+                      value={h}
+                    />
+                  ))}
+                </Picker>
+                <Text
+                  style={{
+                    color: "white",
+                    alignSelf: "center",
+                    paddingRight: 20,
+                  }}
+                >
+                  Minutes
+                </Text>
+              </View>
+            </View>
+          ) : (
+            <View>
+              <View style={styles.timeContainer}>
+                <Text style={styles.previewText}>Time</Text>
+                <View style={styles.timeSelector}>
+                  <DateTimePicker
+                    style={{
+                      backgroundColor: "#CCC",
 
-                  width: 85,
-                  height: "100%",
-                  color: "green",
-                  alignSelf: "flex-end",
-                }}
-                textColor="white"
-                mode="time"
-                value={new Date(time)}
-                onChange={selectTime}
+                      width: 85,
+                      height: "100%",
+                      color: "green",
+                      alignSelf: "flex-end",
+                    }}
+                    textColor="white"
+                    mode="time"
+                    value={new Date(time)}
+                    onChange={selectTime}
+                  />
+                </View>
+              </View>
+
+              <MonthPicker
+                initialDate={time}
+                updateDate={updateDate}
+                minDate={minTime}
               />
             </View>
-          </View>
-
-          <MonthPicker
-            initialDate={time}
-            updateDate={updateDate}
-            minDate={minDate}
-          />
+          )}
         </View>
       )}
     </View>

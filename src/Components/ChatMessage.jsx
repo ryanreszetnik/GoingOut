@@ -1,5 +1,6 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
+import { PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
 
 export default function ChatMessage({ message, sender, author }) {
   if (sender) {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 
   rightArrowOverlap: {
     position: "absolute",
-    backgroundColor: "#eeeeee",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
     //backgroundColor:"green",
     width: 20,
     height: 35,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
 
   leftArrowOverlap: {
     position: "absolute",
-    backgroundColor: "#eeeeee",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
     //backgroundColor:"green",
     width: 20,
     height: 35,

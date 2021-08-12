@@ -1,5 +1,12 @@
 import React, { useRef, useState } from "react"
-import { View, Text, ScrollView, Switch, StyleSheet } from "react-native"
+import {
+  View,
+  Text,
+  ScrollView,
+  Switch,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native"
 import { useSelector } from "react-redux"
 import AppButton from "../../Components/AppButton"
 import MonthPicker from "../../Components/MonthPicker"
@@ -13,6 +20,11 @@ import GenderPreference from "../../Components/GenderPreference"
 import { createEvent } from "../../Socket/socketMethods"
 import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps"
 import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
+import CustomDateTimePicker from "../../Components/CustomDateTimePicker"
+import CategorySelection from "../../Components/CategorySelection"
+import AppSwitch from "../../Components/AppSwitch"
+import GenderPicker from "../../Components/GenderPreference"
 
 export default function CreateTempFromPerm({ navigation, route }) {
   const { groupId } = route.params
@@ -21,14 +33,21 @@ export default function CreateTempFromPerm({ navigation, route }) {
   )
   const [name, setName] = useState(baseGroup ? baseGroup.name : "")
   const [bio, setBio] = useState(baseGroup ? baseGroup.bio : "")
-  const [date, setDate] = useState("")
-  const [time, setTime] = useState(new Date())
-  const [locRange, setLocRange] = useState(25)
-  const [loc, setLoc] = useState({
+  const [notes, setNotes] = useState("")
+  const [category, setCategory] = useState("Any")
+  const [startTime, updateStartTime] = useState(Date.now())
+  const [endTime, updateEndTime] = useState(Date.now())
+  const [locRange, setLocRange] = useState(
+    typeof baseGroup.locRange === "string"
+      ? parseInt(baseGroup.locRange)
+      : baseGroup.locRange
+  )
+  const [visible, setVisible] = useState(false)
+  const [loc, updateLocation] = useState({
     latitude: 43.6532,
     longitude: -79.3832,
-    latitudeDelta: 0.005,
-    longitudeDelta: 0.005,
+    name: "",
+    address: "",
   })
   const mapRef = useRef()
   const [ageRange, setAgeRange] = useState(
@@ -110,100 +129,109 @@ export default function CreateTempFromPerm({ navigation, route }) {
   //     time:string;
   ;`   `
   return (
-    <ScrollView ref={scrollRef}>
-      {baseGroup ? (
-        <View>
-          <Text>{`Base Group: ${baseGroup.name}`}</Text>
-          <Text>Select Date</Text>
-          <MonthPicker
-            updateDate={(date) => {
-              setDate(date)
-              setSelected(true)
-            }}
-          />
-
-          {/*selected && (
-        <DateTimePicker
-          value={time}
-          mode='time'
-          is24Hour={false}
-          display='default'
-          onChange={setTimePicker}
+    <ScrollView ref={scrollRef} style={styles.page}>
+      <Text style={styles.title}>Event Details</Text>
+      <AppTextInput
+        label="Event Name"
+        required
+        value={name}
+        onChangeText={(text) => setName(text)}
+        placeholder="Enter Event Name"
+        autoCapitalize="none"
+      />
+      <View style={{ paddingBottom: 10, paddingTop: 10 }}>
+        <AppTextInput
+          label="Event Notes"
+          value={notes}
+          onChangeText={(text) => setNotes(text)}
+          placeholder="Enter any private event details"
+          autoCapitalize="none"
         />
-      )*/}
-          {formattedTime !== "" && <Text>Selected Time: {formattedTime}</Text>}
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            initialRegion={loc}
-            style={styles.map}
-            ref={mapRef}
-            onPress={(e) => {
-              mapRef.current?.animateToRegion(
-                {
-                  ...e.nativeEvent.coordinate,
-                  latitudeDelta: 0.015 * locRange,
-                  longitudeDelta: 0.015 * locRange,
-                },
-                1500
-              )
-              setLoc({
-                ...e.nativeEvent.coordinate,
-                latitudeDelta: 0.015 * locRange,
-                longitudeDelta: 0.015 * locRange,
-              })
+      </View>
+      <CustomDateTimePicker
+        title="Starts"
+        time={startTime}
+        setTime={updateStartTime}
+      />
+      <CustomDateTimePicker
+        title="Ends"
+        time={endTime}
+        setTime={updateEndTime}
+        minDate={startTime}
+      />
+      <CategorySelection value={category} onChange={setCategory} />
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate(EVENTS_LOCATION_SELECT, {
+            callBack: updateLocation,
+            initialLocation: loc,
+          })
+        }
+        style={{
+          height: 40,
+          marginTop: 4,
+          backgroundColor: "#555",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <View style={{ width: "50%" }}>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 17,
+              fontWeight: "500",
+              paddingLeft: 15,
             }}
           >
-            <Marker coordinate={loc}></Marker>
-            <Circle
-              center={loc}
-              radius={locRange * 1000}
-              fillColor={"rgba(255, 0, 0, 0.07)"}
-            ></Circle>
-          </MapView>
-          <Text>Use Same Values As Group</Text>
-          <Switch value={useDefault} onValueChange={changeSwitch} />
-          {useDefault ? (
-            <View>
-              <Text>{`Event Name: ${baseGroup.name}`}</Text>
-              <Text>{`Event Bio: ${baseGroup.bio}`}</Text>
-              <Text>{`Gender Pref: ${baseGroup.genderPref}`}</Text>
-              <Text>{`Age Range: ${baseGroup.ageRange.minAge}-${baseGroup.ageRange.maxAge}`}</Text>
-            </View>
-          ) : (
-            <View>
-              <Text>Event Name</Text>
-              <AppTextInput
-                value={name}
-                onChangeText={(text) => setName(text)}
-                leftIcon='card-text'
-                placeholder='Enter Event Name'
-                autoCapitalize='none'
-              />
-              <Text>Event Bio</Text>
-              <AppTextInput
-                value={bio}
-                onChangeText={(text) => setBio(text)}
-                leftIcon='card-text'
-                placeholder='Enter a short Bio'
-                autoCapitalize='none'
-              />
-              <Text>{baseGroup.genderPref}</Text>
-              <GenderPreference
-                checked={genderPref}
-                setChecked={setGenderPref}
-              />
-              <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
-            </View>
-          )}
-          <AppButton title='Create Event' onPress={createNewEvent} />
-          <FlashMessage />
+            Location
+          </Text>
         </View>
-      ) : (
-        <View />
-      )}
+        <View style={{ width: "50%", alignItems: "flex-end", paddingRight: 5 }}>
+          <Text style={{ color: "white", fontSize: 17, fontWeight: "500" }}>
+            {loc.name.length > 0 ? loc.name : "Not Set"}
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      <Text style={styles.title}>Matching Preferences</Text>
+      <AppSwitch
+        value={visible}
+        onChange={() => setVisible((v) => !v)}
+        label="Private Event"
+      />
+      <AppTextInput
+        label="Event Bio"
+        value={bio}
+        onChangeText={(text) => setBio(text)}
+        leftIcon="card-text"
+        placeholder="Enter a short public bio"
+        autoCapitalize="none"
+      />
+      <LocationRange locRange={locRange} setLocRange={setLocRange} />
+      <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
+      <GenderPicker setChecked={setGenderPref} checked={genderPref} />
+      <View style={{ alignItems: "center" }}>
+        <AppButton title="Create Event" onPress={createNewEvent} />
+      </View>
+      <FlashMessage />
     </ScrollView>
   )
 }
 const styles = StyleSheet.create({
   map: { width: "100%", height: 250 },
+  page: {
+    backgroundColor: PAGE_BACKGROUND_COLOR,
+    paddingTop: 10,
+  },
+  title: {
+    color: "white",
+    fontSize: 25,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  fieldName: {
+    color: "white",
+  },
 })

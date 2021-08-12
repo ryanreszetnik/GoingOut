@@ -4,7 +4,13 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler"
 
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import { useSelector } from "react-redux"
+import AppTextInput from "../Components/AppTextInput"
 import ChatMessage from "../Components/ChatMessage"
+import {
+  ACCENT_COLOR,
+  CONTAINER_COLOR,
+  PAGE_BACKGROUND_COLOR,
+} from "../Theme/theme.style"
 
 export default function Chat({ messages, sendMessage }) {
   const scrollViewRef = useRef()
@@ -50,7 +56,7 @@ export default function Chat({ messages, sendMessage }) {
             style={{ marginRight: 20 }}
             size={35}
             name="arrow-circle-up"
-            color="tomato"
+            color={ACCENT_COLOR}
           />
         </TouchableOpacity>
       </View>
@@ -60,24 +66,28 @@ export default function Chat({ messages, sendMessage }) {
 const styles = StyleSheet.create({
   page: {
     height: "100%",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
   },
   inputContainer: {
     height: 45,
-    backgroundColor: "#FFF",
+    backgroundColor: CONTAINER_COLOR,
     paddingBottom: 5,
     paddingTop: 5,
     flexDirection: "row",
   },
   input: {
-    backgroundColor: "#e9e9e9",
-    borderRadius: 10,
+    backgroundColor: CONTAINER_COLOR,
+    borderRadius: 45,
+    paddingHorizontal: 10,
+    borderColor: "#888",
+    borderWidth: 2,
     padding: 5,
     width: "85%",
   },
   messageView: {},
   inputText: {
     fontSize: 18,
-    color: "#101010",
+    color: "white",
   },
   sendButton: {
     width: "100%",

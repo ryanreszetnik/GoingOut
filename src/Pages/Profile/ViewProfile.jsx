@@ -59,6 +59,7 @@ export default function ViewProfile({ navigation }) {
                   width: 75,
                   marginVertical: "auto",
                 }}
+                text="Friends"
                 textStyle={{ color: "white" }}
                 //animatedValue={animatedValue1.getTranslateTransform()}
                 //opacityAnimator={opacityAnimator}
@@ -72,6 +73,7 @@ export default function ViewProfile({ navigation }) {
                 style={{
                   width: 75,
                 }}
+                text="Edit Profile"
                 textStyle={{ color: "white" }}
                 //animatedValue={animatedValue3.getTranslateTransform()}
                 //opacityAnimator={opacityAnimator}

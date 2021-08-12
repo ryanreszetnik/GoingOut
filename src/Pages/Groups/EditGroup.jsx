@@ -4,22 +4,31 @@ import { useSelector } from "react-redux"
 import { ScrollView } from "react-native-gesture-handler"
 import AppTextInput from "../../Components/AppTextInput"
 import AgeRange from "../../Components/AgeRange"
-import GenderPicker from "../../Components/GenderPicker"
+import GenderPicker from "../../Components/GenderPreference"
 import AppButton from "../../Components/AppButton"
 
 import { editGroup } from "../../Socket/socketMethods"
 import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
+import UserList from "../../Components/UserList"
 
 export default function EditGroup({ navigation, route }) {
   const { groupId } = route.params
   const group = useSelector((state) =>
     state.groups.find((group) => group.groupId === groupId)
   )
-  const [locRange, setLocRange] = useState(group.locRange)
+  console.log(typeof group.locRange)
+  const [locRange, setLocRange] = useState(
+    typeof group.locRange === "string"
+      ? parseInt(group.locRange)
+      : group.locRange
+  )
   const [groupName, setGroupName] = useState(group.name)
   const [groupBio, setGroupBio] = useState(group.bio)
   const [ageRange, setAgeRange] = useState(group.ageRange)
-  const [genderPref, setPref] = useState(group.genderPref)
+  const [genderPref, setPref] = useState(
+    group.genderPref.length > 0 ? group.genderPref : "None"
+  )
 
   const editGroup = async () => {
     const newGroup = {
@@ -38,30 +47,38 @@ export default function EditGroup({ navigation, route }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.page}>
       <AppTextInput
+        label="Group Name"
+        required
         value={groupName}
         onChangeText={(text) => setGroupName(text)}
-        leftIcon='form-textbox'
-        placeholder='Enter Group Name'
-        autoCapitalize='none'
+        placeholder="Enter Group Name"
+        autoCapitalize="none"
       />
+
+      <Text style={styles.title}>Preset Event Values</Text>
+      <Text style={styles.description}>
+        *Set default values for creating events from this group
+      </Text>
       <AppTextInput
+        label="Event Bio"
         value={groupBio}
         onChangeText={(text) => setGroupBio(text)}
-        leftIcon='card-text'
-        placeholder='Enter a short Bio'
-        autoCapitalize='none'
+        leftIcon="card-text"
+        placeholder="Enter a short public bio"
+        autoCapitalize="none"
       />
-      <Text style={styles.sliderTitle}>Enter Preferred Age Range</Text>
+      <LocationRange locRange={locRange} setLocRange={setLocRange} />
       <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
-      <GenderPicker checked={genderPref} setChecked={setPref} />
+      <GenderPicker setChecked={setPref} checked={genderPref} />
       <View style={{ alignItems: "center" }}>
-        <AppButton title='Save Changes' onPress={editGroup} />
+        <AppButton title="Save Group" onPress={editGroup} />
       </View>
     </ScrollView>
   )
 }
+
 const styles = StyleSheet.create({
   sliderTitle: {
     alignSelf: "center",
@@ -72,5 +89,30 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "black",
     width: "90%",
+  },
+  searchTitle: {
+    fontSize: 20,
+    padding: 10,
+    alignSelf: "center",
+    textAlign: "center",
+    borderTopWidth: 1,
+    borderTopColor: "black",
+    width: "90%",
+  },
+  page: {
+    backgroundColor: PAGE_BACKGROUND_COLOR,
+    paddingTop: 10,
+  },
+  title: {
+    color: "white",
+    fontSize: 25,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  description: {
+    color: "white",
+    fontSize: 14,
+    fontWeight: "400",
+    textAlign: "center",
   },
 })

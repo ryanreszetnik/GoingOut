@@ -34,6 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: LIST_ITEM_COLOR,
     height: 80,
   },
-  header: { fontSize: 20, fontWeight: "600" },
-  message: { fontSize: 15, paddingTop: 3, color: "#444" },
+  header: { fontSize: 20, fontWeight: "600", color: "white" },
+  message: { fontSize: 15, paddingTop: 3, color: "#BBB" },
 })

@@ -13,6 +13,8 @@ import {
   GROUPS_EDIT_GROUP,
   GROUPS_VIEW,
 } from "../../Constants/screens"
+import DisplayTextField from "../../Components/DisplayTextField"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 
 export default function ViewSingleGroup({ navigation, route }) {
   const { groupId } = route.params
@@ -38,48 +40,17 @@ export default function ViewSingleGroup({ navigation, route }) {
   }
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.page}>
       {group && (
         <View style={styles.container}>
           <View style={styles.attributeContainer}>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name='form-textbox'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                {`  Group Name`}
-              </Text>
-              <Text style={styles.attributeTxt}>{group.name}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name='card-text'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                {`  Bio`}
-              </Text>
-              <Text style={styles.attributeTxt}>{group.bio}</Text>
-            </View>
-            <View style={styles.txtField}>
-              <Text>
-                <MaterialCommunityIcons
-                  name='google-maps'
-                  size={20}
-                  color='#6e6869'
-                  style={styles.icon}
-                />
-                {`  Location`}
-              </Text>
-              <Text style={styles.attributeTxt}>
-                {/*group.location*/ "placeholder"}
-              </Text>
-            </View>
+            <DisplayTextField
+              icon="form-textbox"
+              value={group.name}
+              label="Group Name"
+            />
+            <DisplayTextField icon="card-text" value={group.bio} label="Bio" />
+
             {group.events && group.events.length > 0 && (
               <View style={styles.txtField}>
                 <Text>{`Events`}</Text>
@@ -102,9 +73,9 @@ export default function ViewSingleGroup({ navigation, route }) {
           </View>
 
           <View style={{ alignItems: "center" }}>
-            <AppButton title='Edit Group' onPress={editGroup} />
-            <AppButton title='Create Event' onPress={createEvent} />
-            <AppButton title='Leave Group' onPress={leaveGroupHere} />
+            <AppButton title="Edit Group" onPress={editGroup} />
+            <AppButton title="Create Event" onPress={createEvent} />
+            <AppButton title="Leave Group" onPress={leaveGroupHere} />
           </View>
         </View>
       )}
@@ -112,6 +83,7 @@ export default function ViewSingleGroup({ navigation, route }) {
   )
 }
 const styles = StyleSheet.create({
+  page: { height: "100%", backgroundColor: PAGE_BACKGROUND_COLOR },
   container: {
     width: "95%",
     alignSelf: "center",
@@ -126,13 +98,6 @@ const styles = StyleSheet.create({
   },
   imageFriends: {
     flexDirection: "row",
-  },
-  imgText: {
-    backgroundColor: "#c0c0c0",
-    padding: 5,
-    marginLeft: "30%",
-    borderRadius: 5,
-    alignSelf: "center",
   },
   imgTitle: {
     fontSize: 20,

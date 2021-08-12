@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: CONTAINER_COLOR,
     borderRadius: 10,
     padding: 8,
+    marginHorizontal: 10,
   },
   label: {
     color: "white",

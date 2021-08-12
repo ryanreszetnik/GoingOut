@@ -37,6 +37,7 @@ import CustomDateTimePicker from "../../Components/CustomDateTimePicker"
 import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 import { useEffect } from "react"
 import AppSwitch from "../../Components/AppSwitch"
+import CategorySelection from "../../Components/CategorySelection"
 
 export default function CreateEvent({ navigation }) {
   const curSub = useSelector((state) => state.profile.sub)
@@ -50,6 +51,7 @@ export default function CreateEvent({ navigation }) {
   const [members, setMembers] = useState([curSub])
   const [visible, setVisible] = useState(false)
   const [ageRange, setAgeRange] = useState({ minAge: 18, maxAge: 100 })
+  const [category, setCategory] = useState(null)
 
   const [loc, setLoc] = useState({
     latitude: 43.6532,
@@ -57,19 +59,7 @@ export default function CreateEvent({ navigation }) {
     name: "",
     address: "",
   })
-  const updateStartTime = (time) => {
-    if (endTime < time) {
-      setEndTime(time)
-    }
-    setStartTime(time)
-  }
-  const updateEndTime = (time) => {
-    if (time < startTime) {
-      setEndTime(startTime)
-    } else {
-      setEndTime(time)
-    }
-  }
+
   const [shownLocation, setShownLocation] = useState({
     latitude: 43.6532,
     longitude: -79.3832,
@@ -168,38 +158,35 @@ export default function CreateEvent({ navigation }) {
   return (
     <ScrollView ref={scrollRef} style={styles.page}>
       <Text style={styles.title}>Event Details</Text>
-      <View style={styles.inputContainer}>
+      <AppTextInput
+        label="Event Name"
+        required
+        value={name}
+        onChangeText={(text) => setName(text)}
+        placeholder="Enter Event Name"
+        autoCapitalize="none"
+      />
+      <View style={{ paddingBottom: 10, paddingTop: 10 }}>
         <AppTextInput
-          label='Event Name'
-          required
-          value={name}
-          onChangeText={(text) => setName(text)}
-          placeholder='Enter Event Name'
-          autoCapitalize='none'
+          label="Event Notes"
+          value={notes}
+          onChangeText={(text) => setNotes(text)}
+          placeholder="Enter any private event details"
+          autoCapitalize="none"
         />
       </View>
-      <View style={{ paddingBottom: 10, paddingTop: 10 }}>
-        <View style={styles.inputContainer}>
-          <AppTextInput
-            label='Event Notes'
-            value={notes}
-            onChangeText={(text) => setNotes(text)}
-            placeholder='Enter any private event details'
-            autoCapitalize='none'
-          />
-        </View>
-      </View>
       <CustomDateTimePicker
-        title='Starts'
+        title="Starts"
         time={startTime}
-        setTime={updateStartTime}
+        setTime={setStartTime}
       />
       <CustomDateTimePicker
-        title='Ends'
+        title="Ends"
         time={endTime}
-        setTime={updateEndTime}
-        minDate={startTime}
+        minTime={startTime}
+        setTime={setEndTime}
       />
+      <CategorySelection value={category} onChange={setCategory} />
       <TouchableOpacity
         onPress={() =>
           navigation.navigate(EVENTS_LOCATION_SELECT, {
@@ -256,21 +243,19 @@ export default function CreateEvent({ navigation }) {
         onChange={() => setVisible((v) => !v)}
         label="Private Event"
       />
-      <View style={styles.inputContainer}>
-        <AppTextInput
-          label='Event Bio'
-          value={bio}
-          onChangeText={(text) => setBio(text)}
-          leftIcon='card-text'
-          placeholder='Enter a short public bio'
-          autoCapitalize='none'
-        />
-      </View>
+      <AppTextInput
+        label="Event Bio"
+        value={bio}
+        onChangeText={(text) => setBio(text)}
+        leftIcon="card-text"
+        placeholder="Enter a short public bio"
+        autoCapitalize="none"
+      />
       <LocationRange locRange={locRange} setLocRange={updateLocationRange} />
       <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
       <GenderPicker setChecked={setGenderPref} checked={genderPref} />
       <View style={{ alignItems: "center" }}>
-        <AppButton title='Create Event' onPress={createNewEvent} />
+        <AppButton title="Create Event" onPress={createNewEvent} />
       </View>
       <FlashMessage />
     </ScrollView>
@@ -290,8 +275,5 @@ const styles = StyleSheet.create({
   },
   fieldName: {
     color: "white",
-  },
-  inputContainer: {
-    paddingHorizontal: 10,
   },
 })
