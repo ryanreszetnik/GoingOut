@@ -10,7 +10,9 @@ export default function LocationRecommendations({ loc, onPress }) {
     getRecommendations()
   }, [loc])
   const getRecommendations = async () => {
-    console.log(`Getting Recommendations near lat:${loc.lat} lon:${loc.lon}`)
+    console.log(
+      `Getting Recommendations near lat:${loc.latitude} lon:${loc.longitude}`
+    )
     setRecs(await getNearbyLocations(loc))
   }
   return (

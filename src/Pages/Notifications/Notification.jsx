@@ -16,11 +16,12 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 5,
     paddingLeft: 5,
-    borderBottomColor: "black",
+    borderTopColor: "#AAA",
     borderTopWidth: 0.5,
     height: 50,
   },
   message: {
     fontSize: 16,
+    color: "white",
   },
 })

@@ -1,6 +1,6 @@
 import React from "react"
 import { View, Text, StyleSheet } from "react-native"
-import { PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
+import { ACCENT_COLOR, PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
 
 export default function ChatMessage({ message, sender, author }) {
   if (sender) {
@@ -9,7 +9,7 @@ export default function ChatMessage({ message, sender, author }) {
     return (
       <View
         style={{
-          backgroundColor: "#0078fe",
+          backgroundColor: ACCENT_COLOR,
           padding: 10,
           marginLeft: "45%",
           borderRadius: 5,
@@ -33,7 +33,7 @@ export default function ChatMessage({ message, sender, author }) {
         <Text
           style={{
             fontSize: 12,
-            color: "#333",
+            color: "white",
             justifyContent: "flex-start",
             paddingLeft: 25,
           }}
@@ -43,7 +43,7 @@ export default function ChatMessage({ message, sender, author }) {
 
         <View
           style={{
-            backgroundColor: "#dedede",
+            backgroundColor: "gray",
             padding: 10,
             borderRadius: 5,
             marginTop: 5,
@@ -58,7 +58,7 @@ export default function ChatMessage({ message, sender, author }) {
           }}
         >
           <Text
-            style={{ fontSize: 16, color: "#000", justifyContent: "center" }}
+            style={{ fontSize: 16, color: "white", justifyContent: "center" }}
           >
             {message}
           </Text>
@@ -73,7 +73,7 @@ export default function ChatMessage({ message, sender, author }) {
 const styles = StyleSheet.create({
   rightArrow: {
     position: "absolute",
-    backgroundColor: "#0078fe",
+    backgroundColor: ACCENT_COLOR,
     //backgroundColor:"red",
     width: 20,
     height: 25,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   /*Arrow head for recevied messages*/
   leftArrow: {
     position: "absolute",
-    backgroundColor: "#dedede",
+    backgroundColor: "gray",
     //backgroundColor:"red",
     width: 20,
     height: 25,

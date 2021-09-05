@@ -4,62 +4,56 @@ import { useRef } from "react"
 import { useState } from "react"
 import { View, Text, StyleSheet } from "react-native"
 import MapView, { Circle, Marker, PROVIDER_GOOGLE } from "react-native-maps"
-import AppButton from "../../Components/AppButton"
-import AppTextInput from "../../Components/AppTextInput"
-import CustomMarker from "../../Components/CustomMarker"
-import LocationRecommendation from "../../Components/LocationRecommendation"
-import { EVENTS_POTENTIAL_LOCATION } from "../../Constants/screens"
-import { getNearbyLocations } from "../../Endpoints/eventEndpoints"
-import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
+import AppButton from "../Components/AppButton"
+import AppTextInput from "../Components/AppTextInput"
+import CustomMarker from "../Components/CustomMarker"
+import LocationRecommendation from "../Components/LocationRecommendation"
+import { EVENTS_POTENTIAL_LOCATION } from "../Constants/screens"
+import { getNearbyLocations } from "../Endpoints/eventEndpoints"
+import { PAGE_BACKGROUND_COLOR } from "../Theme/theme.style"
+import { getLocationAd } from "../Utils/page.utils"
 
 export default function LocationSelection({ route, navigation }) {
   const { callBack, initialLocation } = route.params
   const [location, setLocation] = useState(initialLocation)
+  const [newAdLocation, setNewAdLocation] = useState(null)
   const [nearby, setNearby] = useState([])
-  const [manual, setManual] = useState(true)
-  const [name, setName] = useState("")
-  const [displayName, setDisplayName] = useState("")
-  const [currentLocation, setCurrentLocation] = useState(null)
-  const [address, setAddress] = useState("")
-
-  useEffect(() => {
-    setLocation({
-      latitude: initialLocation.latitude,
-      longitude: initialLocation.longitude,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
-    })
-    if (initialLocation.locationId) {
-      setCurrentLocation(initialLocation)
-      setManual(false)
-    } else {
-      setName(initialLocation.name)
-      setAddress(initialLocation.address)
-    }
-    setDisplayName(initialLocation.name)
-  }, [initialLocation])
+  const [name, setName] = useState(
+    initialLocation.locationId === null ? initialLocation.name : ""
+  )
+  const [address, setAddress] = useState(
+    initialLocation.locationId === null ? initialLocation.address : ""
+  )
+  const potentialLocationPage = getLocationAd(route.name)
   const mapRef = useRef()
+  const updateName = (newName) => {
+    setName(newName)
+    setLocation((loc) => {
+      return { ...loc, name: newName }
+    })
+  }
+  const updateAddress = (newAddress) => {
+    setAddress(newAddress)
+    setLocation((loc) => {
+      return { ...loc, address: newAddress }
+    })
+  }
   useEffect(() => {
     loadNewLocations()
   }, [location])
   const loadNewLocations = async () => {
     const newNearby = await getNearbyLocations(location)
-    console.log("getting nearby", newNearby)
     setNearby(newNearby)
   }
-  const updateLocation = (latitude, longitude) => {
-    console.log("Setting location", latitude, longitude)
-    setLocation({
-      latitude,
-      longitude,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
-    })
+
+  const updateLocation = (newLocation) => {
+    console.log("Setting location", newLocation)
+    setLocation(newLocation)
 
     mapRef.current?.animateToRegion(
       {
-        latitude,
-        longitude,
+        latitude: newLocation.latitude,
+        longitude: newLocation.longitude,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
       },
@@ -67,40 +61,24 @@ export default function LocationSelection({ route, navigation }) {
     )
   }
   const submit = () => {
-    let data = {}
-    if (manual) {
-      data = {
-        latitude: location.latitude,
-        longitude: location.longitude,
-        name: name,
-        address,
-        locationId: null,
-      }
-    } else {
-      data = {
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
-        name: currentLocation.name,
-        address: currentLocation.address,
-        locationId: currentLocation.locationId,
-      }
-    }
     navigation.pop(1)
-    callBack(data)
+    callBack(location)
   }
   const selectManualLocation = (location) => {
     console.log("Manual", location)
-    setCurrentLocation(null)
-    setDisplayName(name)
-    updateLocation(location.latitude, location.longitude)
-    setManual(true)
+    setNewAdLocation(null)
+    updateLocation({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      name,
+      address,
+      locationId: null,
+    })
   }
   const selectAdLocation = (location) => {
     console.log("Preset", location)
-    setCurrentLocation(location)
-    setDisplayName(location.name)
-    updateLocation(location.latitude, location.longitude)
-    setManual(false)
+    setNewAdLocation(location)
+    updateLocation(location)
   }
   return (
     <View style={{ backgroundColor: PAGE_BACKGROUND_COLOR, height: "100%" }}>
@@ -119,11 +97,16 @@ export default function LocationSelection({ route, navigation }) {
         }}
       >
         <CustomMarker
-          coordinate={location}
-          label={`${displayName}`}
+          coordinate={{
+            latitude: location.latitude,
+            longitude: location.longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}
+          label={`${location.name}`}
         ></CustomMarker>
       </MapView>
-      {manual ? (
+      {location.locationId === null ? (
         <View style={{ paddingTop: 3 }}>
           <View style={styles.textContainer}>
             <AppTextInput
@@ -131,8 +114,7 @@ export default function LocationSelection({ route, navigation }) {
               label="Name"
               required
               onChangeText={(text) => {
-                setName(text)
-                setDisplayName(text)
+                updateName(text)
               }}
               leftIcon="map-marker"
               placeholder="Enter Location Name"
@@ -146,7 +128,7 @@ export default function LocationSelection({ route, navigation }) {
               label="Address"
               value={address}
               onChangeText={(text) => {
-                setAddress(text)
+                updateAddress(text)
               }}
               leftIcon="map-marker"
               placeholder="Enter Location Details/Address"
@@ -160,12 +142,11 @@ export default function LocationSelection({ route, navigation }) {
         <View>
           <Text style={{ color: "white" }}>Selected Location:</Text>
           <LocationRecommendation
-            currentLoc={location}
             showDistance={false}
-            recomendation={currentLocation}
+            recomendation={location}
             onPress={() => {
-              navigation.navigate(EVENTS_POTENTIAL_LOCATION, {
-                location: currentLocation,
+              navigation.navigate(potentialLocationPage, {
+                location,
               })
             }}
           />
@@ -174,18 +155,15 @@ export default function LocationSelection({ route, navigation }) {
       <AppButton title="Confirm" onPress={submit} />
       <View style={styles.recomendations}>
         {nearby
-          .filter(
-            (l) =>
-              currentLocation === null ||
-              l.locationId !== currentLocation.locationId
-          )
+          .filter((l) => l.locationId !== location.locationId)
           .map((recomendation) => {
             return (
               <LocationRecommendation
+                key={recomendation.locationId}
                 currentLoc={location}
                 recomendation={recomendation}
                 onPress={() => {
-                  navigation.navigate(EVENTS_POTENTIAL_LOCATION, {
+                  navigation.push(potentialLocationPage, {
                     location: recomendation,
                     currentLocation: location,
                     callBack: selectAdLocation,

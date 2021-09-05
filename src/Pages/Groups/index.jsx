@@ -19,12 +19,16 @@ import {
   GROUPS_CREATE_GROUP,
   GROUPS_EDIT_GROUP,
   GROUPS_EDIT_MEMBERS,
+  GROUPS_LOCATION_SELECT,
   GROUPS_MEMBERS,
+  GROUPS_POTENTIAL_LOCATION,
   GROUPS_PROFILE,
   GROUPS_SINGLE_GROUP,
   GROUPS_VIEW,
 } from "../../Constants/screens"
 import EditMembers from "./EditMembers"
+import LocationAd from "../../CommonPages/LocationAd"
+import LocationSelection from "../../CommonPages/LocationSelection"
 
 const GroupNavigator = createStackNavigator()
 
@@ -123,15 +127,46 @@ export default function Groups() {
         }}
       />
 
-      <GroupNavigator.Screen name={GROUPS_MEMBERS} component={MemberList} />
       <GroupNavigator.Screen
-        name={GROUPS_EDIT_MEMBERS}
-        component={EditMembers}
+        name={GROUPS_MEMBERS}
+        component={MemberList}
+        options={{ headerTitle: "Members" }}
       />
-      <GroupNavigator.Screen name={GROUPS_EDIT_GROUP} component={EditGroup} />
-      <GroupNavigator.Screen name={GROUPS_ADD_MEMBERS} component={AddMembers} />
 
-      <GroupNavigator.Screen name={GROUPS_PROFILE} component={MemberProfile} />
+      <GroupNavigator.Screen
+        name={GROUPS_EDIT_GROUP}
+        component={EditGroup}
+        options={{ headerTitle: "Edit Group" }}
+      />
+      <GroupNavigator.Screen
+        name={GROUPS_ADD_MEMBERS}
+        component={AddMembers}
+        options={{ headerTitle: "Add Members" }}
+      />
+
+      <GroupNavigator.Screen
+        name={GROUPS_PROFILE}
+        component={MemberProfile}
+        options={{ headerTitle: "Member Profile" }}
+      />
+      <GroupNavigator.Screen
+        name={GROUPS_POTENTIAL_LOCATION}
+        component={LocationAd}
+        options={() => {
+          return {
+            headerTitle: "Potential Location",
+          }
+        }}
+      />
+      <GroupNavigator.Screen
+        name={GROUPS_LOCATION_SELECT}
+        component={LocationSelection}
+        options={() => {
+          return {
+            headerTitle: "Select Location",
+          }
+        }}
+      />
     </GroupNavigator.Navigator>
   )
 }

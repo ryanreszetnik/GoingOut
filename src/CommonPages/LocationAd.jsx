@@ -7,11 +7,14 @@ import CustomMarker from "../Components/CustomMarker"
 import AppButton from "../Components/AppButton"
 import Fontawesome from "react-native-vector-icons/FontAwesome5"
 
-export default function LocationAd({
-  currentLocation = null,
-  location,
-  onSelect,
-}) {
+export default function LocationAd({ route, navigation }) {
+  const { location, currentLocation, callBack } = route.params
+  const onSelect = () => {
+    console.log("Update info")
+
+    navigation.pop(1)
+    callBack(location)
+  }
   const distance = currentLocation
     ? getDistanceBetweenLocations(currentLocation, location)
     : 10

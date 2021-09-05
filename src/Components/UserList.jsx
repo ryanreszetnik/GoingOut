@@ -70,7 +70,7 @@ export default function UserList({
     return (
       <TouchableOpacity
         style={styles.containerHorizontal}
-        key="AddMember"
+        key='AddMember'
         onPress={addMember}
       >
         <View style={styles.photo}>
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 70,
-    borderColor: LIST_ITEM_BORDER_COLOR,
     backgroundColor: LIST_ITEM_COLOR,
+    borderColor: LIST_ITEM_BORDER_COLOR,
     flexDirection: "row",
     paddingTop: 5,
     borderRadius: 10,

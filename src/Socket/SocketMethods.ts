@@ -58,8 +58,9 @@ export const leaveGroup = (group:string, leave:boolean)=>{
   socketSend(SOCKET_SEND_LEAVE_GROUP, {group, leave})
 }
 //Temp group Methods
-export const createEvent = (group:CreateEvent) => {
-  socketSend(SOCKET_SEND_CREATE_EVENT, group)
+export const createEvent = (group:any,fromPerm:boolean) => {
+  console.log("sending create event", group)
+  socketSend(SOCKET_SEND_CREATE_EVENT, {event:group,createdFromPerm:fromPerm})
 };
 export const editEvent = (group:EditEvent) => {
   socketSend(SOCKET_SEND_EDIT_EVENT, group)

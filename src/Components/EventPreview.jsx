@@ -25,28 +25,24 @@ export default function EventPreview({ event, onPress }) {
         <View style={styles.textContainer}>
           <Text style={styles.header}>{event.name}</Text>
           <View style={{ flexDirection: "row", paddingTop: 3 }}>
-            <Ionicon name="calendar-outline" size={15} />
+            <Ionicon name="calendar-outline" size={15} color="white" />
 
-            <Text style={{ paddingLeft: 5 }}>
-              {`${
-                moment(`${event.date}`)
-                  .calendar(null, {
-                    sameDay: "[Today]",
-                    nextDay: "[Tomorrow]",
-                    nextWeek: "dddd",
-                    lastDay: "[Yesterday]",
-                    lastWeek: "[Last] dddd",
-                    sameElse: "DD/MM/YYYY",
-                  })
-                  .split(" at")[0]
-              } ${event.time === "Not Set" ? "" : `at ${event.time}`}`}
+            <Text style={{ paddingLeft: 5, color: "white" }}>
+              {`${moment(event.startTime).calendar(null, {
+                sameDay: "[Today] @ hh:mm a",
+                nextDay: "[Tomorrow] @ hh:mm a",
+                nextWeek: "dddd @ hh:mm a",
+                lastDay: "[Yesterday] @ hh:mm a",
+                lastWeek: "[Last] dddd @ hh:mm a",
+                sameElse: "DD/MM/YYYY @ hh:mm a",
+              })}`}
             </Text>
           </View>
 
           {baseGroups.length > 0 && (
             <View style={{ flexDirection: "row", paddingTop: 2 }}>
               <Ionicon name="chatbubbles-outline" size={15} />
-              <Text style={{ paddingLeft: 5 }}>
+              <Text style={{ paddingLeft: 5, color: "white" }}>
                 {baseGroups.map((bg) => bg.name).join(", ")}
               </Text>
             </View>
@@ -67,6 +63,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 20,
     fontWeight: "600",
+    color: "white",
   },
   textContainer: {
     paddingLeft: 10,

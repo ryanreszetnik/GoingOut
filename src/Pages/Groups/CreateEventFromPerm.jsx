@@ -9,7 +9,6 @@ import {
 } from "react-native"
 import { useSelector } from "react-redux"
 import AppButton from "../../Components/AppButton"
-import MonthPicker from "../../Components/MonthPicker"
 import moment from "moment"
 import { showMessage, hideMessage } from "react-native-flash-message"
 import FlashMessage from "react-native-flash-message"
@@ -19,8 +18,11 @@ import AppTextInput from "../../Components/AppTextInput"
 import GenderPreference from "../../Components/GenderPreference"
 import { createEvent } from "../../Socket/socketMethods"
 import MapView, { PROVIDER_GOOGLE, Marker, Circle } from "react-native-maps"
-import { GROUPS_SINGLE_GROUP } from "../../Constants/screens"
-import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
+import {
+  GROUPS_LOCATION_SELECT,
+  GROUPS_SINGLE_GROUP,
+} from "../../Constants/screens"
+import { CONTAINER_COLOR, PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 import CustomDateTimePicker from "../../Components/CustomDateTimePicker"
 import CategorySelection from "../../Components/CategorySelection"
 import AppSwitch from "../../Components/AppSwitch"
@@ -48,6 +50,7 @@ export default function CreateTempFromPerm({ navigation, route }) {
     longitude: -79.3832,
     name: "",
     address: "",
+    locationId: null,
   })
   const mapRef = useRef()
   const [ageRange, setAgeRange] = useState(
@@ -63,20 +66,8 @@ export default function CreateTempFromPerm({ navigation, route }) {
   const [selected, setSelected] = useState(false)
   const [useDefault, setUseDefault] = useState(true)
 
-  const changeSwitch = () => {
-    setUseDefault((s) => !s)
-  }
   const scrollRef = useRef()
-  const setTimePicker = (event, date) => {
-    if (event.type === "dismissed") {
-      setSelected(false)
-      setTime(new Date())
-    } else {
-      setSelected(false)
-      setTime(date)
-      setFormattedTime(moment(date).format("h:mm a"))
-    }
-  }
+
   const createNewEvent = async () => {
     if (formattedTime === "" || date === "") {
       scrollRef.current?.scrollTo({
@@ -156,13 +147,13 @@ export default function CreateTempFromPerm({ navigation, route }) {
       <CustomDateTimePicker
         title="Ends"
         time={endTime}
+        minTime={startTime}
         setTime={updateEndTime}
-        minDate={startTime}
       />
       <CategorySelection value={category} onChange={setCategory} />
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate(EVENTS_LOCATION_SELECT, {
+          navigation.navigate(GROUPS_LOCATION_SELECT, {
             callBack: updateLocation,
             initialLocation: loc,
           })
@@ -201,20 +192,56 @@ export default function CreateTempFromPerm({ navigation, route }) {
         onChange={() => setVisible((v) => !v)}
         label="Private Event"
       />
-      <AppTextInput
-        label="Event Bio"
-        value={bio}
-        onChangeText={(text) => setBio(text)}
-        leftIcon="card-text"
-        placeholder="Enter a short public bio"
-        autoCapitalize="none"
+      <AppSwitch
+        value={useDefault}
+        onChange={() => setUseDefault((v) => !v)}
+        label="Use Group Settings"
       />
-      <LocationRange locRange={locRange} setLocRange={setLocRange} />
-      <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
-      <GenderPicker setChecked={setGenderPref} checked={genderPref} />
+      {useDefault ? (
+        <View style={styles.presetValuesContainer}>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Text style={styles.fieldLabelText}>Event Bio:</Text>
+            <Text style={styles.fieldText}>{baseGroup.bio}</Text>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Text style={styles.fieldLabelText}>Location range:</Text>
+            <Text style={styles.fieldText}>{`${baseGroup.locRange} km`}</Text>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Text style={styles.fieldLabelText}>Age Range:</Text>
+            <Text
+              style={styles.fieldText}
+            >{`${baseGroup.ageRange.minAge}-${baseGroup.ageRange.maxAge}`}</Text>
+          </View>
+          <View style={{ display: "flex", flexDirection: "row" }}>
+            <Text style={styles.fieldLabelText}>Gender Preference:</Text>
+            <Text style={styles.fieldText}>
+              {(baseGroup && baseGroup.genderPref == "Male") ||
+              baseGroup.genderPref == "Female"
+                ? baseGroup.genderPref
+                : "None"}
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <View>
+          <AppTextInput
+            label="Event Bio"
+            value={bio}
+            onChangeText={(text) => setBio(text)}
+            leftIcon="card-text"
+            placeholder="Enter a short public bio"
+            autoCapitalize="none"
+          />
+          <LocationRange locRange={locRange} setLocRange={setLocRange} />
+          <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
+          <GenderPicker setChecked={setGenderPref} checked={genderPref} />
+        </View>
+      )}
       <View style={{ alignItems: "center" }}>
         <AppButton title="Create Event" onPress={createNewEvent} />
       </View>
+
       <FlashMessage />
     </ScrollView>
   )
@@ -233,5 +260,23 @@ const styles = StyleSheet.create({
   },
   fieldName: {
     color: "white",
+  },
+  fieldText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "300",
+  },
+  fieldLabelText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "500",
+    paddingRight: 5,
+  },
+  presetValuesContainer: {
+    backgroundColor: CONTAINER_COLOR,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 3,
   },
 })

@@ -76,11 +76,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   input: {
-    backgroundColor: CONTAINER_COLOR,
-    borderRadius: 45,
-    paddingHorizontal: 10,
-    borderColor: "#888",
-    borderWidth: 2,
+    backgroundColor: "gray",
+    borderRadius: 10,
     padding: 5,
     width: "85%",
   },

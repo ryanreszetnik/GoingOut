@@ -10,8 +10,8 @@ export const SOCKET_SEND_LEAVE_GROUP = "leavePermGroup"
 export const SOCKET_SEND_ADD_GROUP_MEMBERS = "addPermGroupMembers"
 export const SOCKET_SEND_EDIT_GROUP = "editPermGroup"
 
-export const SOCKET_SEND_CREATE_EVENT = "createTempGroup"
+export const SOCKET_SEND_CREATE_EVENT = "createEvent" //createTempGroup
 export const SOCKET_SEND_LEAVE_EVENT = "leaveTempGroup"
 export const SOCKET_SEND_ADD_EVENT_MEMBERS = "addTempGroupMembers"
-export const SOCKET_SEND_EDIT_EVENT = "editTempGroup"
+export const SOCKET_SEND_EDIT_EVENT = "editEvent"
 export const SOCKET_SEND_DELETE_EVENT = "deleteTempGroup"

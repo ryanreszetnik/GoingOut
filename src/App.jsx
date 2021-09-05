@@ -36,7 +36,9 @@ const LoadingData = () => {
   }, [authStatus])
   const initializeAppState = async () => {
     const initialAppData = await appLoad()
-    console.log("loading app", initialAppData)
+    const token = (await Auth.currentAuthenticatedUser()).signInUserSession
+      .idToken.jwtToken
+    console.log("loading app", initialAppData, token)
     if (!initialAppData) {
       dispatch({ type: SET_AUTH_STATUS, payload: LOGGED_OUT })
     } else {
@@ -58,8 +60,8 @@ const LoadingData = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size='large' color='tomato' />
-      <Button title='Loading App Data' color='tomato' />
+      <ActivityIndicator size="large" color="tomato" />
+      <Button title="Loading App Data" color="tomato" />
     </View>
   )
 }
@@ -67,7 +69,7 @@ const LoadingData = () => {
 const Initializing = () => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size='large' color='tomato' />
+      <ActivityIndicator size="large" color="tomato" />
     </View>
   )
 }

@@ -58,6 +58,7 @@ export default function CreateEvent({ navigation }) {
     longitude: -79.3832,
     name: "",
     address: "",
+    locationId: null,
   })
 
   const [shownLocation, setShownLocation] = useState({
@@ -80,9 +81,6 @@ export default function CreateEvent({ navigation }) {
     // mapRef.current.animateToRegion(newRegion, 1500)
   }
 
-  const addMember = (sub) => {
-    setMembers((mem) => [...mem, sub])
-  }
   const removeMember = (sub) => {
     sub !== curSub && setMembers((mem) => mem.filter((m) => m !== sub))
   }
@@ -101,13 +99,13 @@ export default function CreateEvent({ navigation }) {
   const scrollRef = useRef()
 
   const createNewEvent = async () => {
-    if (date === "" || (name === "") | (bio === "")) {
+    if (name === "") {
       scrollRef.current?.scrollTo({
         y: 0,
         animated: true,
       })
       const message = {
-        message: "Please select a date and time",
+        message: "Please name the event",
         type: "danger",
         hideonPress: true,
         animated: true,
@@ -122,35 +120,26 @@ export default function CreateEvent({ navigation }) {
       const payload = {
         eventId: uuid.v4(),
         name: name,
-        startTime: 0,
-        endTime: 0,
+        notes: notes,
+        category: category,
+        startTime: startTime,
+        endTime: endTime,
         cancelled: false,
-        location: {
-          latitude: 0,
-          longitude: 0,
-          name: "",
-          address: "",
-          locationId: "",
-        },
-        locRange: 0,
-        members: [],
+        location: loc,
+        locRange: locRange,
+        members: members,
         confirmed: [],
 
-        bio: "",
-        ageRange: { minAge: 0, maxAge: 0 },
-        genderPref: "",
-        isVisible: false,
-
-        averageAge: 0,
-        averageGender: 0,
-        numMales: 0,
-        numFemales: 0,
+        bio: bio,
+        ageRange: ageRange,
+        genderPref: genderPref,
+        isVisible: visible,
 
         baseGroups: [],
         events: [],
       }
       console.log(payload)
-      createEvent(payload)
+      createEvent(payload, false)
       navigation.navigate(EVENTS_VIEW)
     }
   }

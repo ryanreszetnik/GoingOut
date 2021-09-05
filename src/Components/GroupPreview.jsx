@@ -35,5 +35,5 @@ const styles = StyleSheet.create({
     height: 80,
   },
   header: { fontSize: 20, fontWeight: "600", color: "white" },
-  message: { fontSize: 15, paddingTop: 3, color: "#BBB" },
+  message: { fontSize: 15, paddingTop: 3, color: "white" },
 })

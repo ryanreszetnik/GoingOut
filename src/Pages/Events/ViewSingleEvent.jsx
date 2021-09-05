@@ -19,6 +19,7 @@ import {
 } from "../../Constants/screens"
 import SmallButton from "../../Components/SmallButton"
 import LocationRecommendations from "../../Components/LocationRecommendations"
+import { PAGE_BACKGROUND_COLOR } from "../../Theme/theme.style"
 export default function ViewSingleEvent({ navigation, route }) {
   const { eventId } = route.params
   const matches = useSelector((state) =>
@@ -66,21 +67,15 @@ export default function ViewSingleEvent({ navigation, route }) {
           <View style={styles.topContainer}>
             <GroupImage photoIds={event.members} size={100} />
             <Text style={styles.eventName}>{event.name}</Text>
-            <Text style={{ paddingLeft: 5 }}>
-              {`${
-                moment(`${event.date}`)
-                  .calendar(null, {
-                    sameDay: "[Today]",
-                    nextDay: "[Tomorrow]",
-                    nextWeek: "dddd",
-                    lastDay: "[Yesterday]",
-                    lastWeek: "[Last] dddd",
-                    sameElse: "DD/MM/YYYY",
-                  })
-                  .split(" at")[0]
-              } ${
-                event.time === "Not Set" ? "(Time not set)" : `at ${event.time}`
-              }`}
+            <Text style={{ paddingLeft: 5, color: "white" }}>
+              {`${moment(event.startTime).calendar(null, {
+                sameDay: "[Today] @ hh:mm a",
+                nextDay: "[Tomorrow] @ hh:mm a",
+                nextWeek: "dddd @ hh:mm a",
+                lastDay: "[Yesterday] @ hh:mm a",
+                lastWeek: "[Last] dddd @ hh:mm a",
+                sameElse: "DD/MM/YYYY @ hh:mm a",
+              })}`}
             </Text>
             <Text style={styles.attributeTxt}>{event.bio}</Text>
             <View style={{ display: "flex", flexDirection: "row" }}>
@@ -118,8 +113,8 @@ export default function ViewSingleEvent({ navigation, route }) {
           <MapView
             provider={PROVIDER_GOOGLE}
             region={{
-              latitude: parseFloat(event.loc.lat),
-              longitude: parseFloat(event.loc.lon),
+              latitude: parseFloat(event.location.latitude),
+              longitude: parseFloat(event.location.longitude),
               latitudeDelta: 0.005,
               longitudeDelta: 0.005,
             }}
@@ -128,8 +123,8 @@ export default function ViewSingleEvent({ navigation, route }) {
           >
             <Marker
               coordinate={{
-                latitude: parseFloat(event.loc.lat),
-                longitude: parseFloat(event.loc.lon),
+                latitude: parseFloat(event.location.latitude),
+                longitude: parseFloat(event.location.longitude),
               }}
             ></Marker>
           </MapView>
@@ -148,7 +143,7 @@ export default function ViewSingleEvent({ navigation, route }) {
             </View>
           )}
           <View style={styles.txtField}>
-            <Text>Recomended Nearby Locations</Text>
+            <Text style={{ color: "white" }}>Recomended Nearby Locations</Text>
             <LocationRecommendations
               loc={event.loc}
               onPress={(selectedLoc) =>
@@ -166,8 +161,10 @@ export default function ViewSingleEvent({ navigation, route }) {
 }
 const styles = StyleSheet.create({
   container: {
-    width: "95%",
+    width: "100%",
+    height: "100%",
     alignSelf: "center",
+    backgroundColor: PAGE_BACKGROUND_COLOR,
   },
   img: {
     width: 100,
@@ -197,6 +194,7 @@ const styles = StyleSheet.create({
   },
   txtField: {
     borderTopWidth: 0.5,
+    borderTopColor: "white",
     marginVertical: 5,
     paddingVertical: 5,
   },
@@ -205,9 +203,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingVertical: 2,
     marginVertical: 2,
+    color: "white",
   },
   map: { width: "100%", height: 250 },
-  eventName: { fontSize: 22, fontWeight: "600" },
+  eventName: { fontSize: 22, fontWeight: "600", color: "white" },
   topContainer: {
     width: "100%",
     alignContent: "center",

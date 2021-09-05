@@ -36,9 +36,10 @@ import {
   EVENTS_VIEW,
 } from "../../Constants/screens"
 import { EVENTS_SINGLE_MATCH } from "../../Constants/screens"
-import PotentialLocation from "./PotentialLocation"
-import LocationSelection from "./LocationSelection"
+// import LocationSelection from "./LocationSelection"
+import LocationSelection from "../../CommonPages/LocationSelection"
 import EditMembers from "./EditMembers"
+import LocationAd from "../../CommonPages/LocationAd"
 
 const EventNavigator = createStackNavigator()
 
@@ -169,7 +170,7 @@ export default function Events({ navigation }) {
       />
       <EventNavigator.Screen
         name={EVENTS_POTENTIAL_LOCATION}
-        component={PotentialLocation}
+        component={LocationAd}
         options={() => {
           return {
             headerTitle: "Potential Location",
